@@ -1,0 +1,12 @@
+D:\C#\Projects\dotnet-onion-architecture\src\MyApp.Domain\bin\Debug\net8.0\MyApp.Domain.deps.json
+D:\C#\Projects\dotnet-onion-architecture\src\MyApp.Domain\bin\Debug\net8.0\MyApp.Domain.dll
+D:\C#\Projects\dotnet-onion-architecture\src\MyApp.Domain\bin\Debug\net8.0\MyApp.Domain.pdb
+D:\C#\Projects\dotnet-onion-architecture\src\MyApp.Domain\obj\Debug\net8.0\MyApp.Domain.GeneratedMSBuildEditorConfig.editorconfig
+D:\C#\Projects\dotnet-onion-architecture\src\MyApp.Domain\obj\Debug\net8.0\MyApp.Domain.AssemblyInfoInputs.cache
+D:\C#\Projects\dotnet-onion-architecture\src\MyApp.Domain\obj\Debug\net8.0\MyApp.Domain.AssemblyInfo.cs
+D:\C#\Projects\dotnet-onion-architecture\src\MyApp.Domain\obj\Debug\net8.0\MyApp.Domain.csproj.CoreCompileInputs.cache
+D:\C#\Projects\dotnet-onion-architecture\src\MyApp.Domain\obj\Debug\net8.0\MyApp.Domain.sourcelink.json
+D:\C#\Projects\dotnet-onion-architecture\src\MyApp.Domain\obj\Debug\net8.0\MyApp.Domain.dll
+D:\C#\Projects\dotnet-onion-architecture\src\MyApp.Domain\obj\Debug\net8.0\refint\MyApp.Domain.dll
+D:\C#\Projects\dotnet-onion-architecture\src\MyApp.Domain\obj\Debug\net8.0\MyApp.Domain.pdb
+D:\C#\Projects\dotnet-onion-architecture\src\MyApp.Domain\obj\Debug\net8.0\ref\MyApp.Domain.dll
