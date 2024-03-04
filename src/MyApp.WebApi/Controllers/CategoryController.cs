@@ -19,7 +19,7 @@ namespace MyApp.WebApi.Controllers
 
         public CategoryController(IServiceManager serviceManager)
         {
-            _serviceManager = serviceManager;
+            _serviceManager = serviceManager;// test 
         }
 
         [HttpPost]
