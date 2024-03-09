@@ -11,5 +11,6 @@ namespace MyApp.Application.Core.Services
     public interface IServiceManager
     {
         ICategoryService CategoryService { get; }
+        IBrandService BrandService { get; }
     }
 }

@@ -16,7 +16,8 @@ namespace MyApp.Application.Models.Mappers
             {
                 Name = dto.Name,
                 Description = dto.Description,
-                Icon = dto.Icon
+                Icon = dto.Icon,
+                ParentId = dto.ParentId
             };
         }
 

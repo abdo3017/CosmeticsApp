@@ -23,17 +23,69 @@ namespace MyApp.Application.Services
 
         public async Task<CategoryDTO> CreateCategory(CategoryDTO req)
         {
-            var specification = CategorySpecifications.GetCategoryByName(req.Name);
-            var parentCategory =await _repository.FirstOrDefaultAsync(specification);
-            
-            var category= req.Map();
-            category.ParentId = parentCategory?.Id;
-            
-            var AddedCategory= await AddAsync(category);
+            var category = req.Map();
+
+            var AddedCategory = await AddAsync(category);
+
             var dtoCategory = AddedCategory.Map();
-            dtoCategory.Parent = req.Name;
-            
+
             return dtoCategory;
+        }
+
+        public void DeleteCategory(CategoryDTO req)
+        {
+            var category = req.Map();
+
+            Delete(category);
+        }
+
+        public async Task<List<CategoryDTO>> GetAllCategories()
+        {
+            var categories = await _repository.GetAllAsync();
+
+            var categoriesDto = categories.Select(s => s.Map()).ToList();
+
+            return categoriesDto;
+        }
+
+        public async Task<List<BrandDTO>?> GetBrandsByCategoryId(int id)
+        {
+            var specification = CategorySpecifications.GetCategoryById(id);
+            specification.AddInclude(s => s.Brands);
+
+            var category = await _repository.FirstOrDefaultAsync(specification);
+            var brandsCategory = category?.Brands.Select(c => c.Map()).ToList();
+
+            return brandsCategory;
+        }
+
+        public async Task<CategoryDTO?> GetCategoryById(int id)
+        {
+            var specification = CategorySpecifications.GetCategoryById(id);
+
+            var category = await _repository.FirstOrDefaultAsync(specification);
+
+            var dtoCategory = category?.Map();
+
+            return dtoCategory;
+        }
+
+        public async Task<CategoryDTO?> GetCategoryByName(string name)
+        {
+            var specification = CategorySpecifications.GetCategoryByName(name);
+
+            var category = await _repository.FirstOrDefaultAsync(specification);
+
+            var dtoCategory = category?.Map();
+
+            return dtoCategory;
+        }
+
+        public void UpdateCategory(CategoryDTO req)
+        {
+            var category = req.Map();
+
+            Update(category);
         }
     }
 }

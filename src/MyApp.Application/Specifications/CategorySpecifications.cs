@@ -11,9 +11,17 @@ namespace MyApp.Application.Specifications
 {
     public static class CategorySpecifications
     {
-        public static BaseSpecification<Category> GetCategoryByName(string CatName)
+        public static BaseSpecification<Category> GetCategoryByName(string catName)
         {
-            return new BaseSpecification<Category>(x => x.Name == CatName);
+            return new BaseSpecification<Category>(x => x.Name == catName);
+        }
+        public static BaseSpecification<Category> GetCategoryById(int id)
+        {
+            return new BaseSpecification<Category>(x => x.Id == id);
+        }
+        public static BaseSpecification<Category> GetCategoriesByBrandId(int id)
+        {
+            return new BaseSpecification<Category>(x => x.Id == id);
         }
     }
 }

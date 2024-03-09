@@ -8,9 +8,9 @@ namespace MyApp.Application.Models.DTOs
 {
     public class CategoryDTO
     {
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public string Icon { get; set; }
-        public string Parent { get; set; }
+        public string? Name { get; set; }
+        public string? Description { get; set; }
+        public string? Icon { get; set; }
+        public int ParentId { get; set; }
     }
 }

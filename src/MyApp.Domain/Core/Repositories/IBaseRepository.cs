@@ -8,7 +8,7 @@ namespace MyApp.Domain.Core.Repositories
         Task<T?> GetByIdAsync(TType id);
         Task<IList<T>> GetAllAsync();
         Task<IList<T>> ListAsync(ISpecification<T> spec);
-        Task<T?> FirstOrDefaultAsync(ISpecification<T?> spec);
+        Task<T?> FirstOrDefaultAsync(ISpecification<T> spec);
         Task<T> AddAsync(T entity);
         void Update(T entity);
         void Delete(T entity);

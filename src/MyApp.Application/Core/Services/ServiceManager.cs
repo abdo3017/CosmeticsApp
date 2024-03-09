@@ -12,11 +12,16 @@ namespace MyApp.Application.Core.Services
     public class ServiceManager : IServiceManager
     {
         private readonly Lazy<ICategoryService> _categoryService;
+        private readonly Lazy<IBrandService> _brandService;
         public ServiceManager(IUnitOfWork unitOfWork)
         {
             _categoryService = new Lazy<ICategoryService>(() => new CategoryService(unitOfWork));
+
+            _brandService = new Lazy<IBrandService>(() => new BrandService(unitOfWork));
         }
 
         public ICategoryService CategoryService => _categoryService.Value;
+
+        public IBrandService BrandService => _brandService.Value;
     }
 }

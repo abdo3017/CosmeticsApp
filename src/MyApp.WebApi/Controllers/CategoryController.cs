@@ -1,13 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using MyApp.Application.Core.Services;
-using MyApp.Application.Interfaces;
 using MyApp.Application.Models.DTOs;
-using MyApp.Application.Models.Requests;
-using MyApp.Application.Models.Responses;
-using MyApp.Application.Services;
-using MyApp.Infrastructure.Data;
-using MyApp.Infrastructure.Identity.Models;
 
 namespace MyApp.WebApi.Controllers
 {
@@ -19,16 +12,58 @@ namespace MyApp.WebApi.Controllers
 
         public CategoryController(IServiceManager serviceManager)
         {
-            _serviceManager = serviceManager;// test  ghazi
+            _serviceManager = serviceManager;
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Post(CategoryDTO category)
+        [HttpGet("GetAll")]
+        public async Task<IActionResult> GetAll()
         {
-            var addedCat = await _serviceManager.CategoryService.CreateCategory(category);
-            return Ok(addedCat);
+            var allCategories = await _serviceManager.CategoryService.GetAllCategories();
+            return Ok(allCategories);
         }
 
+        [HttpGet("GetById")]
+        public async Task<IActionResult> GetById(int id)
+        {
+            var cat = await _serviceManager.CategoryService.GetCategoryById(id);
+            return Ok(cat);
+        }
+
+        [HttpGet("GetByName")]
+        public async Task<IActionResult> GetByName(string name)
+        {
+            var cat = await _serviceManager.CategoryService.GetCategoryByName(name);
+            return Ok(cat);
+        }
+
+        [HttpGet("GetAllBrandsCategory")]
+        public async Task<IActionResult> GetAllBrandsCategory(int id)
+        {
+            var allBrands = await _serviceManager.CategoryService.GetBrandsByCategoryId(id);
+            return Ok(allBrands);
+
+        }
+
+        [HttpPost("Add")]
+        public async Task<IActionResult> Add(CategoryDTO category)
+        {
+            var addedCategory = await _serviceManager.CategoryService.CreateCategory(category);
+            return Created();
+        }
+
+        [HttpPut("Update")]
+        public IActionResult Update(CategoryDTO category)
+        {
+            _serviceManager.CategoryService.UpdateCategory(category);
+            return Ok();
+        }
+
+        [HttpDelete("Delete")]
+        public IActionResult Delete(CategoryDTO category)
+        {
+            _serviceManager.CategoryService.DeleteCategory(category);
+            return Ok();
+        }
 
     }
 }
