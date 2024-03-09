@@ -1,6 +1,6 @@
 using MyApp.Application.Models.Requests;
 using MyApp.Application.Models.Responses;
-using MyApp.Domain.Specifications;
+using MyApp.Application.Specifications;
 using MyApp.Domain.Enums;
 using MyApp.Application.Models.DTOs;
 using MyApp.Application.Interfaces;

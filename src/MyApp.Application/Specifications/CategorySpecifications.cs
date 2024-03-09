@@ -1,4 +1,5 @@
-﻿using MyApp.Domain.Core.Specifications;
+﻿using MyApp.Application.Core.Specifications;
+using MyApp.Domain.Core.Specifications;
 using MyApp.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -6,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MyApp.Domain.Specifications
+namespace MyApp.Application.Specifications
 {
     public static class CategorySpecifications
     {

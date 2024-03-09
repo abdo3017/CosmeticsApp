@@ -5,7 +5,7 @@ using MyApp.Application.Models.Mappers;
 using MyApp.Domain.Core.Repositories;
 using MyApp.Domain.Core.Specifications;
 using MyApp.Domain.Entities;
-using MyApp.Domain.Specifications;
+using MyApp.Application.Specifications;
 using System;
 using System.Collections.Generic;
 using System.Linq;
