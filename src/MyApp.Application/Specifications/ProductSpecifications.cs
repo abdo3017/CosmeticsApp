@@ -14,11 +14,18 @@ namespace MyApp.Application.Specifications
 {
     public static class ProductSpecifications
     {
-        public static BaseSpecification<Product> GetProductWithImgs(int pageNo , int pageSize)
+        public static BaseSpecification<Product> GetProductsByBrandId(int id)
+        {
+            return new BaseSpecification<Product>(x => x.BrandId == id);
+        }
+        public static BaseSpecification<Product> GetProductsByCategoryId(int id)
+        {
+            return new BaseSpecification<Product>(x => x.CategoryId == id);
+        }
+        public static BaseSpecification<Product> GetProductWithPaging(int pageNo , int pageSize)
         {
             var spec = new BaseSpecification<Product>();
             spec.ApplyPaging((pageNo-1)*pageSize, pageSize);
-           // spec.AddInclude(p => p.Imgs);
             return spec;
         }
 
@@ -81,7 +88,7 @@ namespace MyApp.Application.Specifications
             return spec;
         }
 
-        static Expression ConstractContainsExpression(string Param , List<int> list ,Type listType , Type entityType )
+        static Expression ConstructContainsExpression(string Param , List<int> list ,Type listType , Type entityType )
         {
             var parameter = Expression.Parameter(entityType, "Product");
             var property = Expression.Property(parameter, Param);

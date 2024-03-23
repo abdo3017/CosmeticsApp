@@ -35,21 +35,21 @@ namespace MyApp.Application.Services
 
         public async Task<List<productDTO>> GetAllProducts(int pageNo ,int  pageSize)
         {
-            var spec = ProductSpecifications.GetProductWithImgs(pageNo, pageSize);
-            var Products = await _repository.ListAsync(spec);// why not iquerable
-            var ProductsDto = Products.Select(s => s.Map()).ToList();
-            return ProductsDto;
+            var spec = ProductSpecifications.GetProductWithPaging(pageNo, pageSize);
+            var products = await _repository.ListAsync(spec);
+            var productsDto = products.Select(s => s.Map()).ToList();
+            return productsDto;
         }
 
         public async Task<List<productDTO>> GetProductsByFilter(ProductFilter filters)
         {
             var spec = ProductSpecifications.GetProductByFilters(filters);
-            var Products = await _repository.ListAsync(spec);// why not iquerable
-            var categoriesDto = Products.Select(s => s.Map()).ToList();
-            return categoriesDto;
+            var products = await _repository.ListAsync(spec);
+            var productsDto = products.Select(s => s.Map()).ToList();
+            return productsDto;
         }
 
-        public async Task<productDTO?> GetProdcutById(int id)
+        public async Task<productDTO?> GetProductById(int id)
         {
             var spec = ProductSpecifications.GetProductByIdWithImgs(id);
             var product = await _repository.FirstOrDefaultAsync(spec);
@@ -57,12 +57,12 @@ namespace MyApp.Application.Services
             return productDto;
         }
 
-        public async Task<ProductDetailsDTO> GetProdcutDetails(int id)
+        public async Task<ProductDetailsDTO> GetProductDetails(int id)
         {
             var spec = ProductSpecifications.GetProductByIdWithImgs(id);
             var product = await _repository.FirstOrDefaultAsync(spec);
-            var productDtoDetails = product?.MapToProDetails();
-            return productDtoDetails;
+            var productDetailsDto = product?.MapToProDetails();
+            return productDetailsDto;
         }
 
         public void UpdateProduct(productDTO pro)
@@ -73,8 +73,23 @@ namespace MyApp.Application.Services
 
         public List<int> GetProductPriceRange()
         {
-            //var product =   _repository._dbContext;
             return [1, 22];
+        }
+
+        public async Task<List<productDTO>> GetProductsByCategoryId(int catId)
+        {
+            var spec = ProductSpecifications.GetProductsByCategoryId(catId);
+            var products = await _repository.ListAsync(spec);
+            var productsDto = products.Select(s => s.Map()).ToList();
+            return productsDto;
+        }
+
+        public async Task<List<productDTO>> GetProductsByBrandId(int brandId)
+        {
+            var spec = ProductSpecifications.GetProductsByBrandId(brandId);
+            var products = await _repository.ListAsync(spec);
+            var productsDto = products.Select(s => s.Map()).ToList();
+            return productsDto;
         }
     }
 }

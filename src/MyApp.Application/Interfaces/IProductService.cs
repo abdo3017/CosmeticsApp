@@ -11,9 +11,11 @@ namespace MyApp.Application.Interfaces
         void UpdateProduct(productDTO pro);
         void DeleteProduct(int pro);
         Task<List<productDTO>> GetAllProducts(int pageNo, int pageSize);
-        Task<productDTO?> GetProdcutById(int id);
-        Task<ProductDetailsDTO> GetProdcutDetails(int id);
+        Task<productDTO?> GetProductById(int id);
+        Task<ProductDetailsDTO> GetProductDetails(int id);
         Task<List<productDTO>> GetProductsByFilter(ProductFilter filters);
+        Task<List<productDTO>> GetProductsByCategoryId(int catId);
+        Task<List<productDTO>> GetProductsByBrandId(int brandId);
         List<int> GetProductPriceRange();
 
 

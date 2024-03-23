@@ -15,6 +15,7 @@ namespace MyApp.Application.Models.Mappers
             return new Brand
             {
                 Name = dto.Name,
+                Image = dto.Image,
                 Id = dto.Id
             };
         }
@@ -24,7 +25,8 @@ namespace MyApp.Application.Models.Mappers
             return new BrandDTO
             {
                 Name = brand.Name,
-                Id = brand.Id
+                Id = brand.Id,
+                Image = brand.Image,
             };
         }
     }

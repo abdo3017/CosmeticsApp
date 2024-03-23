@@ -19,9 +19,5 @@ namespace MyApp.Application.Specifications
         {
             return new BaseSpecification<Category>(x => x.Id == id);
         }
-        public static BaseSpecification<Category> GetCategoriesByBrandId(int id)
-        {
-            return new BaseSpecification<Category>(x => x.Id == id);
-        }
     }
 }

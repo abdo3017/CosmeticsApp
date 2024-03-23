@@ -24,23 +24,36 @@ namespace MyApp.WebApi.Controllers
         [HttpGet("GetById")]
         public async Task<IActionResult> GetById(int id)
         {
-            var Product = await _serviceManager.ProductService.GetProdcutById(id);
+            var Product = await _serviceManager.ProductService.GetProductById(id);
             return Ok(Product);
         }
-        [HttpGet("GetProdcutDetails")]
-        public async Task<IActionResult> GetProdcutDetails(int id)
+        [HttpGet("GetProductDetails")]
+        public async Task<IActionResult> GetProductDetails(int id)
         {
-            var ProductDetails = await _serviceManager.ProductService.GetProdcutDetails(id);
+            var ProductDetails = await _serviceManager.ProductService.GetProductDetails(id);
             return Ok(ProductDetails);
         }
         [HttpGet("GetPriceRange")]
-        public async Task<IActionResult> GetPriceRange()
+        public IActionResult GetPriceRange()
         {
             var range =  _serviceManager.ProductService.GetProductPriceRange();
             return Ok(range);
         }
-        [HttpPost("GetProductByFilters")]
-        public async Task<IActionResult> GetProdcutByFilters(ProductFilter filters)
+        [HttpGet("GetProductsByBrandId")]
+        public IActionResult GetProductsByBrandId(int brandId)
+        {
+            var range = _serviceManager.ProductService.GetProductsByBrandId(brandId);
+            return Ok(range);
+        }
+        [HttpGet("GetProductsByCategoryId")]
+        public IActionResult GetProductsByCategoryId(int catId)
+        {
+            var range = _serviceManager.ProductService.GetProductsByCategoryId(catId);
+            return Ok(range);
+        }
+
+        [HttpPost("FilterProducts")]
+        public async Task<IActionResult> FilterProducts(ProductFilter filters)
         {
             var ProductDetails = await _serviceManager.ProductService.GetProductsByFilter(filters);
             return Ok(ProductDetails);

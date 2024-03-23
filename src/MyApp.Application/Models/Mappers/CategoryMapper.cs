@@ -14,6 +14,7 @@ namespace MyApp.Application.Models.Mappers
         {
             return new Category
             {
+                Id = dto.Id,
                 Name = dto.Name,
                 Description = dto.Description,
                 Icon = dto.Icon,
@@ -25,6 +26,7 @@ namespace MyApp.Application.Models.Mappers
         {
             return new CategoryDTO
             {
+                Id = dto.Id,
                 Name = dto.Name,
                 Description = dto.Description,
                 Icon = dto.Icon

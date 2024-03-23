@@ -10,8 +10,9 @@ namespace MyApp.Application.Models.DTOs
     public class BrandDTO
     {
         public string? Name { get; set; }
+        public byte[] Image { get; set; } = null!;
         public int Id { get; set; }
-        //public ICollection<Product> Products { get; set; } = new List<Product>();
+        public ICollection<productDTO> Products { get; set; } = new List<productDTO>();
 
         public ICollection<CategoryDTO> Categories { get; set; } = new List<CategoryDTO>();
     }
