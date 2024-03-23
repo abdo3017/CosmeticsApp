@@ -9,7 +9,7 @@ public partial class Brand : BaseEntity
     public int Id { get; set; }
 
     public string Name { get; set; } = null!;
-    public byte[] Image { get; set; } = null!;
+    public byte?[] Image { get; set; } = null!;
 
     public DateOnly? CreationDate { get; set; }
 
