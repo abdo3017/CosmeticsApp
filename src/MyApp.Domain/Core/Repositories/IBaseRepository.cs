@@ -12,6 +12,7 @@ namespace MyApp.Domain.Core.Repositories
         Task<T> AddAsync(T entity);
         void Update(T entity);
         void Delete(T entity);
+        void DeleteById(TType entityID);
         Task<int> CountAsync(ISpecification<T> spec);
         Task<bool> AnyAsync(ISpecification<T> spec);
     }

@@ -16,6 +16,7 @@ namespace MyApp.Domain.Service
         Task<T> AddAsync(T entity);
         void Update(T entity);
         void Delete(T entity);
+        void DeleteById(TType entityId);
 
     }
 

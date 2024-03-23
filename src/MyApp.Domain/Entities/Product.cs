@@ -14,7 +14,7 @@ public partial class Product : BaseEntity
 
     public string? Description { get; set; }
 
-    public int? BrandId { get; set; }
+    public int? BrandId { get; set; } = -1;
 
     public decimal Price { get; set; }
 
@@ -26,11 +26,15 @@ public partial class Product : BaseEntity
 
     public int DiscountPercentage { get; set; }
 
+    public string? TagName { get; set; }
+
     public DateOnly? CreationDate { get; set; }
 
     public DateOnly? ModificationDate { get; set; }
 
     public virtual ICollection<AttributeValue> AttributeValues { get; set; } = new List<AttributeValue>();
+
+    public virtual ICollection<Gallery> Imgs { get; set; } = new List<Gallery>();
 
     public virtual Brand? Brand { get; set; }
 

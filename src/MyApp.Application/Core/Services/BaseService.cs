@@ -50,6 +50,13 @@ namespace MyApp.Application.Core.Services
             UnitOfWork.SaveChanges();
         }
 
+        public void DeleteById(TType entityId)
+        {
+            _repository.DeleteById(entityId);
+            UnitOfWork.SaveChanges();
+        }
+
+
         public void Dispose()
         {
             Dispose(true);
