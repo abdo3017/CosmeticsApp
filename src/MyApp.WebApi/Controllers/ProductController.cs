@@ -39,7 +39,7 @@ namespace MyApp.WebApi.Controllers
             var range =  _serviceManager.ProductService.GetProductPriceRange();
             return Ok(range);
         }
-        [HttpPost("GetProdcutByFilters")]
+        [HttpPost("GetProductByFilters")]
         public async Task<IActionResult> GetProdcutByFilters(ProductFilter filters)
         {
             var ProductDetails = await _serviceManager.ProductService.GetProductsByFilter(filters);

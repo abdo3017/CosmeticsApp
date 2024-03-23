@@ -19,7 +19,7 @@ namespace MyApp.Application.Services
         {
         }
 
-         async Task<productDTO> IProductService.CreateProduct(productDTO pro)
+         public async Task<productDTO> CreateProduct(productDTO pro)
         {
 
             Product product = pro.Map();
@@ -28,12 +28,12 @@ namespace MyApp.Application.Services
             return AddedProductDto;
         }
 
-        void IProductService.DeleteProduct(int proID)
+        public void DeleteProduct(int proID)
         {
             DeleteById(proID);
         }
 
-       async Task<List<productDTO>> IProductService.GetAllProducts(int pageNo ,int  pageSize)
+        public async Task<List<productDTO>> GetAllProducts(int pageNo ,int  pageSize)
         {
             var spec = ProductSpecifications.GetProductWithImgs(pageNo, pageSize);
             var Products = await _repository.ListAsync(spec);// why not iquerable
@@ -41,7 +41,7 @@ namespace MyApp.Application.Services
             return ProductsDto;
         }
 
-        async Task<List<productDTO>> IProductService.GetProductsByFilter(ProductFilter filters)
+        public async Task<List<productDTO>> GetProductsByFilter(ProductFilter filters)
         {
             var spec = ProductSpecifications.GetProductByFilters(filters);
             var Products = await _repository.ListAsync(spec);// why not iquerable
@@ -49,7 +49,7 @@ namespace MyApp.Application.Services
             return categoriesDto;
         }
 
-        async Task<productDTO?> IProductService.GetProdcutById(int id)
+        public async Task<productDTO?> GetProdcutById(int id)
         {
             var spec = ProductSpecifications.GetProductByIdWithImgs(id);
             var product = await _repository.FirstOrDefaultAsync(spec);
@@ -57,7 +57,7 @@ namespace MyApp.Application.Services
             return productDto;
         }
 
-        async Task<ProductDetailsDTO> IProductService.GetProdcutDetails(int id)
+        public async Task<ProductDetailsDTO> GetProdcutDetails(int id)
         {
             var spec = ProductSpecifications.GetProductByIdWithImgs(id);
             var product = await _repository.FirstOrDefaultAsync(spec);
@@ -65,13 +65,13 @@ namespace MyApp.Application.Services
             return productDtoDetails;
         }
 
-        void IProductService.UpdateProduct(productDTO pro)
+        public void UpdateProduct(productDTO pro)
         {
              var product = pro.Map();
             Update(product);
         }
 
-        List<int> IProductService.GetProductPriceRange()
+        public List<int> GetProductPriceRange()
         {
             //var product =   _repository._dbContext;
             return [1, 22];
