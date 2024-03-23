@@ -12,5 +12,6 @@ namespace MyApp.Application.Core.Services
     {
         ICategoryService CategoryService { get; }
         IBrandService BrandService { get; }
+        IProductService ProductService { get; }
     }
 }

@@ -63,6 +63,12 @@ namespace MyApp.Infrastructure.Repositories
             _dbContext.Set<T>().Remove(entity);
         }
 
+        public void DeleteById(TType entityID)
+        {
+            var entity = _dbContext.Set<T>().Find(entityID);
+            _dbContext.Set<T>().Remove(entity);
+        }
+
         private IQueryable<T> ApplySpecification(ISpecification<T> spec)
         {
             return SpecificationEvaluator<T>.GetQuery(_dbContext.Set<T>().AsQueryable(), spec);
