@@ -40,7 +40,7 @@ namespace MyApp.WebApi.Controllers
             return Ok(range);
         }
         [HttpGet("GetProductsByBrandId")]
-        public  async Task<IActionResult> GetProductsByBrandId(int brandId)
+        public async Task<IActionResult> GetProductsByBrandId(int brandId)
         {
             var range = await _serviceManager.ProductService.GetProductsByBrandId(brandId);
             return Ok(range);
