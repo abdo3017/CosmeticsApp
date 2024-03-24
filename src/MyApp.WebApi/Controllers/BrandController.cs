@@ -65,5 +65,12 @@ namespace MyApp.WebApi.Controllers
             return Ok();
         }
 
+        [HttpPost("UploadImg/{BrandId}")]
+        public async Task<IActionResult> UploadImage(int BrandId , IFormFile file)
+        {
+           await _serviceManager.BrandService.UploadImg(BrandId, file); 
+            return Ok();
+        }
+
     }
 }

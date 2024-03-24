@@ -59,13 +59,13 @@ namespace MyApp.Application.Models.Mappers
                 Name = pro.Name,
                 TagName = pro.TagName,
                 Description = pro.Description,
-                BrandImg = new byte [0], // will be change
+                BrandImg = pro.Brand?.Image, // will be change
                 Price = pro.Price,
                 RateValue = pro.RateValue,
                 TotalRate = pro.TotalRate,
                 DiscountPercentage = pro.DiscountPercentage,
                 AttributeValues = pro.AttributeValues,
-                ProductImgs = null // will be change
+                ProductImgs = pro.Imgs,
             };
         }
     }
