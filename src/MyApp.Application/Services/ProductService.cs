@@ -14,16 +14,20 @@ namespace MyApp.Application.Services
 {
     public class ProductService : BaseService<Product, int>, IProductService
     {
-      
+        private readonly IUnitOfWork _unitOfWork;
+
         public ProductService(IUnitOfWork unitOfWork):base(unitOfWork)
         {
+            _unitOfWork = unitOfWork;
         }
 
          public async Task<productDTO> CreateProduct(productDTO pro)
         {
 
             Product product = pro.Map();
+            var catRepo = _unitOfWork.Repository<Category, int>();
             var AddedProduct = await AddAsync(product);
+            var cat =await catRepo.GetByIdAsync(product.CategoryId);
             var AddedProductDto = AddedProduct.Map();
             return AddedProductDto;
         }
