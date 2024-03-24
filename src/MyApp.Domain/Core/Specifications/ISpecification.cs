@@ -12,6 +12,7 @@ namespace MyApp.Domain.Core.Specifications
         Expression<Func<T, object>> GroupBy { get; }
         int Take { get; }
         int Skip { get; }
+        int TotalCount { get; set;}
         bool IsPagingEnabled { get; }
     }
 }

@@ -22,10 +22,10 @@ namespace MyApp.Application.Specifications
         {
             return new BaseSpecification<Product>(x => x.CategoryId == id);
         }
-        public static BaseSpecification<Product> GetProductWithPaging(int pageNo , int pageSize)
+        public static BaseSpecification<Product> GetProductWithPaging(int pageNo, int pageSize)
         {
             var spec = new BaseSpecification<Product>();
-            spec.ApplyPaging((pageNo-1)*pageSize, pageSize);
+            spec.ApplyPaging((pageNo - 1) * pageSize, pageSize);
             return spec;
         }
 
@@ -36,12 +36,11 @@ namespace MyApp.Application.Specifications
             return spec;
         }
 
-        public static BaseSpecification<Product> GetProductByFilters(ProductFilter filters)
+        public static BaseSpecification<Product> GetProductByFilters(ProductFilter filters, int pageNo, int pageSize)
         {
-
-            Expression<Func<Product, bool>> expression = null ;
+            Expression<Func<Product, bool>> expression = null;
             Expression filterExpression = null;
-             var parameter = Expression.Parameter(typeof(Product), "Product");
+            var parameter = Expression.Parameter(typeof(Product), "Product");
 
             if (filters.CategoryIds != null && filters.CategoryIds.Count > 0)
             {
@@ -69,7 +68,7 @@ namespace MyApp.Application.Specifications
             }
             if (filters.PriceRange != null && filters.PriceRange.Count > 0)
             {
-               
+
                 var property = Expression.Property(parameter, "Price");
 
                 var isBetweenExprestion = Expression.Lambda<Func<Product, bool>>(
@@ -83,19 +82,20 @@ namespace MyApp.Application.Specifications
 
 
             expression = Expression.Lambda<Func<Product, bool>>(filterExpression, parameter);
-            var spec = new BaseSpecification<Product>(criteria: expression); 
+            var spec = new BaseSpecification<Product>(criteria: expression);
+            spec.ApplyPaging((pageNo - 1) * pageSize, pageSize);
 
             return spec;
         }
 
-        static Expression ConstructContainsExpression(string Param , List<int> list ,Type listType , Type entityType )
+        static Expression ConstructContainsExpression(string Param, List<int> list, Type listType, Type entityType)
         {
             var parameter = Expression.Parameter(entityType, "Product");
             var property = Expression.Property(parameter, Param);
             var propertyValue = Expression.Constant(list);
             var containsMethod = listType.GetMethod("Contains");
             var containsCall = Expression.Call(propertyValue, containsMethod, property);
-            return  containsCall;
+            return containsCall;
         }
     }
 }

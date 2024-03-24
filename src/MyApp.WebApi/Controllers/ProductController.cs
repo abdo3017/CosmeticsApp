@@ -19,7 +19,11 @@ namespace MyApp.WebApi.Controllers
         public async Task<IActionResult> GetAll(int pageNo , int pageSize)
         {
             var allProducts = await _serviceManager.ProductService.GetAllProducts(pageNo , pageSize);
-            return Ok(allProducts);
+            return Ok(new
+            {
+                TotalCount= _serviceManager.ProductService.TotalCount(),
+                Products= allProducts
+            });
         }
         [HttpGet("GetById")]
         public async Task<IActionResult> GetById(int id)
@@ -53,10 +57,14 @@ namespace MyApp.WebApi.Controllers
         }
 
         [HttpPost("FilterProducts")]
-        public async Task<IActionResult> FilterProducts(ProductFilter filters)
+        public async Task<IActionResult> FilterProducts(ProductFilter filters, int pageNo, int pageSize)
         {
-            var ProductDetails = await _serviceManager.ProductService.GetProductsByFilter(filters);
-            return Ok(ProductDetails);
+            var ProductDetails = await _serviceManager.ProductService.GetProductsByFilter(filters,pageNo,pageSize);
+            return Ok(new
+            {
+                TotalCount = _serviceManager.ProductService.TotalCount(),
+                Products = ProductDetails
+            });
         }
         [HttpPost("Add")]
         public async Task<IActionResult> Add(productDTO productDTO)
