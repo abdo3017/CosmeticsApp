@@ -41,14 +41,16 @@ namespace MyApp.Application.Services
         {
             var spec = ProductSpecifications.GetProductWithPaging(pageNo, pageSize);
             var products = await _repository.ListAsync(spec);
+            TotalCount(spec.TotalCount);
             var productsDto = products.Select(s => s.Map()).ToList();
             return productsDto;
         }
 
-        public async Task<List<productDTO>> GetProductsByFilter(ProductFilter filters)
+        public async Task<List<productDTO>> GetProductsByFilter(ProductFilter filters, int pageNo, int pageSize)
         {
-            var spec = ProductSpecifications.GetProductByFilters(filters);
+            var spec = ProductSpecifications.GetProductByFilters(filters,pageNo,pageSize);
             var products = await _repository.ListAsync(spec);
+            TotalCount(spec.TotalCount);
             var productsDto = products.Select(s => s.Map()).ToList();
             return productsDto;
         }
@@ -94,6 +96,11 @@ namespace MyApp.Application.Services
             var products = await _repository.ListAsync(spec);
             var productsDto = products.Select(s => s.Map()).ToList();
             return productsDto;
+        }
+
+        public int TotalCount(int count=0)
+        {
+            return count;
         }
     }
 }

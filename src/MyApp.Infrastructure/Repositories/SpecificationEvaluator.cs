@@ -39,12 +39,16 @@ namespace MyApp.Infrastructure.Repositories
                 query = query.GroupBy(specification.GroupBy).SelectMany(x => x);
             }
 
+            specification.TotalCount = query.Count();
+
             // Apply paging if enabled
             if (specification.IsPagingEnabled)
             {
                 query = query.Skip(specification.Skip)
                              .Take(specification.Take);
             }
+
+
             return query;
         }
     }
