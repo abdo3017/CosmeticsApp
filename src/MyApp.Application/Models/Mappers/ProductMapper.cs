@@ -30,6 +30,22 @@ namespace MyApp.Application.Models.Mappers
             };
         }
 
+        public static Product Map(this CreateProductDTO dto)
+        {
+            return new Product
+            {
+              
+                Name = dto.Name,
+                CategoryId = dto.CategoryId,
+                Description = dto.Description,
+                BrandId = dto.BrandId,
+                Price = dto.Price,
+                Qty = dto.Qty,
+                DiscountPercentage = dto.DiscountPercentage,             
+                TagName = dto.TagName,
+            };
+        }
+
         public static productDTO Map(this Product pro)
         {
             return new productDTO
@@ -50,6 +66,7 @@ namespace MyApp.Application.Models.Mappers
                 
             };
         }
+
 
         public static ProductDetailsDTO MapToProDetails(this Product pro)
         {

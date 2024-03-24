@@ -2,12 +2,13 @@ using MyApp.Application.Models.DTOs;
 using MyApp.Application.Models.Requests;
 using MyApp.Application.Models.Responses;
 using MyApp.Domain.Entities;
+using System.Runtime.InteropServices;
 
 namespace MyApp.Application.Interfaces
 {
     public interface IProductService
     {
-        Task<productDTO> CreateProduct(productDTO pro );
+        Task<productDTO> CreateProduct(CreateProductDTO pro );
         void UpdateProduct(productDTO pro);
         void DeleteProduct(int pro);
         int TotalCount(int count = 0);
