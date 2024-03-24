@@ -15,6 +15,19 @@ namespace MyApp.WebApi.Controllers
             _serviceManager = serviceManager;
         }
 
+        [HttpGet("GetAllWithSubCategories")]
+        public async Task<IActionResult> GetAllWithSubCategories()
+        {
+            var allCategories = await _serviceManager.CategoryService.GetAllWithSubCategories();
+            return Ok(allCategories);
+        }
+        [HttpGet("GetCategoriesByBrandId")]
+        public async Task<IActionResult> GetCategoriesByBrandId(int id)
+        {
+            var allCategories = await _serviceManager.CategoryService.GetCategoriesByBrandId(id);
+            return Ok(allCategories);
+
+        }
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAll()
         {
@@ -28,6 +41,12 @@ namespace MyApp.WebApi.Controllers
             var cat = await _serviceManager.CategoryService.GetCategoryById(id);
             return Ok(cat);
         }
+        [HttpGet("GetByIdWithSubCategories")]
+        public async Task<IActionResult> GetByIdWithSubCategories(int id)
+        {
+            var cat = await _serviceManager.CategoryService.GetByIdWithSubCategories(id);
+            return Ok(cat);
+        }
 
         [HttpGet("GetByName")]
         public async Task<IActionResult> GetByName(string name)
@@ -36,13 +55,6 @@ namespace MyApp.WebApi.Controllers
             return Ok(cat);
         }
 
-        [HttpGet("GetAllBrandsCategory")]
-        public async Task<IActionResult> GetAllBrandsCategory(int id)
-        {
-            var allBrands = await _serviceManager.CategoryService.GetBrandsByCategoryId(id);
-            return Ok(allBrands);
-
-        }
 
         [HttpPost("Add")]
         public async Task<IActionResult> Add(CategoryDTO category)

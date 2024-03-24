@@ -36,11 +36,11 @@ namespace MyApp.WebApi.Controllers
             return Ok(cat);
         }
 
-        [HttpGet("GetAllCategoriesBrand")]
-        public async Task<IActionResult> GetAllCategoriesBrand(int id)
+        [HttpGet("GetBrandsByCategoryId")]
+        public async Task<IActionResult> GetBrandsByCategoryId(int id)
         {
-            var allCategories = await _serviceManager.BrandService.GetCategoriesByBrandId(id);
-            return Ok(allCategories);
+            var allBrands = await _serviceManager.BrandService.GetBrandsByCategoryId(id);
+            return Ok(allBrands);
 
         }
 

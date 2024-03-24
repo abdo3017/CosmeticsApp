@@ -10,6 +10,6 @@ namespace MyApp.Application.Interfaces
         Task<List<BrandDTO>> GetAllBrands();
         Task<BrandDTO?> GetBrandById(int id);
         Task<BrandDTO?> GetBrandByName(string name);
-        Task<List<CategoryDTO>?> GetCategoriesByBrandId(int id);
+        Task<List<BrandDTO>?> GetBrandsByCategoryId(int id);
     }
 }

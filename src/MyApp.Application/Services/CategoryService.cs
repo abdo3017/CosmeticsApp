@@ -16,9 +16,11 @@ namespace MyApp.Application.Services
 {
     public class CategoryService : BaseService<Category, int>, ICategoryService
     {
+        private readonly IUnitOfWork _unitOfWork;
 
         public CategoryService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<CategoryDTO> CreateCategory(CategoryDTO req)
@@ -48,17 +50,58 @@ namespace MyApp.Application.Services
             return categoriesDto;
         }
 
-        public async Task<List<BrandDTO>?> GetBrandsByCategoryId(int id)
+        public async Task<List<CategoryDTO>?> GetCategoriesByBrandId(int id)
         {
-            var specification = CategorySpecifications.GetCategoryById(id);
-            specification.AddInclude(s => s.Brands);
+            var specification = BrandSpecifications.GetBrandById(id);
+            specification.AddInclude(s => s.Categories);
+            var brandRepo = _unitOfWork.Repository<Brand, int>();
+            var brand = await brandRepo.FirstOrDefaultAsync(specification);
+            var categoriesBrand = brand?.Categories.Select(c => c.Map()).ToList();
 
-            var category = await _repository.FirstOrDefaultAsync(specification);
-            var brandsCategory = category?.Brands.Select(c => c.Map()).ToList();
-
-            return brandsCategory;
+            return categoriesBrand;
         }
 
+        public async Task<List<CategoryDTO>?> GetAllWithSubCategories()
+        {
+            var AllCategories = await _repository.GetAllAsync();
+
+            var specification = CategorySpecifications.GetAllParentCategories();
+            var parentCategories = await _repository.ListAsync(specification);
+            var parentCategoriesDTO = parentCategories.Select(c => c.Map()).ToList();
+
+            foreach (var category in parentCategoriesDTO)
+            {
+                ConstructSubCategories(category, AllCategories);
+            }
+
+            return parentCategoriesDTO;
+        }
+        public async Task<CategoryDTO?> GetByIdWithSubCategories(int id)
+        {
+            var Category = await _repository.GetByIdAsync(id);
+            var AllCategories = await _repository.GetAllAsync();
+
+            var CategoryDTO = Category.Map();
+
+            ConstructSubCategories(CategoryDTO, AllCategories);
+
+            return CategoryDTO;
+        }
+        private void ConstructSubCategories(CategoryDTO parentCategory, IEnumerable<Category> categories)
+        {
+            var subCategories = categories.Where(x => x.ParentId == parentCategory.Id);
+            parentCategory.SubCategories = subCategories.Select(c => c.Map()).ToList();
+
+            if (subCategories.Count() > 0)
+            {
+                foreach (var subCategory in parentCategory.SubCategories)
+                {
+                    ConstructSubCategories(subCategory, categories);
+                }
+            }
+
+            return;
+        }
         public async Task<CategoryDTO?> GetCategoryById(int id)
         {
             var specification = CategorySpecifications.GetCategoryById(id);

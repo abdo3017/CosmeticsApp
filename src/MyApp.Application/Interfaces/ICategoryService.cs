@@ -14,6 +14,8 @@ namespace MyApp.Application.Interfaces
         Task<List<CategoryDTO>> GetAllCategories();
         Task<CategoryDTO?> GetCategoryById(int id);
         Task<CategoryDTO?> GetCategoryByName(string name);
-        Task<List<BrandDTO>?> GetBrandsByCategoryId(int id);
+        Task<List<CategoryDTO>?> GetAllWithSubCategories(); 
+        Task<CategoryDTO> GetByIdWithSubCategories(int id); 
+        Task<List<CategoryDTO>?> GetCategoriesByBrandId(int id);
     }
 }

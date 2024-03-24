@@ -16,9 +16,11 @@ namespace MyApp.Application.Services
 {
     public class BrandService : BaseService<Brand, int>, IBrandService
     {
+        private readonly IUnitOfWork _unitOfWork;
 
         public BrandService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<BrandDTO> CreateBrand(BrandDTO req)
@@ -69,18 +71,17 @@ namespace MyApp.Application.Services
 
             return dtoBrand;
         }
-
-        public async Task<List<CategoryDTO>?> GetCategoriesByBrandId(int id)
+        public async Task<List<BrandDTO>?> GetBrandsByCategoryId(int id)
         {
-            var specification = BrandSpecifications.GetBrandById(id);
-            specification.AddInclude(s => s.Categories);
+            var specification = CategorySpecifications.GetCategoryById(id);
+            specification.AddInclude(s => s.Brands);
+            var catRepo = _unitOfWork.Repository<Category, int>();
 
-            var brand = await _repository.FirstOrDefaultAsync(specification);
-            var categoriesBrand = brand?.Categories.Select(c => c.Map()).ToList();
+            var category = await catRepo.FirstOrDefaultAsync(specification);
+            var brandsCategory = category?.Brands.Select(c => c.Map()).ToList();
 
-            return categoriesBrand;
+            return brandsCategory;
         }
-
         public void UpdateBrand(BrandDTO req)
         {
             var Brand = req.Map();
