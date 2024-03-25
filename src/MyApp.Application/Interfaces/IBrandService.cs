@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Http;
 using MyApp.Application.Models.DTOs;
 
 namespace MyApp.Application.Interfaces
@@ -11,5 +12,7 @@ namespace MyApp.Application.Interfaces
         Task<BrandDTO?> GetBrandById(int id);
         Task<BrandDTO?> GetBrandByName(string name);
         Task<List<BrandDTO>?> GetBrandsByCategoryId(int id);
+        Task UploadImg(int BrandId, IFormFile file);
     }
+        
 }

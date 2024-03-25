@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace MyApp.Application.Services
 {
@@ -87,6 +88,15 @@ namespace MyApp.Application.Services
             var Brand = req.Map();
 
             Update(Brand);
+        }
+
+        public async Task UploadImg(int BrandId,IFormFile file)
+        {
+            byte[] photoData = await GalleryMapper.ConvertFormFileToBarr(file);
+            var specification = BrandSpecifications.GetBrandById(BrandId);
+            var Brand = await _repository.FirstOrDefaultAsync(specification);
+            Brand.Image = photoData;
+            _unitOfWork.SaveChanges();
         }
     }
 }

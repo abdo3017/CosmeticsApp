@@ -123,6 +123,10 @@ namespace MyApp.Infrastructure.Data.Configurations
                 entity.HasOne(d => d.Category).WithMany(p => p.Products)
                     .HasForeignKey(d => d.CategoryId)
                     .HasConstraintName("FK_Products_Categories");
+
+                entity.HasMany(d => d.Imgs).WithOne(g => g.Product)
+                   .HasForeignKey(g => g.ProductId);
+                   //.HasConstraintName("FK_Products_Categories");
             });
         }
     }

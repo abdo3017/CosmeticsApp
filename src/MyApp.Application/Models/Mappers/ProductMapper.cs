@@ -30,6 +30,22 @@ namespace MyApp.Application.Models.Mappers
             };
         }
 
+        public static Product Map(this CreateProductDTO dto)
+        {
+            return new Product
+            {
+              
+                Name = dto.Name,
+                CategoryId = dto.CategoryId,
+                Description = dto.Description,
+                BrandId = dto.BrandId,
+                Price = dto.Price,
+                Qty = dto.Qty,
+                DiscountPercentage = dto.DiscountPercentage,             
+                TagName = dto.TagName,
+            };
+        }
+
         public static productDTO Map(this Product pro)
         {
             return new productDTO
@@ -51,6 +67,7 @@ namespace MyApp.Application.Models.Mappers
             };
         }
 
+
         public static ProductDetailsDTO MapToProDetails(this Product pro)
         {
             return new ProductDetailsDTO
@@ -59,13 +76,13 @@ namespace MyApp.Application.Models.Mappers
                 Name = pro.Name,
                 TagName = pro.TagName,
                 Description = pro.Description,
-                BrandImg = new byte [0], // will be change
+                BrandImg = pro.Brand?.Image, // will be change
                 Price = pro.Price,
                 RateValue = pro.RateValue,
                 TotalRate = pro.TotalRate,
                 DiscountPercentage = pro.DiscountPercentage,
                 AttributeValues = pro.AttributeValues,
-                ProductImgs = null // will be change
+                ProductImgs = pro.Imgs,
             };
         }
     }

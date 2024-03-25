@@ -67,7 +67,7 @@ namespace MyApp.WebApi.Controllers
             });
         }
         [HttpPost("Add")]
-        public async Task<IActionResult> Add(productDTO productDTO)
+        public async Task<IActionResult> Add(CreateProductDTO productDTO)
         {
             var addedProduct= await _serviceManager.ProductService.CreateProduct(productDTO);
             return Ok(addedProduct);

@@ -26,7 +26,7 @@ namespace MyApp.Application.Models.DTOs
 
         public int DiscountPercentage { get; set; }
 
-        public byte[][]? ProductImgs { get; set; }
+        public ICollection<Gallery>? ProductImgs { get; set; }
 
         public  ICollection<AttributeValue> AttributeValues { get; set; } = new List<AttributeValue>();
 
