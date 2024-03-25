@@ -14,13 +14,17 @@ namespace MyApp.Application.Specifications
 {
     public static class ProductSpecifications
     {
-        public static BaseSpecification<Product> GetProductsByBrandId(int id)
+        public static BaseSpecification<Product> GetProductsByBrandId(int id, int pageNo, int pageSize)
         {
-            return new BaseSpecification<Product>(x => x.BrandId == id);
+            var spec = new BaseSpecification<Product>(x => x.BrandId == id);
+            spec.ApplyPaging((pageNo - 1) * pageSize, pageSize);
+            return spec;
         }
-        public static BaseSpecification<Product> GetProductsByCategoryId(int id)
+        public static BaseSpecification<Product> GetProductsByCategoryId(int id, int pageNo, int pageSize)
         {
-            return new BaseSpecification<Product>(x => x.CategoryId == id);
+            var spec = new BaseSpecification<Product>(x => x.CategoryId == id);
+            spec.ApplyPaging((pageNo - 1) * pageSize, pageSize);
+            return spec;
         }
         public static BaseSpecification<Product> GetProductWithPaging(int pageNo, int pageSize)
         {

@@ -44,15 +44,15 @@ namespace MyApp.WebApi.Controllers
             return Ok(range);
         }
         [HttpGet("GetProductsByBrandId")]
-        public async Task<IActionResult> GetProductsByBrandId(int brandId)
+        public async Task<IActionResult> GetProductsByBrandId(int brandId, int pageNo, int pageSize)
         {
-            var range = await _serviceManager.ProductService.GetProductsByBrandId(brandId);
+            var range = await _serviceManager.ProductService.GetProductsByBrandId(brandId, pageNo, pageSize);
             return Ok(range);
         }
         [HttpGet("GetProductsByCategoryId")]
-        public async Task<IActionResult> GetProductsByCategoryId(int catId)
+        public async Task<IActionResult> GetProductsByCategoryId(int catId, int pageNo, int pageSize)
         {
-            var range = await _serviceManager.ProductService.GetProductsByCategoryId(catId);
+            var range = await _serviceManager.ProductService.GetProductsByCategoryId(catId, pageNo, pageSize);
             return Ok(range);
         }
 
