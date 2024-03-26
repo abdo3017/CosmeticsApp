@@ -102,5 +102,20 @@ namespace MyApp.Application.Services
         {
             return count;
         }
+        public async Task<List<productDTO>> GetBestProducts(int pageNo , int pageSize)
+        {
+            var spec = ProductSpecifications.GetProductWithRateGt4_5(pageNo, pageSize);
+            var products = await _repository.ListAsync(spec);
+            var productsDto = products.Select(s => s.Map()).ToList();
+            return productsDto;
+        }
+
+        public async Task<List<productDTO>> GetRecentProducts(int pageNo, int pageSize)
+        {
+            var spec = ProductSpecifications.GetRecentProduct(pageNo, pageSize);
+            var products = await _repository.ListAsync(spec);
+            var productsDto = products.Select(s => s.Map()).ToList();
+            return productsDto;
+        }
     }
 }

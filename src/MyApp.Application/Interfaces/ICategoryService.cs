@@ -8,7 +8,7 @@ namespace MyApp.Application.Interfaces
 {
     public interface ICategoryService
     {
-        Task<CategoryDTO> CreateCategory(CategoryDTO req);
+        Task<CategoryDTO> CreateCategory(CreateCategoryDTO req);
         void UpdateCategory(CategoryDTO req);
         void DeleteCategory(CategoryDTO req);
         Task<List<CategoryDTO>> GetAllCategories();

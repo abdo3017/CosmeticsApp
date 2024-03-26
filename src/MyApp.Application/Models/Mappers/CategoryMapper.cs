@@ -22,6 +22,17 @@ namespace MyApp.Application.Models.Mappers
             };
         }
 
+        public static Category Map(this CreateCategoryDTO dto)
+        {
+            return new Category
+            {             
+                Name = dto.Name,
+                Description = dto.Description,
+                Icon = dto.Icon,
+                ParentId = dto.ParentId
+            };
+        }
+
         public static CategoryDTO Map(this Category dto)
         {
             return new CategoryDTO

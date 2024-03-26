@@ -62,8 +62,9 @@ namespace MyApp.Application.Models.Mappers
                 TotalRate = pro.TotalRate,
                 RateValue = pro.RateValue,
                 CoverImg = pro.Imgs.SingleOrDefault(i => i.IsCover)?.Image,
-                CategoryName = pro.Category.Name
-                
+                CategoryName = pro.Category.Name,
+                BrandName = pro.Brand?.Name
+                 
             };
         }
 
@@ -83,6 +84,7 @@ namespace MyApp.Application.Models.Mappers
                 DiscountPercentage = pro.DiscountPercentage,
                 AttributeValues = pro.AttributeValues,
                 ProductImgs = pro.Imgs,
+                BrandName = pro.Brand?.Name
             };
         }
     }
