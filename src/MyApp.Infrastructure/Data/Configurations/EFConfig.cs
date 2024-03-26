@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MyApp.Domain.Entities;
+using MyApp.Infrastructure.Models;
 using System.ComponentModel.DataAnnotations.Schema;
 using Attribute = MyApp.Domain.Entities.Attribute;
 

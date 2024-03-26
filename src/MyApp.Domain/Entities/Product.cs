@@ -14,7 +14,7 @@ public partial class Product : BaseEntity
 
     public string? Description { get; set; }
 
-    public int? BrandId { get; set; } = -1;
+    public int BrandId { get; set; }
 
     public decimal Price { get; set; }
 
@@ -36,7 +36,7 @@ public partial class Product : BaseEntity
 
     public virtual ICollection<Gallery> Imgs { get; set; } = new List<Gallery>();
 
-    public virtual Brand? Brand { get; set; }
+    public virtual Brand Brand { get; set; }
 
     public virtual ICollection<CartDetail> CartDetails { get; set; } = new List<CartDetail>();
 

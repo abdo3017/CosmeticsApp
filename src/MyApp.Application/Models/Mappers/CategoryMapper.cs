@@ -18,6 +18,7 @@ namespace MyApp.Application.Models.Mappers
                 Name = dto.Name,
                 Description = dto.Description,
                 Icon = dto.Icon,
+                IsSelected = dto.IsSelected,
                 ParentId = dto.ParentId
             };
         }
@@ -28,6 +29,7 @@ namespace MyApp.Application.Models.Mappers
             {
                 Id = dto.Id,
                 Name = dto.Name,
+                IsSelected = dto.IsSelected,
                 Description = dto.Description,
                 Icon = dto.Icon
             };
