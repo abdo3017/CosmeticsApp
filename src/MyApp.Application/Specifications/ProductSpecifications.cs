@@ -103,9 +103,11 @@ namespace MyApp.Application.Specifications
                 var property = Expression.Property(parameter, "DiscountPercentage");
 
                 var UptoDiscountExprestion = Expression.Lambda<Func<Product, bool>>(
-                        Expression.LessThanOrEqual(property, Expression.Constant(filters.UptoDiscount)),parameter);
+                    Expression.And(
+                        Expression.GreaterThan(property, Expression.Constant(0)),
+                        Expression.LessThanOrEqual(property, Expression.Constant(filters.UptoDiscount))
+                    ), parameter);
                 filterExpression = filterExpression != null ? Expression.AndAlso(filterExpression, UptoDiscountExprestion.Body) : UptoDiscountExprestion.Body;
-
             }
 
             expression = Expression.Lambda<Func<Product, bool>>(filterExpression, parameter);
