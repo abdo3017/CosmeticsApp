@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MyApp.Application.Core.Models;
 using MyApp.Application.Interfaces;
+using MyApp.Application.Models.DTOs;
 
 namespace MyApp.WebApi.Controllers
 {
@@ -21,6 +21,23 @@ namespace MyApp.WebApi.Controllers
                 return BadRequest(ModelState);
 
             var result = await _authService.RegisterAsync(model);
+
+            if (!result.IsAuthenticated)
+                return BadRequest(result.Message);
+
+            return Ok(new
+            {
+                token = result.Token,
+                expiration = result.ExpiresOn
+            });
+        }
+        [HttpPost("Login")]
+        public async Task<IActionResult> LoginAsync(LoginDTO model)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var result = await _authService.LoginAsync(model);
 
             if (!result.IsAuthenticated)
                 return BadRequest(result.Message);

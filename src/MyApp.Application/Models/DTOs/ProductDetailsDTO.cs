@@ -25,7 +25,7 @@ namespace MyApp.Application.Models.DTOs
         public int TotalRate { get; set; }
 
         public int DiscountPercentage { get; set; }
-
+        public string? BrandName { get; set; }
         public ICollection<Gallery>? ProductImgs { get; set; }
 
         public  ICollection<AttributeValue> AttributeValues { get; set; } = new List<AttributeValue>();

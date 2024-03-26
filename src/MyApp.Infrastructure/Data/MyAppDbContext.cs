@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.Extensions.Options;
 using MyApp.Domain.Entities;
+using MyApp.Domain.Models;
 using MyApp.Infrastructure.Data.Configurations;
 using MyApp.Infrastructure.Identity.Models;
-using MyApp.Infrastructure.Models;
 using System.Text.RegularExpressions;
 using Attribute = MyApp.Domain.Entities.Attribute;
 

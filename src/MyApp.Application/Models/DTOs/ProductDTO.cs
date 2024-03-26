@@ -17,7 +17,6 @@ namespace MyApp.Application.Models.DTOs
         public decimal RateValue { get; set; }
         public int TotalRate { get; set; }
         public string? CategoryName { get; set; }
-
-
+        public string? BrandName { get; set; }
     }
 }

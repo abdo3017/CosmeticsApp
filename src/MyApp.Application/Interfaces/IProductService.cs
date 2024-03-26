@@ -19,6 +19,8 @@ namespace MyApp.Application.Interfaces
         Task<List<productDTO>> GetProductsByCategoryId(int catId, int pageNo, int pageSize);
         Task<List<productDTO>> GetProductsByBrandId(int brandId, int pageNo, int pageSize);
         List<int> GetProductPriceRange();
+        Task<List<productDTO>> GetBestProducts(int pageNo, int pageSize);
+        Task<List<productDTO>> GetRecentProducts(int pageNo, int pageSize);
 
 
     }

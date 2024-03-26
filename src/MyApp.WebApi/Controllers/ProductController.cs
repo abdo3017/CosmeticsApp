@@ -55,6 +55,19 @@ namespace MyApp.WebApi.Controllers
             var range = await _serviceManager.ProductService.GetProductsByCategoryId(catId, pageNo, pageSize);
             return Ok(range);
         }
+        [HttpGet("GetBestProducts")]
+        public async Task<IActionResult> GetBestProducts(int pageNo , int pageSize)
+        {
+            var range = await _serviceManager.ProductService.GetBestProducts(pageNo,pageSize);
+            return Ok(range);
+        }
+
+        [HttpGet("GetRecentProducts")]
+        public async Task<IActionResult> GetRecentProducts(int pageNo, int pageSize)
+        {
+            var range = await _serviceManager.ProductService.GetRecentProducts(pageNo, pageSize);
+            return Ok(range);
+        }
 
         [HttpPost("FilterProducts")]
         public async Task<IActionResult> FilterProducts(ProductFilter filters, int pageNo, int pageSize)

@@ -57,7 +57,7 @@ namespace MyApp.WebApi.Controllers
 
 
         [HttpPost("Add")]
-        public async Task<IActionResult> Add(CategoryDTO category)
+        public async Task<IActionResult> Add(CreateCategoryDTO category)
         {
             var addedCategory = await _serviceManager.CategoryService.CreateCategory(category);
             return Created();

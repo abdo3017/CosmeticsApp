@@ -23,7 +23,7 @@ namespace MyApp.Application.Services
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<CategoryDTO> CreateCategory(CategoryDTO req)
+        public async Task<CategoryDTO> CreateCategory(CreateCategoryDTO req)
         {
             var category = req.Map();
 
