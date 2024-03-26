@@ -1,0 +1,74 @@
+﻿using MyApp.Application.Core.Specifications;
+using MyApp.Application.Models.DTOs;
+using MyApp.Domain.Core.Specifications;
+using MyApp.Domain.Entities;
+using MyApp.Domain.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace MyApp.Application.Specifications
+{
+    public static class AdvertisementSpecifications
+    {
+        public static BaseSpecification<Advertisement> GetAdvertisementById(int id)
+        {
+            return new BaseSpecification<Advertisement>(x => x.Id == id);
+        }
+        public static BaseSpecification<Advertisement> GetAdvertisementsByFilters(AdvertisementFilter filters)
+        {
+            Expression<Func<Advertisement, bool>> expression = null;
+            Expression filterExpression = null;
+            var parameter = Expression.Parameter(typeof(Advertisement), "Advertisement");
+
+            if (filters.CategoryId != null)
+            {
+                var property = Expression.Property(parameter, "CategoryId");
+                var propertyValue = Expression.Constant(filters.CategoryId);
+               
+                var isEqualExpression = Expression.Lambda<Func<Advertisement, bool>>(
+                     Expression.Equal(property, propertyValue),
+                    parameter);
+
+                filterExpression = filterExpression != null ? Expression.AndAlso(filterExpression, isEqualExpression.Body) : isEqualExpression.Body;
+
+            }
+            if (filters.BrandId != null)
+            {
+                var property = Expression.Property(parameter, "BrandId");
+                var propertyValue = Expression.Constant(filters.BrandId);
+                var isEqualExpression = Expression.Lambda<Func<Advertisement, bool>>(
+                     Expression.Equal(property, propertyValue),
+                    parameter);
+                filterExpression = filterExpression != null ? Expression.AndAlso(filterExpression, isEqualExpression.Body) : isEqualExpression.Body;
+            }
+            if (filters.Discount != null)
+            {
+                var property = Expression.Property(parameter, "Discount");
+                var propertyValue = Expression.Constant(filters.Discount);
+                var isEqualExpression = Expression.Lambda<Func<Advertisement, bool>>(
+                     Expression.Equal(property, propertyValue),
+                    parameter);
+                filterExpression = filterExpression != null ? Expression.AndAlso(filterExpression, isEqualExpression.Body) : isEqualExpression.Body;
+            }
+            if (filters.TagName != null)
+            {
+                var property = Expression.Property(parameter, "TagName");
+                var propertyValue = Expression.Constant(filters.TagName);
+                var isEqualExpression = Expression.Lambda<Func<Advertisement, bool>>(
+                     Expression.Equal(property, propertyValue),
+                    parameter);
+                filterExpression = filterExpression != null ? Expression.AndAlso(filterExpression, isEqualExpression.Body) : isEqualExpression.Body;
+            }
+
+            expression = Expression.Lambda<Func<Advertisement, bool>>(filterExpression, parameter);
+            var spec = new BaseSpecification<Advertisement>(criteria: expression);
+
+            return spec;
+        }
+
+    }
+}

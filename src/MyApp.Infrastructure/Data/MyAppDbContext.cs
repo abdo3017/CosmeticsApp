@@ -13,15 +13,15 @@ using Attribute = MyApp.Domain.Entities.Attribute;
 
 namespace MyApp.Infrastructure.Data
 {
-    public class MyAppDbContext : IdentityDbContext<AppUser,AppRole,int>
+    public class MyAppDbContext : IdentityDbContext<AppUser, AppRole, int>
     {
 
         public MyAppDbContext(DbContextOptions<MyAppDbContext> options) : base(options)
         { }
         public virtual DbSet<Advertisement> Advertisements { get; set; }
 
-        //public virtual DbSet<RefreshToken> RefreshTokens { get; set; }
-        public DbSet<User> Users { get; set; }
+        public virtual DbSet<User> Users { get; set; }
+
         public virtual DbSet<Attribute> Attributes { get; set; }
 
         public virtual DbSet<AttributeValue> AttributeValues { get; set; }
@@ -48,7 +48,7 @@ namespace MyApp.Infrastructure.Data
         {
             base.OnModelCreating(modelBuilder);
             EfConfig.ConfigureEf(modelBuilder);
-            
+
 
         }
 
@@ -62,8 +62,7 @@ namespace MyApp.Infrastructure.Data
             catch (DbUpdateException ex)
             {
                 ChangeTracker.Clear();
-                SqlException innerException = (ex.InnerException?.InnerException as SqlException) ??
-                                                ex.InnerException as SqlException;
+                SqlException innerException = (ex.InnerException?.InnerException as SqlException) ?? ex.InnerException as SqlException;
                 if (innerException != null && (innerException?.Number == 2627 || innerException?.Number == 2601))
                 {
                     throw new Exception("DuplicateKeyError");
@@ -95,8 +94,8 @@ namespace MyApp.Infrastructure.Data
                         var CreatedOnProp = entry.Properties.Where(x =>
                               string.Equals(x.Metadata.Name, "CreatedOn", StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
                         var CreatedbyProp = entry.Properties.Where(x =>
-                             string.Equals(x.Metadata.Name, "Createdby", StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
-                        
+                             string.Equals(x.Metadata.Name, "CreatedBy", StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
+
 
                         switch (entry.State)
                         {

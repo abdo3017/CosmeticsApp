@@ -1,0 +1,82 @@
+﻿using MyApp.Application.Core.Services;
+using MyApp.Application.Interfaces;
+using MyApp.Application.Models.DTOs;
+using MyApp.Application.Models.Mappers;
+using MyApp.Domain.Core.Repositories;
+using MyApp.Domain.Core.Specifications;
+using MyApp.Domain.Entities;
+using MyApp.Application.Specifications;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using MyApp.Domain.Models;
+
+namespace MyApp.Application.Services
+{
+    public class AdvertisementService : BaseService<Advertisement, int>, IAdvertisementService
+    {
+        private readonly IUnitOfWork _unitOfWork;
+
+        public AdvertisementService(IUnitOfWork unitOfWork) : base(unitOfWork)
+        {
+            _unitOfWork = unitOfWork;
+        }
+
+        public async Task<AdvertisementDTO> CreateAdvertisement(AdvertisementDTO req)
+        {
+            var Advertisement = req.Map();
+
+            var AddedAdvertisement = await AddAsync(Advertisement);
+
+            var dtoAdvertisement = AddedAdvertisement.Map();
+
+            return dtoAdvertisement;
+        }
+
+        public void DeleteAdvertisement(AdvertisementDTO req)
+        {
+            var Advertisement = req.Map();
+
+            Delete(Advertisement);
+        }
+
+        public async Task<List<AdvertisementDTO>> GetAllAdvertisements()
+        {
+            var Advertisements = await _repository.GetAllAsync();
+
+            var AdvertisementsDto = Advertisements.Select(s => s.Map()).ToList();
+
+            return AdvertisementsDto;
+        }
+
+        public async Task<List<AdvertisementDTO>?> GetFilteredAdvertisements(AdvertisementFilter filter)
+        {
+            var specification = AdvertisementSpecifications.GetAdvertisementsByFilters(filter);
+            var advertisements = await _repository.ListAsync(specification);
+            var advertisementsDTO = advertisements.Select(c => c.Map()).ToList();
+
+            return advertisementsDTO;
+        }
+
+       
+        public async Task<AdvertisementDTO?> GetAdvertisementById(int id)
+        {
+            var specification = AdvertisementSpecifications.GetAdvertisementById(id);
+
+            var Advertisement = await _repository.FirstOrDefaultAsync(specification);
+
+            var dtoAdvertisement = Advertisement?.Map();
+
+            return dtoAdvertisement;
+        }
+
+        public void UpdateAdvertisement(AdvertisementDTO req)
+        {
+            var Advertisement = req.Map();
+
+            Update(Advertisement);
+        }
+    }
+}

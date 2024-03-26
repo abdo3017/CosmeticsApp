@@ -11,9 +11,9 @@ public partial class Brand : BaseEntity
     public string Name { get; set; } = null!;
     public byte[]? Image { get; set; }
 
-    public DateOnly? CreationDate { get; set; }
+    public DateTime? CreationDate { get; set; }
 
-    public DateOnly? ModificationDate { get; set; }
+    public DateTime? ModificationDate { get; set; }
 
     public virtual ICollection<Product> Products { get; set; } = new List<Product>();
 

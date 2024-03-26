@@ -1,9 +1,10 @@
-﻿using System;
+﻿using MyApp.Domain.Core.Models;
+using System;
 using System.Collections.Generic;
 
-namespace MyApp.Infrastructure.Models;
+namespace MyApp.Domain.Models;
 
-public partial class Advertisement
+public partial class Advertisement:BaseEntity
 {
     public int Id { get; set; }
 

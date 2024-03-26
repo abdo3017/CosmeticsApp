@@ -11,7 +11,7 @@ namespace MyApp.Application.Interfaces
         Task<productDTO> CreateProduct(CreateProductDTO pro );
         void UpdateProduct(productDTO pro);
         void DeleteProduct(int pro);
-        int TotalCount(int count = 0);
+        int TotalCount();
         Task<List<productDTO>> GetAllProducts(int pageNo, int pageSize);
         Task<productDTO?> GetProductById(int id);
         Task<ProductDetailsDTO> GetProductDetails(int id);
