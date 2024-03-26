@@ -82,17 +82,17 @@ namespace MyApp.Application.Services
             return [1, 22];
         }
 
-        public async Task<List<productDTO>> GetProductsByCategoryId(int catId)
+        public async Task<List<productDTO>> GetProductsByCategoryId(int catId, int pageNo, int pageSize)
         {
-            var spec = ProductSpecifications.GetProductsByCategoryId(catId);
+            var spec = ProductSpecifications.GetProductsByCategoryId(catId,pageNo, pageSize);
             var products = await _repository.ListAsync(spec);
             var productsDto = products.Select(s => s.Map()).ToList();
             return productsDto;
         }
 
-        public async Task<List<productDTO>> GetProductsByBrandId(int brandId)
+        public async Task<List<productDTO>> GetProductsByBrandId(int brandId, int pageNo, int pageSize)
         {
-            var spec = ProductSpecifications.GetProductsByBrandId(brandId);
+            var spec = ProductSpecifications.GetProductsByBrandId(brandId, pageNo, pageSize);
             var products = await _repository.ListAsync(spec);
             var productsDto = products.Select(s => s.Map()).ToList();
             return productsDto;

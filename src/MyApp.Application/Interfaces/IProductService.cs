@@ -16,8 +16,8 @@ namespace MyApp.Application.Interfaces
         Task<productDTO?> GetProductById(int id);
         Task<ProductDetailsDTO> GetProductDetails(int id);
         Task<List<productDTO>> GetProductsByFilter(ProductFilter filters, int pageNo, int pageSize);
-        Task<List<productDTO>> GetProductsByCategoryId(int catId);
-        Task<List<productDTO>> GetProductsByBrandId(int brandId);
+        Task<List<productDTO>> GetProductsByCategoryId(int catId, int pageNo, int pageSize);
+        Task<List<productDTO>> GetProductsByBrandId(int brandId, int pageNo, int pageSize);
         List<int> GetProductPriceRange();
         Task<List<productDTO>> GetBestProducts(int pageNo, int pageSize);
         Task<List<productDTO>> GetRecentProducts(int pageNo, int pageSize);
