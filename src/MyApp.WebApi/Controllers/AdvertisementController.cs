@@ -16,8 +16,8 @@ namespace MyApp.WebApi.Controllers
         }
 
        
-        [HttpGet("GetAdvertisementsByBrandId")]
-        public async Task<IActionResult> GetFilteredAdvertisements(AdvertisementFilter filter)
+        [HttpPost("FilterAdvertisements")]
+        public async Task<IActionResult> FilterAdvertisements(AdvertisementFilter filter)
         {
             var allAdvertisements = await _serviceManager.AdvertisementService.GetFilteredAdvertisements(filter);
             return Ok(allAdvertisements);
