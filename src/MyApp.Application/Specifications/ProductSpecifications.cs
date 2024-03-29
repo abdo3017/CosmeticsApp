@@ -98,7 +98,7 @@ namespace MyApp.Application.Specifications
                     parameter);
                 filterExpression = filterExpression != null ? Expression.AndAlso(filterExpression, isBetweenExprestion.Body) : isBetweenExprestion.Body;
             }
-            if (filters.UptoDiscount != null)
+            if (filters.Discount != null)
             {
 
                 var property = Expression.Property(parameter, "DiscountPercentage");
@@ -106,7 +106,7 @@ namespace MyApp.Application.Specifications
                 var UptoDiscountExprestion = Expression.Lambda<Func<Product, bool>>(
                     Expression.And(
                         Expression.GreaterThan(property, Expression.Constant(0)),
-                        Expression.LessThanOrEqual(property, Expression.Constant(filters.UptoDiscount))
+                        Expression.LessThanOrEqual(property, Expression.Constant(filters.Discount))
                     ), parameter);
                 filterExpression = filterExpression != null ? Expression.AndAlso(filterExpression, UptoDiscountExprestion.Body) : UptoDiscountExprestion.Body;
             }

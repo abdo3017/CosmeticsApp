@@ -10,7 +10,8 @@ namespace MyApp.Application.Interfaces
         void DeleteAdvertisement(AdvertisementDTO req);
         Task<List<AdvertisementDTO>> GetAllAdvertisements();
         Task<AdvertisementDTO?> GetAdvertisementById(int id);
-        Task<List<AdvertisementDTO>?> GetFilteredAdvertisements(AdvertisementFilter filter);
+        Task<List<AdvertisementDTO>?> GetFilteredAdvertisements(AdvertisementFilter filter, int pageNo, int pageSize);
         Task UploadImg(int AdvertisementId, IFormFile file);
+        int TotalCount();
     }
 }

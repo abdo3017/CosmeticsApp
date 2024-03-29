@@ -15,9 +15,9 @@ namespace MyApp.WebApi.Controllers
             _serviceManager = serviceManager;
         }
 
-       
+
         [HttpGet("GetFilteredAdvertisements")]
-        public async Task<IActionResult> GetFilteredAdvertisements(int? CatId, int? BrandId, int? Discount, string? Tag)
+        public async Task<IActionResult> GetFilteredAdvertisements(int pageNo, int pageSize, int? CatId, int? BrandId, int? Discount, string? Tag)
         {
             var filter = new AdvertisementFilter
             {
@@ -26,8 +26,12 @@ namespace MyApp.WebApi.Controllers
                 TagName = Tag,
                 Discount = Discount
             };
-            var allAdvertisements = await _serviceManager.AdvertisementService.GetFilteredAdvertisements(filter);
-            return Ok(allAdvertisements);
+            var allAdvertisements = await _serviceManager.AdvertisementService.GetFilteredAdvertisements(filter, pageNo, pageSize);
+            return Ok(new
+            {
+                TotalCount = _serviceManager.AdvertisementService.TotalCount(),
+                Advertisements = allAdvertisements
+            });
 
         }
         [HttpGet("GetAll")]

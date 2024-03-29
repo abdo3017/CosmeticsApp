@@ -19,6 +19,7 @@ namespace MyApp.Application.Services
     public class AdvertisementService : BaseService<Advertisement, int>, IAdvertisementService
     {
         private readonly IUnitOfWork _unitOfWork;
+        private int totalCount = 0;
 
         public AdvertisementService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
@@ -52,16 +53,17 @@ namespace MyApp.Application.Services
             return AdvertisementsDto;
         }
 
-        public async Task<List<AdvertisementDTO>?> GetFilteredAdvertisements(AdvertisementFilter filter)
+        public async Task<List<AdvertisementDTO>?> GetFilteredAdvertisements(AdvertisementFilter filter, int pageNo, int pageSize)
         {
-            var specification = AdvertisementSpecifications.GetAdvertisementsByFilters(filter);
+            var specification = AdvertisementSpecifications.GetAdvertisementsByFilters(filter, pageNo, pageSize);
             var advertisements = await _repository.ListAsync(specification);
+            totalCount = specification.TotalCount;
             var advertisementsDTO = advertisements.Select(c => c.Map()).ToList();
 
             return advertisementsDTO;
         }
 
-       
+
         public async Task<AdvertisementDTO?> GetAdvertisementById(int id)
         {
             var specification = AdvertisementSpecifications.GetAdvertisementById(id);
@@ -87,6 +89,10 @@ namespace MyApp.Application.Services
             var Adv = await _repository.FirstOrDefaultAsync(specification);
             Adv.Img = photoData;
             _unitOfWork.SaveChanges();
+        }
+        public int TotalCount()
+        {
+            return totalCount;
         }
     }
 }
