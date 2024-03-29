@@ -15,6 +15,7 @@ namespace MyApp.Application.Models.Mappers
         {
             return new Advertisement
             {
+                Id = dto.Id,
                 BrandId = dto.BrandId,
                 Img = dto.Img,
                 CategoryId = dto.CategoryId,
@@ -26,6 +27,7 @@ namespace MyApp.Application.Models.Mappers
         {
             return new AdvertisementDTO
             {
+                Id = model.Id,
                 BrandId = model.BrandId,
                 Img = model.Img,
                 CategoryId = model.CategoryId,

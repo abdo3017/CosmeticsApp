@@ -8,6 +8,8 @@ namespace MyApp.Application.Models.DTOs
 {
     public class AdvertisementDTO
     {
+        public int Id { get; set; }
+
         public byte[]? Img { get; set; }
 
         public int? TagName { get; set; }

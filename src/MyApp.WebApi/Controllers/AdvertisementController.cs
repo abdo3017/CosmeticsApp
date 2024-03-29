@@ -16,9 +16,16 @@ namespace MyApp.WebApi.Controllers
         }
 
        
-        [HttpPost("FilterAdvertisements")]
-        public async Task<IActionResult> FilterAdvertisements(AdvertisementFilter filter)
+        [HttpPost("GetFilteredAdvertisements")]
+        public async Task<IActionResult> FilterAdvertisements(int? CatId, int? BrandId, int? Discount, string Tag)
         {
+            var filter = new AdvertisementFilter
+            {
+                CategoryId = CatId,
+                BrandId = BrandId,
+                TagName = Tag,
+                Discount = Discount
+            };
             var allAdvertisements = await _serviceManager.AdvertisementService.GetFilteredAdvertisements(filter);
             return Ok(allAdvertisements);
 
@@ -60,9 +67,9 @@ namespace MyApp.WebApi.Controllers
         }
 
         [HttpPost("UploadImg/{AdvId}")]
-        public async Task<IActionResult> UploadImage(int advertisementId, IFormFile file)
+        public async Task<IActionResult> UploadImage(int AdvId, IFormFile file)
         {
-            await _serviceManager.AdvertisementService.UploadImg(advertisementId, file);
+            await _serviceManager.AdvertisementService.UploadImg(AdvId, file);
             return Ok();
         }
     }
