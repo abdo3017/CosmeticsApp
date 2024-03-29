@@ -1,8 +1,5 @@
 using MyApp.Application.Models.DTOs;
-using MyApp.Application.Models.Requests;
-using MyApp.Application.Models.Responses;
-using MyApp.Domain.Core.Repositories;
-using MyApp.Domain.Entities;
+using Microsoft.AspNetCore.Http;
 
 namespace MyApp.Application.Interfaces
 {
@@ -14,5 +11,6 @@ namespace MyApp.Application.Interfaces
         Task<List<AdvertisementDTO>> GetAllAdvertisements();
         Task<AdvertisementDTO?> GetAdvertisementById(int id);
         Task<List<AdvertisementDTO>?> GetFilteredAdvertisements(AdvertisementFilter filter);
+        Task UploadImg(int AdvertisementId, IFormFile file);
     }
 }

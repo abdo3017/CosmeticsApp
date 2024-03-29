@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MyApp.Domain.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace MyApp.Application.Services
 {
@@ -77,6 +78,15 @@ namespace MyApp.Application.Services
             var Advertisement = req.Map();
 
             Update(Advertisement);
+        }
+
+        public async Task UploadImg(int advertisementId, IFormFile file)
+        {
+            byte[] photoData = await GalleryMapper.ConvertFormFileToBarr(file);
+            var specification = AdvertisementSpecifications.GetAdvertisementById(advertisementId);
+            var Adv = await _repository.FirstOrDefaultAsync(specification);
+            Adv.Img = photoData;
+            _unitOfWork.SaveChanges();
         }
     }
 }
