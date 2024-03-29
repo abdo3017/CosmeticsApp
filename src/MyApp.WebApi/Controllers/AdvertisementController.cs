@@ -17,7 +17,7 @@ namespace MyApp.WebApi.Controllers
 
        
         [HttpGet("GetFilteredAdvertisements")]
-        public async Task<IActionResult> GetFilteredAdvertisements(int? CatId, int? BrandId, int? Discount, string Tag)
+        public async Task<IActionResult> GetFilteredAdvertisements(int? CatId, int? BrandId, int? Discount, string? Tag)
         {
             var filter = new AdvertisementFilter
             {
