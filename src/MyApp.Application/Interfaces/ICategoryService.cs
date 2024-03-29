@@ -12,6 +12,7 @@ namespace MyApp.Application.Interfaces
         void UpdateCategory(CategoryDTO req);
         void DeleteCategory(CategoryDTO req);
         Task<List<CategoryDTO>> GetAllCategories();
+        Task<List<CategoryDTO>> GetSelectedCategories();
         Task<CategoryDTO?> GetCategoryById(int id);
         Task<CategoryDTO?> GetCategoryByName(string name);
         Task<List<CategoryDTO>?> GetAllWithSubCategories(); 

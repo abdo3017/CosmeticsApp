@@ -15,6 +15,10 @@ namespace MyApp.Application.Specifications
         {
             return new BaseSpecification<Category>(x => x.Name == catName);
         }
+        public static BaseSpecification<Category> GetSelectedCategories()
+        {
+            return new BaseSpecification<Category>(x => x.IsSelected == true);
+        }
         public static BaseSpecification<Category> GetAllParentCategories()
         {
             return new BaseSpecification<Category>(x => x.ParentId == null);

@@ -28,6 +28,13 @@ namespace MyApp.WebApi.Controllers
             return Ok(allCategories);
 
         }
+        [HttpGet("GetSelectedCategories")]
+        public async Task<IActionResult> GetSelectedCategories()
+        {
+            var selectedCategories = await _serviceManager.CategoryService.GetSelectedCategories();
+            return Ok(selectedCategories);
+
+        }
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAll()
         {
