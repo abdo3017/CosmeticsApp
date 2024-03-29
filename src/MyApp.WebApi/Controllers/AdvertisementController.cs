@@ -27,11 +27,13 @@ namespace MyApp.WebApi.Controllers
                 Discount = Discount
             };
             var allAdvertisements = await _serviceManager.AdvertisementService.GetFilteredAdvertisements(filter, pageNo, pageSize);
-            return Ok(new
-            {
-                TotalCount = _serviceManager.AdvertisementService.TotalCount(),
-                Advertisements = allAdvertisements
-            });
+            return Ok(
+                new
+                {
+                    TotalCount = _serviceManager.AdvertisementService.TotalCount(),
+                    Advertisements = allAdvertisements
+                }
+            );
 
         }
         [HttpGet("GetAll")]

@@ -18,6 +18,10 @@ namespace MyApp.Application.Specifications
         {
             return new BaseSpecification<Advertisement>(x => x.Id == id);
         }
+        public static BaseSpecification<Advertisement> GetAdvertisementById(int? id)
+        {
+            return new BaseSpecification<Advertisement>(x => x.Discount!=null && x.Discount  == 60);
+        }
         public static BaseSpecification<Advertisement> GetAdvertisementsByFilters(AdvertisementFilter filters, int pageNo, int pageSize)
         {
             Expression<Func<Advertisement, bool>> expression = null;
@@ -32,8 +36,8 @@ namespace MyApp.Application.Specifications
                 var isEqualExpression = Expression.Lambda<Func<Advertisement, bool>>(
                     Expression.And(
                         Expression.NotEqual(property, Expression.Constant(null)),
-                     Expression.Equal(property, propertyValue)
-                    ),parameter);
+                     Expression.Equal(Expression.Convert(property, typeof(int)), propertyValue)
+                    ), parameter);
 
                 filterExpression = filterExpression != null ? Expression.AndAlso(filterExpression, isEqualExpression.Body) : isEqualExpression.Body;
 
@@ -45,18 +49,19 @@ namespace MyApp.Application.Specifications
                 var isEqualExpression = Expression.Lambda<Func<Advertisement, bool>>(
                     Expression.And(
                         Expression.NotEqual(property, Expression.Constant(null)),
-                     Expression.Equal(property, propertyValue)
+                     Expression.Equal(Expression.Convert(property, typeof(int)), propertyValue)
                     ), parameter);
                 filterExpression = filterExpression != null ? Expression.AndAlso(filterExpression, isEqualExpression.Body) : isEqualExpression.Body;
             }
             if (filters.Discount != null)
             {
                 var property = Expression.Property(parameter, "Discount");
-                var propertyValue = Expression.Constant(filters.Discount);
+                var propertyValue = Expression.Constant((int)filters.Discount);
+
                 var isEqualExpression = Expression.Lambda<Func<Advertisement, bool>>(
                     Expression.And(
                         Expression.NotEqual(property, Expression.Constant(null)),
-                     Expression.Equal(property, propertyValue)
+                     Expression.Equal(Expression.Convert(property,typeof(int)), propertyValue)
                     ), parameter);
                 filterExpression = filterExpression != null ? Expression.AndAlso(filterExpression, isEqualExpression.Body) : isEqualExpression.Body;
             }
@@ -67,7 +72,7 @@ namespace MyApp.Application.Specifications
                 var isEqualExpression = Expression.Lambda<Func<Advertisement, bool>>(
                     Expression.And(
                         Expression.NotEqual(property, Expression.Constant(null)),
-                     Expression.Equal(property, propertyValue)
+                     Expression.Equal(Expression.Convert(property, typeof(string)), propertyValue)
                     ), parameter);
                 filterExpression = filterExpression != null ? Expression.AndAlso(filterExpression, isEqualExpression.Body) : isEqualExpression.Body;
             }
