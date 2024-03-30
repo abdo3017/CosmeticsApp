@@ -11,6 +11,8 @@ namespace MyApp.Application.Core.Services
 {
     public class ServiceManager : IServiceManager
     {
+        
+        private readonly Lazy<IReviewService> _reviewService;
         private readonly Lazy<IAdvertisementService> _advertisementService;
         private readonly Lazy<ICategoryService> _categoryService;
         private readonly Lazy<IBrandService> _brandService;
@@ -18,6 +20,7 @@ namespace MyApp.Application.Core.Services
         private readonly Lazy<IGalleryService> _galleryService;
         public ServiceManager(IUnitOfWork unitOfWork)
         {
+            _reviewService = new Lazy<IReviewService>(() => new ReviewService(unitOfWork));
             _advertisementService = new Lazy<IAdvertisementService>(() => new AdvertisementService(unitOfWork));
             _categoryService = new Lazy<ICategoryService>(() => new CategoryService(unitOfWork));
             _brandService = new Lazy<IBrandService>(() => new BrandService(unitOfWork));
@@ -25,6 +28,7 @@ namespace MyApp.Application.Core.Services
             _galleryService = new Lazy<IGalleryService>(() => new GalleryService(unitOfWork));
         }
 
+        public IReviewService ReviewService => _reviewService.Value;
         public IAdvertisementService AdvertisementService => _advertisementService.Value;
         public ICategoryService CategoryService => _categoryService.Value;
         public IBrandService BrandService => _brandService.Value;

@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MyApp.Domain.Entities;
-using MyApp.Infrastructure.Models;
+using MyApp.Domain.Models;
 using System.ComponentModel.DataAnnotations.Schema;
 using Attribute = MyApp.Domain.Entities.Attribute;
 
@@ -10,6 +10,12 @@ namespace MyApp.Infrastructure.Data.Configurations
     {
         public static void ConfigureEf(ModelBuilder modelBuilder)
         {
+
+            modelBuilder.Entity<Review>(entity =>
+            {
+                entity.Property(e => e.Rate).HasColumnType("decimal(18, 0)");
+            });
+
             modelBuilder.Entity<Attribute>(entity =>
             {
                 entity.Property(e => e.Name).HasMaxLength(255);

@@ -8,6 +8,7 @@ using MyApp.Domain.Entities;
 using MyApp.Domain.Models;
 using MyApp.Infrastructure.Data.Configurations;
 using MyApp.Infrastructure.Identity.Models;
+using MyApp.Infrastructure.Models;
 using System.Text.RegularExpressions;
 using Attribute = MyApp.Domain.Entities.Attribute;
 
@@ -18,6 +19,9 @@ namespace MyApp.Infrastructure.Data
 
         public MyAppDbContext(DbContextOptions<MyAppDbContext> options) : base(options)
         { }
+
+        public virtual DbSet<Review> Reviews { get; set; }
+
         public virtual DbSet<Advertisement> Advertisements { get; set; }
 
         public virtual DbSet<User> Users { get; set; }

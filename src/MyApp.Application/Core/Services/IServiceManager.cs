@@ -10,6 +10,8 @@ namespace MyApp.Application.Core.Services
 {
     public interface IServiceManager
     {
+
+        IReviewService ReviewService { get; }
         ICategoryService CategoryService { get; }
         IBrandService BrandService { get; }
         IProductService ProductService { get; }
