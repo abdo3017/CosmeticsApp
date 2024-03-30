@@ -23,7 +23,7 @@ namespace MyApp.WebApi.Controllers
             {
                 CategoryId = CatId,
                 BrandId = BrandId,
-                TagName = Tag,
+                Tag = Tag,
                 Discount = Discount
             };
             var allAdvertisements = await _serviceManager.AdvertisementService.GetFilteredAdvertisements(filter, pageNo, pageSize);

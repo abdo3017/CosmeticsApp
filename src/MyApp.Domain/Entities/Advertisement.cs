@@ -10,7 +10,7 @@ public partial class Advertisement:BaseEntity
 
     public byte[]? Img { get; set; }
 
-    public int? TagName { get; set; }
+    public int? Tag { get; set; }
 
     public int? BrandId { get; set; }
 

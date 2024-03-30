@@ -65,14 +65,14 @@ namespace MyApp.Application.Specifications
                     ), parameter);
                 filterExpression = filterExpression != null ? Expression.AndAlso(filterExpression, isEqualExpression.Body) : isEqualExpression.Body;
             }
-            if (filters.TagName != null)
+            if (filters.Tag != null)
             {
-                var property = Expression.Property(parameter, "TagName");
-                var propertyValue = Expression.Constant(filters.TagName);
+                var property = Expression.Property(parameter, "Tag");
+                var propertyValue = Expression.Constant(filters.Tag);
                 var isEqualExpression = Expression.Lambda<Func<Advertisement, bool>>(
                     Expression.And(
                         Expression.NotEqual(property, Expression.Constant(null)),
-                     Expression.Equal(Expression.Convert(property, typeof(string)), propertyValue)
+                     Expression.Equal(Expression.Convert(property, typeof(int)), propertyValue)
                     ), parameter);
                 filterExpression = filterExpression != null ? Expression.AndAlso(filterExpression, isEqualExpression.Body) : isEqualExpression.Body;
             }

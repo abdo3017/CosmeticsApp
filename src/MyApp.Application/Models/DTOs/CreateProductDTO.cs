@@ -15,6 +15,6 @@ namespace MyApp.Application.Models.DTOs
         public decimal Price { get; set; }
         public int Qty { get; set; }
         public int DiscountPercentage { get; set; }
-        public string? TagName { get; set; }
+        public int? Tag { get; set; }
     }
 }

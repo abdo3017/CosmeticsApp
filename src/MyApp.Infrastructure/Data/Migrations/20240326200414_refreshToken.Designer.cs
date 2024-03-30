@@ -462,7 +462,7 @@ namespace MyApp.Infrastructure.Migrations
                     b.Property<decimal>("RateValue")
                         .HasColumnType("decimal(18, 0)");
 
-                    b.Property<string>("TagName")
+                    b.Property<int>("Tag")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("TotalRate")
@@ -639,7 +639,7 @@ namespace MyApp.Infrastructure.Migrations
                     b.Property<byte[]>("Img")
                         .HasColumnType("varbinary(max)");
 
-                    b.Property<int?>("TagName")
+                    b.Property<int?>("Tag")
                         .HasColumnType("int");
 
                     b.HasKey("Id");

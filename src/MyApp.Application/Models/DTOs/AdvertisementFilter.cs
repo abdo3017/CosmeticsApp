@@ -11,6 +11,6 @@ namespace MyApp.Application.Models.DTOs
         public int? CategoryId { get; set; }
         public int? BrandId { get; set; }
         public int? Discount { get; set; }
-        public string? TagName { get; set; }
+        public string? Tag { get; set; }
     }
 }
