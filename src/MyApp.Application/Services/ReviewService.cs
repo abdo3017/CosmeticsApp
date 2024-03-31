@@ -62,7 +62,17 @@ namespace MyApp.Application.Services
 
             return dtoReview;
         }
+        public async Task<List<ReviewDTO>> GetReviewsByProductId(int productId)
+        {
+            var specification = ReviewSpecifications.GetReviewsByProductId(productId);
 
+            var reviews = await _repository.ListAsync(specification);
+
+            var reviewsDto = reviews.Select(s => s.Map()).ToList();
+
+            return reviewsDto;
+        }
+        
         public async Task<List<ReviewDTO>> GetReviewsByCustomerId(int customerId)
         {
             var specification = ReviewSpecifications.GetReviewsByCustomerId(customerId);

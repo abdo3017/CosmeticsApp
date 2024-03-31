@@ -17,6 +17,10 @@ namespace MyApp.Application.Specifications
         {
             return new BaseSpecification<Review>(x => x.Id == id);
         }
+        public static BaseSpecification<Review> GetReviewsByProductId(int productId)
+        {
+            return new BaseSpecification<Review>(x => x.ProductId == productId);
+        }
         public static BaseSpecification<Review> GetReviewsByCustomerId(int customerId)
         {
             return new BaseSpecification<Review>(x => x.CustomerId == customerId);

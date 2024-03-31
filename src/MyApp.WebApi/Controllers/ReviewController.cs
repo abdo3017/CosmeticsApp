@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MyApp.Application.Core.Services;
 using MyApp.Application.Models.DTOs;
+using MyApp.Domain.Models;
 
 namespace MyApp.WebApi.Controllers
 {
@@ -25,15 +26,22 @@ namespace MyApp.WebApi.Controllers
         [HttpGet("GetById")]
         public async Task<IActionResult> GetById(int id)
         {
-            var cat = await _serviceManager.ReviewService.GetReviewById(id);
-            return Ok(cat);
+            var reviews = await _serviceManager.ReviewService.GetReviewById(id);
+            return Ok(reviews);
         }
 
         [HttpGet("GetByCustomerId")]
         public async Task<IActionResult> GetByCustomerId(int customerId)
         {
-            var cat = await _serviceManager.ReviewService.GetReviewsByCustomerId(customerId);
-            return Ok(cat);
+            var reviews = await _serviceManager.ReviewService.GetReviewsByCustomerId(customerId);
+            return Ok(reviews);
+        }
+
+        [HttpGet("GetByProductId")]
+        public async Task<IActionResult> GetReviewsByProductId(int productId)
+        {
+            var reviews = await _serviceManager.ReviewService.GetReviewsByProductId(productId);
+            return Ok(reviews);
         }
 
         [HttpPost("Add")]

@@ -10,6 +10,7 @@ namespace MyApp.Application.Interfaces
         void DeleteReview(ReviewDTO req);
         Task<List<ReviewDTO>> GetAllReviews();
         Task<List<ReviewDTO>> GetReviewsByCustomerId(int customerId);
+        Task<List<ReviewDTO>> GetReviewsByProductId(int productId);
         Task<ReviewDTO?> GetReviewById(int id);
     }
 }
