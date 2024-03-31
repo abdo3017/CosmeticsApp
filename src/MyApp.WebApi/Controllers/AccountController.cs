@@ -25,11 +25,7 @@ namespace MyApp.WebApi.Controllers
             if (!result.IsAuthenticated)
                 return BadRequest(result.Message);
 
-            return Ok(new
-            {
-                token = result.Token,
-                expiration = result.ExpiresOn
-            });
+            return Ok(result);
         }
         [HttpPost("Login")]
         public async Task<IActionResult> LoginAsync(LoginDTO model)
@@ -42,11 +38,7 @@ namespace MyApp.WebApi.Controllers
             if (!result.IsAuthenticated)
                 return BadRequest(result.Message);
 
-            return Ok(new
-            {
-                token = result.Token,
-                expiration = result.ExpiresOn
-            });
+            return Ok(result);
         }
     }
 }
