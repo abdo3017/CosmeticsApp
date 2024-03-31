@@ -18,6 +18,7 @@ namespace MyApp.Application.Models.Mappers
                 Id = dto.Id,
                 BrandId = dto.BrandId,
                 Img = dto.Img,
+                Tag = dto.Tag,
                 CategoryId = dto.CategoryId,
                 Discount = dto.Discount,
             };
@@ -30,6 +31,7 @@ namespace MyApp.Application.Models.Mappers
                 Id = model.Id,
                 BrandId = model.BrandId,
                 Img = model.Img,
+                Tag = model.Tag,
                 CategoryId = model.CategoryId,
                 Discount = model.Discount,
             };
