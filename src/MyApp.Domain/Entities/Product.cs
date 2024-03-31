@@ -28,7 +28,7 @@ public partial class Product : BaseEntity
 
     public int? Tag { get; set; }
 
-    public DateTime? CreationDate { get; set; }
+    public DateTime CreationDate { get; set; }
 
     public DateTime? ModificationDate { get; set; }
 
