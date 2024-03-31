@@ -106,7 +106,7 @@ namespace MyApp.Application.Specifications
                 var UptoDiscountExprestion = Expression.Lambda<Func<Product, bool>>(
                     Expression.And(
                         Expression.GreaterThan(property, Expression.Constant(0)),
-                        Expression.LessThanOrEqual(property, Expression.Constant(filters.Discount))
+                        Expression.Equal(property, Expression.Constant(filters.Discount))
                     ), parameter);
                 filterExpression = filterExpression != null ? Expression.AndAlso(filterExpression, UptoDiscountExprestion.Body) : UptoDiscountExprestion.Body;
             }
