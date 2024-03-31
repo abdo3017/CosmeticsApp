@@ -47,26 +47,42 @@ namespace MyApp.WebApi.Controllers
         public async Task<IActionResult> GetProductsByBrandId(int brandId, int pageNo, int pageSize)
         {
             var range = await _serviceManager.ProductService.GetProductsByBrandId(brandId, pageNo, pageSize);
-            return Ok(range);
+            return Ok(new
+            {
+                TotalCount = _serviceManager.ProductService.TotalCount(),
+                Products = range
+            });
         }
         [HttpGet("GetProductsByCategoryId")]
         public async Task<IActionResult> GetProductsByCategoryId(int catId, int pageNo, int pageSize)
         {
             var range = await _serviceManager.ProductService.GetProductsByCategoryId(catId, pageNo, pageSize);
-            return Ok(range);
+            return Ok(new
+            {
+                TotalCount = _serviceManager.ProductService.TotalCount(),
+                Products = range
+            });
         }
         [HttpGet("GetBestProducts")]
         public async Task<IActionResult> GetBestProducts(int pageNo , int pageSize)
         {
             var range = await _serviceManager.ProductService.GetBestProducts(pageNo,pageSize);
-            return Ok(range);
+            return Ok(new
+            {
+                TotalCount = _serviceManager.ProductService.TotalCount(),
+                Products = range
+            });
         }
 
         [HttpGet("GetRecentProducts")]
         public async Task<IActionResult> GetRecentProducts(int pageNo, int pageSize)
         {
             var range = await _serviceManager.ProductService.GetRecentProducts(pageNo, pageSize);
-            return Ok(range);
+            return Ok(new
+            {
+                TotalCount = _serviceManager.ProductService.TotalCount(),
+                Products = range
+            });
         }
 
         [HttpPost("FilterProducts")]
