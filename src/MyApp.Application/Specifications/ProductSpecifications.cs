@@ -49,7 +49,7 @@ namespace MyApp.Application.Specifications
 
         public static BaseSpecification<Product> GetRecentProduct(int pageNo, int pageSize)
         {
-            var spec = new BaseSpecification<Product>(x =>   x.CreationDate.AddDays(7) >= DateTime.Today);
+            var spec = new BaseSpecification<Product>(x =>   x.CreationDate.AddDays(7) >= DateTime.Today  );
            // var spec = new BaseSpecification<Product>(x =>  x.CreationDate < DateTime.Today);
             spec.ApplyPaging((pageNo - 1) * pageSize, pageSize);
             return spec;
