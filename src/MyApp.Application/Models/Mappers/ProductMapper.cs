@@ -77,12 +77,12 @@ namespace MyApp.Application.Models.Mappers
                 Name = pro.Name,
                 Tag = pro.Tag,
                 Description = pro.Description,
-                BrandImg = pro.Brand?.Image, // will be change
+                BrandImg = pro.Brand?.Image,
                 Price = pro.Price,
                 RateValue = pro.RateValue,
                 TotalRate = pro.TotalRate,
                 DiscountPercentage = pro.DiscountPercentage,
-                AttributeValues = pro.AttributeValues,
+                AttributeValues = pro.AttributeValues.GroupBy(p=> p.AttributeId),
                 ProductImgs = pro.Imgs,
                 BrandName = pro.Brand?.Name
             };

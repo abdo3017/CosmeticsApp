@@ -42,7 +42,7 @@ namespace MyApp.Application.Specifications
 
         public static BaseSpecification<Product> GetProductWithRateGt4_5(int pageNo, int pageSize)
         {
-            var spec = new BaseSpecification<Product>(x => x.RateValue >= 4.5m);
+            var spec = new BaseSpecification<Product>(x => x.RateValue >= 4.5m || x.Tag == 1 );//tag 1 - bestsale
             spec.ApplyPaging((pageNo - 1) * pageSize, pageSize);
             return spec;
         }

@@ -18,6 +18,8 @@ namespace MyApp.Application.Core.Services
         private readonly Lazy<IBrandService> _brandService;
         private readonly Lazy<IProductService> _productService;
         private readonly Lazy<IGalleryService> _galleryService;
+        private readonly Lazy<IAttributeValueService> _AttributeValueService;
+
         public ServiceManager(IUnitOfWork unitOfWork)
         {
             _reviewService = new Lazy<IReviewService>(() => new ReviewService(unitOfWork));
@@ -26,6 +28,7 @@ namespace MyApp.Application.Core.Services
             _brandService = new Lazy<IBrandService>(() => new BrandService(unitOfWork));
             _productService = new Lazy<IProductService>(() => new ProductService(unitOfWork));
             _galleryService = new Lazy<IGalleryService>(() => new GalleryService(unitOfWork));
+            _AttributeValueService = new  Lazy<IAttributeValueService>(() => new AttributeValueService(unitOfWork));
         }
 
         public IReviewService ReviewService => _reviewService.Value;
@@ -34,5 +37,6 @@ namespace MyApp.Application.Core.Services
         public IBrandService BrandService => _brandService.Value;
         public IProductService ProductService => _productService.Value;
         public IGalleryService GalleryService => _galleryService.Value;
+        public IAttributeValueService AttributeValueService => _AttributeValueService.Value;
     }
 }
