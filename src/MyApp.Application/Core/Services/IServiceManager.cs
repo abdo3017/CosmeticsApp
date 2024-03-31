@@ -17,5 +17,6 @@ namespace MyApp.Application.Core.Services
         IProductService ProductService { get; }
         IAdvertisementService AdvertisementService { get; }
         IGalleryService GalleryService { get; }
+        IAttributeValueService AttributeValueService { get; }
     }
 }
