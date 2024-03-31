@@ -108,6 +108,7 @@ namespace MyApp.Application.Services
         {
             var spec = ProductSpecifications.GetProductWithRateGt4_5(pageNo, pageSize);
             var products = await _repository.ListAsync(spec);
+            totalCount = spec.TotalCount;
             var productsDto = products.Select(s => s.Map()).ToList();
             return productsDto;
         }
