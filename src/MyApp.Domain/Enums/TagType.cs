@@ -11,5 +11,5 @@ namespace MyApp.Domain.Enums
         MostPopular = 0,
         Recent = 1,
         Best = 2
-    }
+    } 
 }
