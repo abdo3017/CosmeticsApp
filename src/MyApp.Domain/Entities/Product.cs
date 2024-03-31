@@ -26,11 +26,11 @@ public partial class Product : BaseEntity
 
     public int DiscountPercentage { get; set; }
 
-    public string? TagName { get; set; }
+    public int? Tag { get; set; }
 
-    public DateTime CreationDate { get; set; }
+    public DateTime? CreationDate { get; set; }
 
-    public DateOnly? ModificationDate { get; set; }
+    public DateTime? ModificationDate { get; set; }
 
     public virtual ICollection<AttributeValue> AttributeValues { get; set; } = new List<AttributeValue>();
 

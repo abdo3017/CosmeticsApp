@@ -49,6 +49,17 @@ namespace MyApp.Application.Services
 
             return categoriesDto;
         }
+        public async Task<List<CategoryDTO>> GetSelectedCategories()
+        {
+            var specification = CategorySpecifications.GetSelectedCategories();
+
+            var categories = await _repository.ListAsync(specification);
+
+            var categoriesDto = categories.Select(s => s.Map()).ToList();
+
+            return categoriesDto;
+        }
+        
 
         public async Task<List<CategoryDTO>?> GetCategoriesByBrandId(int id)
         {

@@ -15,8 +15,8 @@ namespace MyApp.Application.Services
     public class ProductService : BaseService<Product, int>, IProductService
     {
         private readonly IUnitOfWork _unitOfWork;
-
-        public ProductService(IUnitOfWork unitOfWork):base(unitOfWork)
+        private int totalCount = 0;
+        public ProductService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
@@ -27,7 +27,7 @@ namespace MyApp.Application.Services
             Product product = pro.Map();
             var catRepo = _unitOfWork.Repository<Category, int>();
             var AddedProduct = await AddAsync(product);
-            var cat =await catRepo.GetByIdAsync(product.CategoryId);
+            var cat = await catRepo.GetByIdAsync(product.CategoryId);
             var AddedProductDto = AddedProduct.Map();
             return AddedProductDto;
         }
@@ -37,20 +37,20 @@ namespace MyApp.Application.Services
             DeleteById(proID);
         }
 
-        public async Task<List<productDTO>> GetAllProducts(int pageNo ,int  pageSize)
+        public async Task<List<productDTO>> GetAllProducts(int pageNo, int pageSize)
         {
             var spec = ProductSpecifications.GetProductWithPaging(pageNo, pageSize);
             var products = await _repository.ListAsync(spec);
-            TotalCount(spec.TotalCount);
+            totalCount = spec.TotalCount;
             var productsDto = products.Select(s => s.Map()).ToList();
             return productsDto;
         }
 
         public async Task<List<productDTO>> GetProductsByFilter(ProductFilter filters, int pageNo, int pageSize)
         {
-            var spec = ProductSpecifications.GetProductByFilters(filters,pageNo,pageSize);
+            var spec = ProductSpecifications.GetProductByFilters(filters, pageNo, pageSize);
             var products = await _repository.ListAsync(spec);
-            TotalCount(spec.TotalCount);
+            totalCount = spec.TotalCount;
             var productsDto = products.Select(s => s.Map()).ToList();
             return productsDto;
         }
@@ -73,7 +73,7 @@ namespace MyApp.Application.Services
 
         public void UpdateProduct(productDTO pro)
         {
-             var product = pro.Map();
+            var product = pro.Map();
             Update(product);
         }
 
@@ -84,8 +84,9 @@ namespace MyApp.Application.Services
 
         public async Task<List<productDTO>> GetProductsByCategoryId(int catId, int pageNo, int pageSize)
         {
-            var spec = ProductSpecifications.GetProductsByCategoryId(catId,pageNo, pageSize);
+            var spec = ProductSpecifications.GetProductsByCategoryId(catId, pageNo, pageSize);
             var products = await _repository.ListAsync(spec);
+            totalCount = spec.TotalCount;
             var productsDto = products.Select(s => s.Map()).ToList();
             return productsDto;
         }
@@ -94,13 +95,14 @@ namespace MyApp.Application.Services
         {
             var spec = ProductSpecifications.GetProductsByBrandId(brandId, pageNo, pageSize);
             var products = await _repository.ListAsync(spec);
+            totalCount = spec.TotalCount;
             var productsDto = products.Select(s => s.Map()).ToList();
             return productsDto;
         }
 
-        public int TotalCount(int count=0)
+        public int TotalCount()
         {
-            return count;
+            return totalCount;
         }
         public async Task<List<productDTO>> GetBestProducts(int pageNo , int pageSize)
         {
@@ -114,6 +116,7 @@ namespace MyApp.Application.Services
         {
             var spec = ProductSpecifications.GetRecentProduct(pageNo, pageSize);
             var products = await _repository.ListAsync(spec);
+            totalCount = spec.TotalCount;
             var productsDto = products.Select(s => s.Map()).ToList();
             return productsDto;
         }

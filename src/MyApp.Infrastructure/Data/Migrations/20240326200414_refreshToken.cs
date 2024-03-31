@@ -40,7 +40,7 @@ namespace MyApp.Infrastructure.Migrations
             //    oldNullable: true);
 
             //migrationBuilder.AddColumn<string>(
-            //    name: "TagName",
+            //    name: "Tag",
             //    table: "Products",
             //    type: "nvarchar(max)",
             //    nullable: true);
@@ -85,7 +85,7 @@ namespace MyApp.Infrastructure.Migrations
             //        Id = table.Column<int>(type: "int", nullable: false)
             //            .Annotation("SqlServer:Identity", "1, 1"),
             //        Img = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
-            //        TagName = table.Column<int>(type: "int", nullable: true),
+            //        Tag = table.Column<int>(type: "int", nullable: true),
             //        BrandId = table.Column<int>(type: "int", nullable: true),
             //        CategoryId = table.Column<int>(type: "int", nullable: true),
             //        Discount = table.Column<int>(type: "int", nullable: true)
@@ -150,7 +150,7 @@ namespace MyApp.Infrastructure.Migrations
             //    table: "Galleries");
 
             //migrationBuilder.DropColumn(
-            //    name: "TagName",
+            //    name: "Tag",
             //    table: "Products");
 
             //migrationBuilder.DropColumn(

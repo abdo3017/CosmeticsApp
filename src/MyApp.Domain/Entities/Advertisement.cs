@@ -1,15 +1,16 @@
-﻿using System;
+﻿using MyApp.Domain.Core.Models;
+using System;
 using System.Collections.Generic;
 
-namespace MyApp.Infrastructure.Models;
+namespace MyApp.Domain.Models;
 
-public partial class Advertisement
+public partial class Advertisement:BaseEntity
 {
     public int Id { get; set; }
 
     public byte[]? Img { get; set; }
 
-    public int? TagName { get; set; }
+    public int? Tag { get; set; }
 
     public int? BrandId { get; set; }
 

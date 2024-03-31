@@ -197,10 +197,10 @@ namespace MyApp.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateOnly?>("CreationDate")
+                    b.Property<DateTime?>("CreationDate")
                         .HasColumnType("date");
 
-                    b.Property<DateOnly?>("ModificationDate")
+                    b.Property<DateTime?>("ModificationDate")
                         .HasColumnType("date");
 
                     b.Property<string>("Name")
@@ -268,7 +268,7 @@ namespace MyApp.Infrastructure.Migrations
                     b.Property<int?>("ChildId")
                         .HasColumnType("int");
 
-                    b.Property<DateOnly?>("CreationDate")
+                    b.Property<DateTime?>("CreationDate")
                         .HasColumnType("date");
 
                     b.Property<string>("Description")
@@ -278,7 +278,7 @@ namespace MyApp.Infrastructure.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
-                    b.Property<DateOnly?>("ModificationDate")
+                    b.Property<DateTime?>("ModificationDate")
                         .HasColumnType("date");
 
                     b.Property<string>("Name")
@@ -427,7 +427,7 @@ namespace MyApp.Infrastructure.Migrations
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
-                    b.Property<DateOnly?>("CreationDate")
+                    b.Property<DateTime?>("CreationDate")
                         .HasColumnType("date");
 
                     b.Property<string>("Description")
@@ -436,7 +436,7 @@ namespace MyApp.Infrastructure.Migrations
                     b.Property<int>("DiscountPercentage")
                         .HasColumnType("int");
 
-                    b.Property<DateOnly?>("ModificationDate")
+                    b.Property<DateTime?>("ModificationDate")
                         .HasColumnType("date");
 
                     b.Property<string>("Name")

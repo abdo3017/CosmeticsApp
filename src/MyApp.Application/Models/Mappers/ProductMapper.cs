@@ -25,7 +25,7 @@ namespace MyApp.Application.Models.Mappers
                 DiscountPercentage = dto.DiscountPercentage,
                 TotalRate = dto.TotalRate,
                 RateValue = dto.RateValue,
-                TagName = dto.TagName,
+                Tag = dto.Tag,
                 
             };
         }
@@ -42,7 +42,7 @@ namespace MyApp.Application.Models.Mappers
                 Price = dto.Price,
                 Qty = dto.Qty,
                 DiscountPercentage = dto.DiscountPercentage,             
-                TagName = dto.TagName,
+                Tag = dto.Tag,
             };
         }
 
@@ -58,7 +58,7 @@ namespace MyApp.Application.Models.Mappers
                 Price = pro.Price,
                 Qty = pro.Qty,
                 DiscountPercentage = pro.DiscountPercentage,
-                TagName = pro.TagName,
+                Tag = pro.Tag,
                 TotalRate = pro.TotalRate,
                 RateValue = pro.RateValue,
                 CoverImg = pro.Imgs.SingleOrDefault(i => i.IsCover)?.Image,
@@ -75,7 +75,7 @@ namespace MyApp.Application.Models.Mappers
             {
                 Id = pro.Id,
                 Name = pro.Name,
-                TagName = pro.TagName,
+                Tag = pro.Tag,
                 Description = pro.Description,
                 BrandImg = pro.Brand?.Image, // will be change
                 Price = pro.Price,

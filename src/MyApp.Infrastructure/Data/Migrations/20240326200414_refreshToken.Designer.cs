@@ -200,13 +200,13 @@ namespace MyApp.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateOnly?>("CreationDate")
+                    b.Property<DateTime?>("CreationDate")
                         .HasColumnType("date");
 
                     b.Property<byte[]>("Image")
                         .HasColumnType("varbinary(max)");
 
-                    b.Property<DateOnly?>("ModificationDate")
+                    b.Property<DateTime?>("ModificationDate")
                         .HasColumnType("date");
 
                     b.Property<string>("Name")
@@ -270,7 +270,7 @@ namespace MyApp.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateOnly?>("CreationDate")
+                    b.Property<DateTime?>("CreationDate")
                         .HasColumnType("date");
 
                     b.Property<string>("Description")
@@ -283,7 +283,7 @@ namespace MyApp.Infrastructure.Migrations
                     b.Property<bool>("IsSelected")
                         .HasColumnType("bit");
 
-                    b.Property<DateOnly?>("ModificationDate")
+                    b.Property<DateTime?>("ModificationDate")
                         .HasColumnType("date");
 
                     b.Property<string>("Name")
@@ -436,7 +436,7 @@ namespace MyApp.Infrastructure.Migrations
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
-                    b.Property<DateOnly?>("CreationDate")
+                    b.Property<DateTime?>("CreationDate")
                         .HasColumnType("date");
 
                     b.Property<string>("Description")
@@ -445,7 +445,7 @@ namespace MyApp.Infrastructure.Migrations
                     b.Property<int>("DiscountPercentage")
                         .HasColumnType("int");
 
-                    b.Property<DateOnly?>("ModificationDate")
+                    b.Property<DateTime?>("ModificationDate")
                         .HasColumnType("date");
 
                     b.Property<string>("Name")
@@ -462,7 +462,7 @@ namespace MyApp.Infrastructure.Migrations
                     b.Property<decimal>("RateValue")
                         .HasColumnType("decimal(18, 0)");
 
-                    b.Property<string>("TagName")
+                    b.Property<int>("Tag")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("TotalRate")
@@ -639,7 +639,7 @@ namespace MyApp.Infrastructure.Migrations
                     b.Property<byte[]>("Img")
                         .HasColumnType("varbinary(max)");
 
-                    b.Property<int?>("TagName")
+                    b.Property<int?>("Tag")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
