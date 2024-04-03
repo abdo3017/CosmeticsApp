@@ -26,8 +26,8 @@ namespace MyApp.Infrastructure
         .AddEntityFrameworkStores<MyAppDbContext>();
             services.AddDbContextPool<MyAppDbContext>(options =>
                 options.UseLazyLoadingProxies().UseSqlServer(
-"Data Source=bi-qc-01;Initial Catalog=SalesBuzz_Schema_Test_bak;User ID=PDASYNC;Password=PDASYNC;MultipleActiveResultSets=true;Encrypt=False",
-x => x.MigrationsAssembly("MyApp.Infrastructure")));
+"Data Source=SQL5104.site4now.net;Initial Catalog=db_aa7228_cosmetics;User Id=db_aa7228_cosmetics_admin;Password=Aa600700"
+,x => x.MigrationsAssembly("MyApp.Infrastructure")));
             services.AddScoped(typeof(IBaseRepository<,>), typeof(BaseRepository<,>));
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 

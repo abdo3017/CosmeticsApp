@@ -1,6 +1,10 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using MyApp.Infrastructure.Data.Configurations;
+using System.Globalization;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,6 +17,24 @@ var appSettings = new ConfigurationBuilder()
 
 MyApp.Application.DependencyInjections.ConfigureServices(builder.Services);
 MyApp.Infrastructure.DependencyInjections.ConfigureServices(builder.Services, appSettings);
+
+builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
+
+
+builder.Services.Configure<RequestLocalizationOptions>(options =>
+{
+    var supportedCultures = new[]
+    {
+        new CultureInfo("en-US"),
+        new CultureInfo("ar-EG"),
+        new CultureInfo("fr-FR")
+    };
+
+    options.DefaultRequestCulture = new RequestCulture(culture: "en-US", uiCulture: "en-US");
+    options.SupportedCultures = supportedCultures;
+    options.SupportedUICultures = supportedCultures;
+});
+
 builder.Services.AddCors(op =>
 {
     op.AddPolicy(allowedOrigines, po =>
@@ -34,11 +56,18 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+
 app.UseHttpsRedirection();
+app.UseStaticFiles();
+
+app.UseCors(allowedOrigines);
+app.UseRouting();
+
+var locOptions = app.Services.GetService<IOptions<RequestLocalizationOptions>>();
+app.UseRequestLocalization(locOptions.Value);
 
 app.UseAuthentication();
 app.UseAuthorization();
-app.UseCors(allowedOrigines);
 app.MapControllers();
 
 //using (var scope = app.Services.CreateScope())
