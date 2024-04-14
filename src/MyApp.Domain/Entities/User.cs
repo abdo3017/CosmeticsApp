@@ -1,10 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Xml.Linq;
+using Microsoft.EntityFrameworkCore;
 using MyApp.Domain.Core.Models;
 using MyApp.Domain.Enums;
 
 namespace MyApp.Domain.Entities
 {
-    public class User : BaseEntity, IAuditableEntity, ISoftDeleteEntity
+    public class User : BaseEntity
     {
         [Key]
         public int Id { get; set; }

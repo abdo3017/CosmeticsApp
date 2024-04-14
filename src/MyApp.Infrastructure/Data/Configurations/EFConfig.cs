@@ -14,6 +14,8 @@ namespace MyApp.Infrastructure.Data.Configurations
             modelBuilder.Entity<Review>(entity =>
             {
                 entity.Property(e => e.Rate).HasColumnType("decimal(18, 0)");
+                entity.HasOne(d => d.User).WithMany()
+                   .HasForeignKey(d => d.CustomerId);
             });
 
             modelBuilder.Entity<Attribute>(entity =>

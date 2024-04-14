@@ -10,11 +10,12 @@ using MyApp.Infrastructure.Data.Configurations;
 using MyApp.Infrastructure.Identity.Models;
 using MyApp.Infrastructure.Models;
 using System.Text.RegularExpressions;
+
 using Attribute = MyApp.Domain.Entities.Attribute;
 
 namespace MyApp.Infrastructure.Data
 {
-    public class MyAppDbContext : IdentityDbContext<AppUser, AppRole, int>
+    public class MyAppDbContext : IdentityDbContext<Identity.Models.AppUser, Identity.Models.AppRole, int>
     {
 
         public MyAppDbContext(DbContextOptions<MyAppDbContext> options) : base(options)
@@ -94,9 +95,13 @@ namespace MyApp.Infrastructure.Data
                         var ModifiedOnProp = entry.Properties.Where(x =>
                                string.Equals(x.Metadata.Name, "ModifiedOn", StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
                         var ModifiedByProp = entry.Properties.Where(x =>
-                               string.Equals(x.Metadata.Name, "ModifiedBy", StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
+                               string.Equals(x.Metadata.Name, "ModifiedBy", StringComparison.OrdinalIgnoreCase)
+                                || string.Equals(x.Metadata.Name, "ModificationDate", StringComparison.OrdinalIgnoreCase))
+                            .FirstOrDefault();
                         var CreatedOnProp = entry.Properties.Where(x =>
-                              string.Equals(x.Metadata.Name, "CreatedOn", StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
+                              string.Equals(x.Metadata.Name, "CreatedOn", StringComparison.OrdinalIgnoreCase)
+                              || string.Equals(x.Metadata.Name, "CreationDate", StringComparison.OrdinalIgnoreCase))
+                            .FirstOrDefault();
                         var CreatedbyProp = entry.Properties.Where(x =>
                              string.Equals(x.Metadata.Name, "CreatedBy", StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
 

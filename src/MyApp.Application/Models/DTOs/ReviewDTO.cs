@@ -12,6 +12,7 @@ namespace MyApp.Application.Models.DTOs
         public string Comment { get; set; } = null!;
         public decimal Rate { get; set; }
         public int ProductId { get; set; }
+        public DateTime? CreatedOn { get; set; }
         public int CustomerId { get; set; }
         public string? CustomerName { get; set; }
     }

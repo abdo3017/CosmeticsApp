@@ -1,10 +1,11 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using MyApp.Infrastructure.Models;
 
 namespace MyApp.Infrastructure.Identity.Models
 {
 
-    public class AppUser :IdentityUser<int>
+    public partial class AppUser :IdentityUser<int>
     {
         public List<RefreshToken>? RefreshTokens { get; set; }
     }
@@ -33,5 +34,15 @@ namespace MyApp.Infrastructure.Identity.Models
 
     public class AppUserLogin : IdentityUserLogin<int>
     {
+    }
+    [Owned]
+    public class RefreshToken
+    {
+        public string Token { get; set; }
+        public DateTime ExpiresOn { get; set; }
+        public bool IsExpired => DateTime.UtcNow >= ExpiresOn;
+        public DateTime CreatedOn { get; set; }
+        public DateTime? RevokedOn { get; set; }
+        public bool IsActive => RevokedOn == null && !IsExpired;
     }
 }

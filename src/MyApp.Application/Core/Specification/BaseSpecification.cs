@@ -36,7 +36,8 @@ namespace MyApp.Application.Core.Specifications
         {
             Skip = skip;
             Take = take;
-            IsPagingEnabled = true;
+            if(Take > 0)
+                IsPagingEnabled = true;
         }
 
         public virtual void ApplyOrderBy(Expression<Func<T, object>> orderByExpression)

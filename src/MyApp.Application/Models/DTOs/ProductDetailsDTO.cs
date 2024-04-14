@@ -12,7 +12,10 @@ namespace MyApp.Application.Models.DTOs
         public int Id { get; set; }
 
         public string Name { get; set; } 
-        public int? Tag { get; set; } 
+
+        public int? Tag { get; set; }
+        
+        public int Qty { get; set; }
 
         public string? Description { get; set; }
 
@@ -23,7 +26,7 @@ namespace MyApp.Application.Models.DTOs
         public decimal RateValue { get; set; }
 
         public int TotalRate { get; set; }
-
+        public DateTime CreationDate { get; set; }
         public int DiscountPercentage { get; set; }
         public string? BrandName { get; set; }
         public ICollection<Gallery>? ProductImgs { get; set; }

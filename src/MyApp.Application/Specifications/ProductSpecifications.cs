@@ -1,6 +1,7 @@
 ﻿using MyApp.Application.Core.Specifications;
 using MyApp.Application.Models.DTOs;
 using MyApp.Domain.Entities;
+using MyApp.Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.Data.Common;
@@ -16,13 +17,13 @@ namespace MyApp.Application.Specifications
     {
         public static BaseSpecification<Product> GetProductsByBrandId(int id, int pageNo, int pageSize)
         {
-            var spec = new BaseSpecification<Product>(x => x.BrandId == id);
+            var spec = new BaseSpecification<Product>(Product => Product.BrandId == id);
             spec.ApplyPaging((pageNo - 1) * pageSize, pageSize);
             return spec;
         }
         public static BaseSpecification<Product> GetProductsByCategoryId(int id, int pageNo, int pageSize)
         {
-            var spec = new BaseSpecification<Product>(x => x.CategoryId == id);
+            var spec = new BaseSpecification<Product>(Product => Product.CategoryId == id);
             spec.ApplyPaging((pageNo - 1) * pageSize, pageSize);
             return spec;
         }
@@ -35,22 +36,28 @@ namespace MyApp.Application.Specifications
 
         public static BaseSpecification<Product> GetProductByIdWithImgs(int id)
         {
-            var spec = new BaseSpecification<Product>(x => x.Id == id);
+            var spec = new BaseSpecification<Product>(Product => Product.Id == id);
             spec.AddInclude(p => p.Imgs);
             return spec;
         }
 
         public static BaseSpecification<Product> GetProductWithRateGt4_5(int pageNo, int pageSize)
         {
-            var spec = new BaseSpecification<Product>(x => x.RateValue >= 4.5m || x.Tag == 1 );//tag 1 - bestsale
+            var spec = new BaseSpecification<Product>(Product => Product.RateValue >= 4.5m || Product.Tag == (int)TagType.Best);
             spec.ApplyPaging((pageNo - 1) * pageSize, pageSize);
             return spec;
         }
 
         public static BaseSpecification<Product> GetRecentProduct(int pageNo, int pageSize)
         {
-            var spec = new BaseSpecification<Product>(x =>   x.CreationDate.AddDays(7) >= DateTime.Today  );
-           // var spec = new BaseSpecification<Product>(x =>  x.CreationDate < DateTime.Today);
+            var spec = new BaseSpecification<Product>(Product => Product.CreationDate.AddDays(7) >= DateTime.Today || Product.Tag == (int)TagType.Recent);
+            spec.ApplyPaging((pageNo - 1) * pageSize, pageSize);
+            return spec;
+        }
+
+        public static BaseSpecification<Product> GetMostPopularProduct(int pageNo, int pageSize)
+        {
+            var spec = new BaseSpecification<Product>(Product => Product.Tag == (int)TagType.MostPopular);
             spec.ApplyPaging((pageNo - 1) * pageSize, pageSize);
             return spec;
         }
@@ -110,7 +117,23 @@ namespace MyApp.Application.Specifications
                     ), parameter);
                 filterExpression = filterExpression != null ? Expression.AndAlso(filterExpression, UptoDiscountExprestion.Body) : UptoDiscountExprestion.Body;
             }
-
+            if (filters.Recent)
+            {
+                var recentSpec = GetRecentProduct(pageNo, pageSize);
+                var UptoDiscountExprestion = Expression.Lambda<Func<Product, bool>>(
+                    Expression.AndAlso(recentSpec.Criteria, filterExpression), recentSpec.Criteria.Parameters);
+                filterExpression = filterExpression != null ? Expression.AndAlso(filterExpression, recentSpec.Criteria.Body) : recentSpec.Criteria.Body;
+            }
+            if (filters.MostPopular)
+            {
+                var mostPopularSpec = GetMostPopularProduct(pageNo, pageSize);
+                filterExpression = filterExpression != null ? Expression.AndAlso(filterExpression, mostPopularSpec.Criteria.Body) : mostPopularSpec.Criteria.Body;
+            }
+            if (filters.Best)
+            {
+                var bestSpec = GetProductWithRateGt4_5(pageNo, pageSize);
+                filterExpression = filterExpression != null ? Expression.AndAlso(filterExpression, bestSpec.Criteria.Body) : bestSpec.Criteria.Body;
+            }
             expression = Expression.Lambda<Func<Product, bool>>(filterExpression, parameter);
             var spec = new BaseSpecification<Product>(criteria: expression);
             spec.ApplyPaging((pageNo - 1) * pageSize, pageSize);

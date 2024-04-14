@@ -10,6 +10,8 @@ namespace MyApp.Application.Models.DTOs
         public string? Description { get; set; }
         public int BrandId { get; set; }
         public decimal Price { get; set; }
+        public DateTime CreationDate { get; set; }
+
         public int Qty { get; set; }
         public int DiscountPercentage { get; set; }  
         public int?  Tag { get; set;}

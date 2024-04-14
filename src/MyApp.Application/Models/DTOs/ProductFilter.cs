@@ -13,6 +13,9 @@ namespace MyApp.Application.Models.DTOs
         public decimal? MinPrice { get; set; }
         public decimal? MaxPrice { get; set; }
         public int? Discount { get; set; }
+        public bool Best { get; set; }
+        public bool Recent { get; set; }
+        public bool MostPopular { get; set; }
         public List<int>? Tags { get; set; }
     }
 }
