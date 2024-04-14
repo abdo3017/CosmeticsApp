@@ -9,13 +9,6 @@ namespace MyApp.Application.Models.DTOs
         public string LastName { get; set; }
         public string EmailId { get; set; }
 
-        public UserDTO(User user)
-        {
-            Id = user.Id;
-            FirstName = user.FirstName;
-            LastName = user.LastName;
-            EmailId = user.EmailId;
-           
-        }
+       
     }
 }

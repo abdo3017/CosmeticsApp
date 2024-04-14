@@ -45,7 +45,9 @@ namespace MyApp.Application.Services
 
         public async Task<List<ReviewDTO>> GetAllReviews()
         {
-            var reviews = await _repository.GetAllAsync();
+            var specification = ReviewSpecifications.GetReviewWithUser();
+
+            var reviews = await _repository.ListAsync(specification);
 
             var reviewsDto = reviews.Select(s => s.Map()).ToList();
 

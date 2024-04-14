@@ -13,6 +13,12 @@ namespace MyApp.Application.Specifications
     public static class ReviewSpecifications
     {
         
+        public static BaseSpecification<Review> GetReviewWithUser()
+        {
+            var spec = new BaseSpecification<Review>();
+            spec.AddInclude(x => x.User);
+            return spec;
+        }
         public static BaseSpecification<Review> GetReviewById(int id)
         {
             return new BaseSpecification<Review>(x => x.Id == id);

@@ -30,6 +30,7 @@ namespace MyApp.Application.Models.Mappers
                 Id = model.Id,
                 CustomerId = model.CustomerId,
                 Comment = model.Comment,
+                CustomerName = model.User.UserName,
                 CreatedOn = model.CreatedOn,
                 Rate = model.Rate,
                 ProductId = model.ProductId

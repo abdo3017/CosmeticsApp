@@ -10,12 +10,16 @@ namespace MyApp.Infrastructure.Data.Configurations
     {
         public static void ConfigureEf(ModelBuilder modelBuilder)
         {
-
+            modelBuilder.Entity<User>(entity =>
+            {
+                entity.ToTable("aspnetusers");
+            });
             modelBuilder.Entity<Review>(entity =>
             {
                 entity.Property(e => e.Rate).HasColumnType("decimal(18, 0)");
                 entity.HasOne(d => d.User).WithMany()
-                   .HasForeignKey(d => d.CustomerId);
+                   .HasForeignKey(d => d.CustomerId)
+                   .HasPrincipalKey(x => x.Id);
             });
 
             modelBuilder.Entity<Attribute>(entity =>

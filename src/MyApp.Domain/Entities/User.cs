@@ -10,14 +10,19 @@ namespace MyApp.Domain.Entities
     {
         [Key]
         public int Id { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string EmailId { get; set; }
-        public string Password { get; set; }
-        public Guid CreatedBy { get; set; }
-        public DateTimeOffset CreatedOn { get; set; }
-        public Guid? LastModifiedBy { get; set; }
-        public DateTimeOffset? LastModifiedOn { get; set; }
-        public bool IsDeleted { get; set; }
+        public virtual DateTimeOffset? LockoutEnd { get; set; }
+        public virtual bool TwoFactorEnabled { get; set; }
+        public virtual bool PhoneNumberConfirmed { get; set; }
+        public virtual string? PhoneNumber { get; set; }
+        public virtual string? ConcurrencyStamp { get; set; }
+        public virtual string? SecurityStamp { get; set; }
+        public virtual string? PasswordHash { get; set; }
+        public virtual bool EmailConfirmed { get; set; }
+        public virtual string? NormalizedEmail { get; set; }
+        public virtual string? Email { get; set; }
+        public virtual string? NormalizedUserName { get; set; }
+        public virtual string? UserName { get; set; }
+        public virtual bool LockoutEnabled { get; set; }
+        public virtual int AccessFailedCount { get; set; }
     }
 }

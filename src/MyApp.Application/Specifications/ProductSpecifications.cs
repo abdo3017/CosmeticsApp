@@ -43,21 +43,35 @@ namespace MyApp.Application.Specifications
 
         public static BaseSpecification<Product> GetProductWithRateGt4_5(int pageNo, int pageSize)
         {
-            var spec = new BaseSpecification<Product>(Product => Product.RateValue >= 4.5m || Product.Tag == (int)TagType.Best);
+            var spec = new BaseSpecification<Product>(BestProductExepression());
             spec.ApplyPaging((pageNo - 1) * pageSize, pageSize);
             return spec;
         }
-
+        static Expression<Func<Product, bool>> RecentProductExepression()
+        {
+            Expression<Func<Product, bool>> criteria = Product => Product.CreationDate.AddDays(7) >= DateTime.Today || Product.Tag == (int)TagType.Recent;
+            return criteria;
+        }
+        static Expression<Func<Product, bool>> MostPopularProductExepression()
+        {
+            Expression<Func<Product, bool>> criteria = Product => Product.Tag == (int)TagType.MostPopular;
+            return criteria;
+        }
+        static Expression<Func<Product, bool>> BestProductExepression()
+        {
+            Expression<Func<Product, bool>> criteria = Product => Product.RateValue >= 4.5m || Product.Tag == (int)TagType.Best;
+            return criteria;
+        }
         public static BaseSpecification<Product> GetRecentProduct(int pageNo, int pageSize)
         {
-            var spec = new BaseSpecification<Product>(Product => Product.CreationDate.AddDays(7) >= DateTime.Today || Product.Tag == (int)TagType.Recent);
+            var spec = new BaseSpecification<Product>(RecentProductExepression());
             spec.ApplyPaging((pageNo - 1) * pageSize, pageSize);
             return spec;
         }
 
         public static BaseSpecification<Product> GetMostPopularProduct(int pageNo, int pageSize)
         {
-            var spec = new BaseSpecification<Product>(Product => Product.Tag == (int)TagType.MostPopular);
+            var spec = new BaseSpecification<Product>(MostPopularProductExepression());
             spec.ApplyPaging((pageNo - 1) * pageSize, pageSize);
             return spec;
         }
@@ -68,6 +82,7 @@ namespace MyApp.Application.Specifications
             Expression filterExpression = null;
             var parameter = Expression.Parameter(typeof(Product), "Product");
 
+
             if (filters.CategoryIds != null && filters.CategoryIds.Count > 0)
             {
                 var property = Expression.Property(parameter, "CategoryId");
@@ -75,6 +90,18 @@ namespace MyApp.Application.Specifications
                 var containsMethod = typeof(List<int>).GetMethod("Contains");
                 var containsCall = Expression.Call(propertyValue, containsMethod, property);
                 filterExpression = containsCall;
+            }
+            if (filters.Discount != null)
+            {
+
+                var property = Expression.Property(parameter, "DiscountPercentage");
+
+                var UptoDiscountExprestion = Expression.Lambda<Func<Product, bool>>(
+                    Expression.And(
+                        Expression.GreaterThan(property, Expression.Constant(0)),
+                        Expression.Equal(property, Expression.Constant(filters.Discount))
+                    ), parameter);
+                filterExpression = filterExpression != null ? Expression.AndAlso(filterExpression, UptoDiscountExprestion.Body) : UptoDiscountExprestion.Body;
             }
             if (filters.BrandIds != null && filters.BrandIds.Count > 0)
             {
@@ -105,42 +132,58 @@ namespace MyApp.Application.Specifications
                     parameter);
                 filterExpression = filterExpression != null ? Expression.AndAlso(filterExpression, isBetweenExprestion.Body) : isBetweenExprestion.Body;
             }
-            if (filters.Discount != null)
-            {
 
-                var property = Expression.Property(parameter, "DiscountPercentage");
+            var tagsExep = TagsExepression(filters);
 
-                var UptoDiscountExprestion = Expression.Lambda<Func<Product, bool>>(
-                    Expression.And(
-                        Expression.GreaterThan(property, Expression.Constant(0)),
-                        Expression.Equal(property, Expression.Constant(filters.Discount))
-                    ), parameter);
-                filterExpression = filterExpression != null ? Expression.AndAlso(filterExpression, UptoDiscountExprestion.Body) : UptoDiscountExprestion.Body;
-            }
-            if (filters.Recent)
-            {
-                var recentSpec = GetRecentProduct(pageNo, pageSize);
-                var UptoDiscountExprestion = Expression.Lambda<Func<Product, bool>>(
-                    Expression.AndAlso(recentSpec.Criteria, filterExpression), recentSpec.Criteria.Parameters);
-                filterExpression = filterExpression != null ? Expression.AndAlso(filterExpression, recentSpec.Criteria.Body) : recentSpec.Criteria.Body;
-            }
-            if (filters.MostPopular)
-            {
-                var mostPopularSpec = GetMostPopularProduct(pageNo, pageSize);
-                filterExpression = filterExpression != null ? Expression.AndAlso(filterExpression, mostPopularSpec.Criteria.Body) : mostPopularSpec.Criteria.Body;
-            }
-            if (filters.Best)
-            {
-                var bestSpec = GetProductWithRateGt4_5(pageNo, pageSize);
-                filterExpression = filterExpression != null ? Expression.AndAlso(filterExpression, bestSpec.Criteria.Body) : bestSpec.Criteria.Body;
-            }
-            expression = Expression.Lambda<Func<Product, bool>>(filterExpression, parameter);
+            if(filterExpression is not null)
+                expression = Expression.Lambda<Func<Product, bool>>(filterExpression, parameter);
+
+            if (expression is not null && tagsExep is not null)
+                expression = expression.And(tagsExep);
+            else if(tagsExep is not null)
+                expression = tagsExep;
+
             var spec = new BaseSpecification<Product>(criteria: expression);
             spec.ApplyPaging((pageNo - 1) * pageSize, pageSize);
 
             return spec;
         }
+        static Expression<Func<Product, bool>> TagsExepression(ProductFilter filters)
+        {
+            Expression<Func<Product, bool>> expression = null;
+            var parameter = Expression.Parameter(typeof(Product), "Product");
 
+            if (filters.Recent)
+            {
+                expression = RecentProductExepression();
+            }
+            if (filters.MostPopular)
+            {
+                var mostPopularExep = MostPopularProductExepression();
+                expression = expression != null? mostPopularExep.Or(expression): mostPopularExep;
+            }
+            if (filters.Best)
+            {
+                var bestSpec = BestProductExepression();
+                expression = expression != null ? bestSpec.Or(expression) : bestSpec;
+            }
+            return expression;
+        }
+        public static Expression<Func<T, bool>> Or<T>(this Expression<Func<T, bool>> expr1,
+                                                      Expression<Func<T, bool>> expr2)
+        {
+            var invokedExpr = Expression.Invoke(expr2, expr1.Parameters.Cast<Expression>());
+            return Expression.Lambda<Func<T, bool>>
+                  (Expression.OrElse(expr1.Body, invokedExpr), expr1.Parameters);
+        }
+
+        public static Expression<Func<T, bool>> And<T>(this Expression<Func<T, bool>> expr1,
+                                                             Expression<Func<T, bool>> expr2)
+        {
+            var invokedExpr = Expression.Invoke(expr2, expr1.Parameters.Cast<Expression>());
+            return Expression.Lambda<Func<T, bool>>
+                  (Expression.AndAlso(expr1.Body, invokedExpr), expr1.Parameters);
+        }
         static Expression ConstructContainsExpression(string Param, List<int> list, Type listType, Type entityType)
         {
             var parameter = Expression.Parameter(entityType, "Product");
@@ -151,6 +194,6 @@ namespace MyApp.Application.Specifications
             return containsCall;
         }
 
-      
+
     }
 }

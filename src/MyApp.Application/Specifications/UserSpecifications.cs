@@ -7,10 +7,7 @@ namespace MyApp.Application.Specifications
 {
     public static class UserSpecifications
     {
-        public static BaseSpecification<User> GetUserByEmailAndPasswordSpec(string emailId, string password)
-        {
-            return new BaseSpecification<User>(x => x.EmailId == emailId && x.Password == password && x.IsDeleted == false);
-        }
+     
 
        
     }
