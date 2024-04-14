@@ -31,7 +31,7 @@ namespace MyApp.Application.Models.DTOs
         public string? BrandName { get; set; }
         public ICollection<Gallery>? ProductImgs { get; set; }
 
-        public IEnumerable<IGrouping<int, AttributeValue>> AttributeValues { get; set; } = null;
+        public IEnumerable<IGrouping<int, AttributeValueDTO>> AttributeValues { get; set; } = null;
 
     }
 }

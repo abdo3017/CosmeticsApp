@@ -85,7 +85,7 @@ namespace MyApp.Application.Models.Mappers
                 CreationDate = pro.CreationDate,
                 Qty = pro.Qty,
                 DiscountPercentage = pro.DiscountPercentage,
-                AttributeValues = pro.AttributeValues.GroupBy(p=> p.AttributeId),
+                AttributeValues = pro.AttributeValues.Select(s=>s.Map()).GroupBy(p=> p.AttributeId),
                 ProductImgs = pro.Imgs,
                 BrandName = pro.Brand?.Name
             };

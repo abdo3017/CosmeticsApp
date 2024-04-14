@@ -17,6 +17,7 @@ namespace MyApp.Application.Models.Mappers
             return new AttributeValueDTO
             {
                 AttributeId = attr.AttributeId,
+                AttributeName = attr.Attribute.Name,
                 ProductId = attr.ProductId,
                 Value = attr.Value
             }; 
