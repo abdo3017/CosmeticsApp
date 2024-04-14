@@ -56,6 +56,27 @@ namespace MyApp.Infrastructure.Data
 
 
         }
+        public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
+        {
+            OnBeforeSaving();
+            try
+            {
+                return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+            }
+            catch (DbUpdateException ex)
+            {
+                ChangeTracker.Clear();
+                SqlException innerException = (ex.InnerException?.InnerException as SqlException) ?? ex.InnerException as SqlException;
+                if (innerException != null && (innerException?.Number == 2627 || innerException?.Number == 2601))
+                {
+                    throw new Exception("DuplicateKeyError");
+                }
+                else
+                {
+                    throw;
+                }
+            }
+        }
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
         {
@@ -77,6 +98,10 @@ namespace MyApp.Infrastructure.Data
                     throw;
                 }
             }
+
+        }
+        private void TrySaving()
+        {
 
         }
         private void OnBeforeSaving()

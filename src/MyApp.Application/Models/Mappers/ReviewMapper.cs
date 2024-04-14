@@ -40,7 +40,6 @@ namespace MyApp.Application.Models.Mappers
         {
             return new Review
             {
-                Id = dto.Id,
                 CustomerId = dto.CustomerId,
                 Comment = dto.Comment,
                 Rate = dto.Rate,

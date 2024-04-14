@@ -8,7 +8,6 @@ namespace MyApp.Application.Models.DTOs
 {
     public class CreateReviewDTO
     {
-        public int Id { get; set; }
         public string Comment { get; set; } = null!;
         public decimal Rate { get; set; }
         public int ProductId { get; set; }
