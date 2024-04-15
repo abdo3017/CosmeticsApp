@@ -13,6 +13,7 @@ namespace MyApp.Application.Models.DTOs
 
         public int ProductId { get; set; }
         public string AttributeName { get; set; } = null!;
+        public int Qty { get; set; }
 
         public string Value { get; set; } = null!;
     }

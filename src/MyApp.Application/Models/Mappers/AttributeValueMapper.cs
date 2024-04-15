@@ -19,6 +19,7 @@ namespace MyApp.Application.Models.Mappers
                 AttributeId = attr.AttributeId,
                 AttributeName = attr.Attribute.Name,
                 ProductId = attr.ProductId,
+                Qty = attr.Qty,
                 Value = attr.Value
             }; 
         }
@@ -27,6 +28,7 @@ namespace MyApp.Application.Models.Mappers
             return new AttributeValue
             {
                 AttributeId = attr.AttributeId,
+                Qty = attr.Qty,
                 ProductId = attr.ProductId,
                 Value = attr.Value
             };

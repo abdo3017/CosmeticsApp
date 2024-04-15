@@ -12,6 +12,7 @@ public partial class AttributeValue : BaseEntity
     public int AttributeId { get; set; }
 
     public int ProductId { get; set; }
+    public int Qty { get; set; }
 
     public string Value { get; set; } = null!;
     [JsonIgnore]
