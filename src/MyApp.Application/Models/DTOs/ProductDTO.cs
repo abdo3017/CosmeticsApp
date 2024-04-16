@@ -20,5 +20,7 @@ namespace MyApp.Application.Models.DTOs
         public int TotalRate { get; set; }
         public string? CategoryName { get; set; }
         public string? BrandName { get; set; }
+
+        public bool HasAttr { get; set; } = false; 
     }
 }

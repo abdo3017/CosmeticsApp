@@ -64,8 +64,8 @@ namespace MyApp.Application.Models.Mappers
                 RateValue = pro.RateValue,
                 CoverImg = pro.Imgs.SingleOrDefault(i => i.IsCover)?.Image,
                 CategoryName = pro.Category.Name,
-                BrandName = pro.Brand?.Name
-                 
+                BrandName = pro.Brand?.Name,
+                HasAttr = pro.AttributeValues.Count() > 0 
             };
         }
 
