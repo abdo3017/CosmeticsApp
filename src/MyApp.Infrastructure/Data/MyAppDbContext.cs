@@ -118,10 +118,11 @@ namespace MyApp.Infrastructure.Data
                     if (TheEntity != null)
                     {
                         var ModifiedOnProp = entry.Properties.Where(x =>
-                               string.Equals(x.Metadata.Name, "ModifiedOn", StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
-                        var ModifiedByProp = entry.Properties.Where(x =>
-                               string.Equals(x.Metadata.Name, "ModifiedBy", StringComparison.OrdinalIgnoreCase)
+                               string.Equals(x.Metadata.Name, "ModifiedOn", StringComparison.OrdinalIgnoreCase)
                                 || string.Equals(x.Metadata.Name, "ModificationDate", StringComparison.OrdinalIgnoreCase))
+                            .FirstOrDefault();
+                        var ModifiedByProp = entry.Properties.Where(x =>
+                               string.Equals(x.Metadata.Name, "ModifiedBy", StringComparison.OrdinalIgnoreCase))
                             .FirstOrDefault();
                         var CreatedOnProp = entry.Properties.Where(x =>
                               string.Equals(x.Metadata.Name, "CreatedOn", StringComparison.OrdinalIgnoreCase)

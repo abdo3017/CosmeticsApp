@@ -16,23 +16,44 @@ namespace MyApp.WebApi.Controllers
             _serviceManager = serviceManager;
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Add(AttributeValueDTO attr)
+        [HttpGet("GetAll")]
+        public async Task<IActionResult> GetAll()
         {
-          var res = await   _serviceManager.AttributeValueService.CreateAttrVal(attr);
+            var allAttributeValues = await _serviceManager.AttributeValueService.GetAllAttributeValues();
+            return Ok(allAttributeValues);
+        }
+
+        [HttpGet("GetAttributeValuesByAttributeId")]
+        public async Task<IActionResult> GetAttributeValuesByAttributeId(int AttributeId)
+        {
+            var filteredAttributeValues = await _serviceManager.AttributeValueService.GetAttributeValuesByAttributeId(AttributeId);
+            return Ok(filteredAttributeValues);
+        }
+
+        [HttpGet("GetAttributeValuesByProductId")]
+        public async Task<IActionResult> GetAttributeValuesByProductId(int ProductId)
+        {
+            var filteredAttributeValues = await _serviceManager.AttributeValueService.GetAttributeValuesByProductId(ProductId);
+            return Ok(filteredAttributeValues);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Add(CreateAttributeValueDTO attr)
+        {
+            var res = await _serviceManager.AttributeValueService.CreateAttrVal(attr);
             return Ok(res);
         }
 
         [HttpPut]
-        public IActionResult Update(AttributeValueDTO attr)
+        public IActionResult Update(UpdateAttributeValueDTO attr)
         {
             _serviceManager.AttributeValueService.UpdateAttrVal(attr);
             return Ok();
         }
         [HttpDelete]
-        public IActionResult Delete(AttributeValueDTO attr)
+        public IActionResult Delete(int Id)
         {
-            _serviceManager.AttributeValueService.DeleteAttrVal(attr);
+            _serviceManager.AttributeValueService.DeleteAttrVal(Id);
             return Ok();
         }
     }

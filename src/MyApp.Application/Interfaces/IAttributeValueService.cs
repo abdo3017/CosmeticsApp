@@ -10,8 +10,11 @@ namespace MyApp.Application.Interfaces
 {
     public interface IAttributeValueService
     {
-        Task<AttributeValue> CreateAttrVal(AttributeValueDTO req);
-        void DeleteAttrVal(AttributeValueDTO req);
-        void UpdateAttrVal(AttributeValueDTO req);
+        Task<AttributeValueDTO> CreateAttrVal(CreateAttributeValueDTO req);
+        void DeleteAttrVal(int id);
+        Task<List<AttributeValueDTO>> GetAllAttributeValues();
+        Task<List<AttributeValueDTO>> GetAttributeValuesByProductId(int productId);
+        Task<List<AttributeValueDTO>> GetAttributeValuesByAttributeId(int attributeId);
+        Task UpdateAttrVal(UpdateAttributeValueDTO req);
     }
 }
