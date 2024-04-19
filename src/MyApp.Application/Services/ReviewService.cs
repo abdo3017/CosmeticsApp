@@ -36,11 +36,9 @@ namespace MyApp.Application.Services
             return dtoReview;
         }
 
-        public void DeleteReview(ReviewDTO req)
+        public void DeleteReview(int id)
         {
-            var Review = req.Map();
-
-            Delete(Review);
+            DeleteById(id);
         }
 
         public async Task<List<ReviewDTO>> GetAllReviews()

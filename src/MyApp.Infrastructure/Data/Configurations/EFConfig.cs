@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Castle.Components.DictionaryAdapter.Xml;
+using Microsoft.EntityFrameworkCore;
 using MyApp.Domain.Entities;
 using MyApp.Domain.Models;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -16,6 +17,8 @@ namespace MyApp.Infrastructure.Data.Configurations
             });
             modelBuilder.Entity<Review>(entity =>
             {
+                entity.ToTable("Reviews", tb => tb.HasTrigger("Trg_UpdateProductRate"));
+
                 entity.Property(e => e.Rate).HasColumnType("decimal(18, 0)");
                 entity.HasOne(d => d.User).WithMany()
                    .HasForeignKey(d => d.CustomerId)

@@ -59,9 +59,9 @@ namespace MyApp.WebApi.Controllers
         }
 
         [HttpDelete("Delete")]
-        public IActionResult Delete(ReviewDTO Review)
+        public IActionResult Delete(int Id)
         {
-            _serviceManager.ReviewService.DeleteReview(Review);
+            _serviceManager.ReviewService.DeleteReview(Id);
             return Ok();
         }
 

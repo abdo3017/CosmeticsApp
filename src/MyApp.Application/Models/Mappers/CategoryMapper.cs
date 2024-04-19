@@ -30,7 +30,8 @@ namespace MyApp.Application.Models.Mappers
                 Name = dto.Name,
                 Description = dto.Description,
                 Icon = dto.Icon,
-                ParentId = dto.ParentId
+                ParentId = dto.ParentId,
+                IsSelected = dto.IsSelected,
             };
         }
 

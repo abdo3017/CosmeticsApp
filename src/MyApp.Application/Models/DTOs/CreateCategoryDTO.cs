@@ -12,6 +12,7 @@ namespace MyApp.Application.Models.DTOs
         public string? Description { get; set; }
         public string? Icon { get; set; }
         public int? ParentId { get; set; }
-      
+        public bool IsSelected { get; set; }
+
     }
 }

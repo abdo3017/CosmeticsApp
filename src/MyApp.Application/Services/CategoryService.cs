@@ -34,11 +34,10 @@ namespace MyApp.Application.Services
             return dtoCategory;
         }
 
-        public void DeleteCategory(CategoryDTO req)
+        public void DeleteCategory(int id)
         {
-            var category = req.Map();
 
-            Delete(category);
+            DeleteById(id);
         }
 
         public async Task<List<CategoryDTO>> GetAllCategories()

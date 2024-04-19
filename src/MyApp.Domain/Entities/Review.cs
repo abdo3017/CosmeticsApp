@@ -12,7 +12,7 @@ public partial class Review : BaseEntity
     public decimal Rate { get; set; }
     public DateTime? CreatedOn { get; set; }
     public int CustomerId { get; set; }
-    public virtual User User { get; set; } = null!;
+    public virtual User User { get; set; }
 
     public int ProductId { get; set; }
 }

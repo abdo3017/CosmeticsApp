@@ -10,7 +10,7 @@ namespace MyApp.Application.Interfaces
     {
         Task<CategoryDTO> CreateCategory(CreateCategoryDTO req);
         void UpdateCategory(CategoryDTO req);
-        void DeleteCategory(CategoryDTO req);
+        void DeleteCategory(int id);
         Task<List<CategoryDTO>> GetAllCategories();
         Task<List<CategoryDTO>> GetSelectedCategories();
         Task<CategoryDTO?> GetCategoryById(int id);
