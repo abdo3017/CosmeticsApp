@@ -12,6 +12,8 @@ namespace MyApp.Application.Models.DTOs
 
         [StringLength(50)]
         public string Username { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
 
         [StringLength(128)]
         public string Email { get; set; }

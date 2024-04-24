@@ -38,6 +38,8 @@ namespace MyApp.Infrastructure.Services
 
             var user = new AppUser
             {
+                FirstName = model.FirstName,
+                LastName = model.LastName,
                 UserName = model.Username,
                 Email = model.Email,
                 PhoneNumber = model.Phone

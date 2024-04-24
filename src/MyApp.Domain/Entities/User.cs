@@ -11,6 +11,8 @@ namespace MyApp.Domain.Entities
         [Key]
         public int Id { get; set; }
         public virtual DateTimeOffset? LockoutEnd { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
         public virtual bool TwoFactorEnabled { get; set; }
         public virtual bool PhoneNumberConfirmed { get; set; }
         public virtual string? PhoneNumber { get; set; }
