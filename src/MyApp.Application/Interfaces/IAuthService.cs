@@ -11,5 +11,6 @@ namespace MyApp.Application.Interfaces
     {
         Task<AuthModel> RegisterAsync(RegisterModel model);
         Task<AuthModel> LoginAsync(LoginDTO model);
+        Task<AuthModel> RefreshTokenAsync(string token); 
     }
 }
