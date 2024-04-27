@@ -18,5 +18,8 @@ namespace MyApp.Application.Core.Services
         IAdvertisementService AdvertisementService { get; }
         IGalleryService GalleryService { get; }
         IAttributeValueService AttributeValueService { get; }
+        IOrderService OrderService { get; }
+        ILocationService LocationService { get; } 
+        IOrderDetailsService OrderDetailsService { get; }
     }
 }

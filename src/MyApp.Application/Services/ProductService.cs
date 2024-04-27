@@ -9,6 +9,11 @@ using MyApp.Domain.Core.Repositories;
 using MyApp.Domain.Entities;
 using MyApp.Application.Models.Mappers;
 using MyApp.Domain.Core.Specifications;
+using Microsoft.EntityFrameworkCore;
+
+
+
+
 
 namespace MyApp.Application.Services
 {
@@ -120,6 +125,26 @@ namespace MyApp.Application.Services
             totalCount = spec.TotalCount;
             var productsDto = products.Select(s => s.Map()).ToList();
             return productsDto;
+        }
+
+        public async Task<bool> IsAvailableProduct(OrderDetailsDTO DTO)
+        {
+            var attrValueRepo = _unitOfWork.Repository<AttributeValue, int>();
+            var attrValue = await attrValueRepo.GetByIdAsync(DTO.AttrValueId);
+            if (attrValue != null)
+            {
+                bool isValid = attrValue.Qty >= DTO.ProductQty;
+                if (isValid) {
+                    attrValue.Qty -= DTO.ProductQty;
+                    attrValueRepo.Update(attrValue);
+                   // var productDto  = await GetProductById(DTO.ProductId);
+                    //productDto.Qty -= DTO.ProductQty; 
+                    //UpdateProduct(productDto);
+                    _unitOfWork.SaveChanges();
+                }
+                return isValid; 
+            }
+            return false;
         }
     }
 }

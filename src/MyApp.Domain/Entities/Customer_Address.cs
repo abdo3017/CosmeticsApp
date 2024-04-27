@@ -17,4 +17,6 @@ public partial class Customer_Address : BaseEntity
     public string PostalCode { get; set; } = null!;
 
     public string Area { get; set; } = null!;
+    public string? Street { get; set; }
+
 }
