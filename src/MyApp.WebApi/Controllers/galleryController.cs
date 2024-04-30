@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Hosting.Server;
+using Microsoft.AspNetCore.Mvc;
 using MyApp.Application.Core.Services;
 using MyApp.Application.Models.Mappers;
 using MyApp.Domain.Entities;
@@ -41,6 +42,27 @@ namespace MyApp.WebApi.Controllers
                 throw ex;
             }
         }
+        [HttpPost("uploadCategoryImg/{catId}")]
+        public async Task<IActionResult> UploadCategoryImg(int catId, IFormFile file)
+        {
+            try
+            {
 
+                if (file != null && file.Length > 0)
+                {
+                    await _serviceManager.CategoryService.CreateImg(catId, file);
+                    return Ok();
+                }
+                else
+                {
+                    return BadRequest("Invalid file.");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex; 
+            }
+
+        }
     }
 }

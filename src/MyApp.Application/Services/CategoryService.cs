@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace MyApp.Application.Services
 {
@@ -139,6 +140,16 @@ namespace MyApp.Application.Services
             var category = req.Map();
 
             Update(category);
+        }
+
+        public async Task<CategoryDTO> CreateImg(int CatId, IFormFile file)
+        {
+            byte[] photoData = await GalleryMapper.ConvertFormFileToBarr(file);
+            var Cat = await GetByIdAsync(CatId);
+           // var Cat = catDTO.Map();
+            Cat.Image = photoData;  
+             Update(Cat);
+            return null;
         }
     }
 }

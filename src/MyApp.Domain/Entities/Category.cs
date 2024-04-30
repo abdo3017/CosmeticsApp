@@ -21,6 +21,8 @@ public partial class Category : BaseEntity
 
     public DateTime? ModificationDate { get; set; }
 
+    public byte[]? Image { get; set; } 
+
     public virtual ICollection<Product> Products { get; set; } = new List<Product>();
 
     public virtual ICollection<Brand> Brands { get; set; } = new List<Brand>();
