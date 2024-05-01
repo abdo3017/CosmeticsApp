@@ -59,7 +59,7 @@ namespace MyApp.Application.Services
 
             return categoriesDto;
         }
-        
+
 
         public async Task<List<CategoryDTO>?> GetCategoriesByBrandId(int id)
         {
@@ -142,14 +142,15 @@ namespace MyApp.Application.Services
             Update(category);
         }
 
-        public async Task<CategoryDTO> CreateImg(int CatId, IFormFile file)
+        public async Task CreateImg(int CatId, IFormFile file)
         {
             byte[] photoData = await GalleryMapper.ConvertFormFileToBarr(file);
-            var Cat = await GetByIdAsync(CatId);
-           // var Cat = catDTO.Map();
-            Cat.Image = photoData;  
-             Update(Cat);
-            return null;
+            var cat = await GetByIdAsync(CatId);
+            if (cat is Category)
+            {
+                cat.Image = photoData;
+                Update(cat);
+            }
         }
     }
 }

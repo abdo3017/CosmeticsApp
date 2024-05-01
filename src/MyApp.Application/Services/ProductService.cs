@@ -137,9 +137,9 @@ namespace MyApp.Application.Services
                 if (isValid) {
                     attrValue.Qty -= DTO.ProductQty;
                     attrValueRepo.Update(attrValue);
-                   // var productDto  = await GetProductById(DTO.ProductId);
-                    //productDto.Qty -= DTO.ProductQty; 
-                    //UpdateProduct(productDto);
+                    var productDto  = await GetProductById(DTO.ProductId);
+                    productDto.Qty -= DTO.ProductQty; 
+                    UpdateProduct(productDto);
                     _unitOfWork.SaveChanges();
                 }
                 return isValid; 

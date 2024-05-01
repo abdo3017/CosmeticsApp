@@ -20,10 +20,7 @@ namespace MyApp.Application.Services
         private readonly IUnitOfWork _unitOfWork;
         private readonly IProductService _productService;
         private readonly IOrderDetailsService _OrderDetailsService;
-        //public OrderService(IUnitOfWork unitOfWork) : base(unitOfWork)
-        //{
-        //    _unitOfWork = unitOfWork;
-        //}
+
         public OrderService(IUnitOfWork unitOfWork, IProductService productService, IOrderDetailsService orderDetailsService) : base(unitOfWork)
         {
             _unitOfWork = unitOfWork;
@@ -45,13 +42,23 @@ namespace MyApp.Application.Services
             {
                 var Order = await Create(DTO); // create order 
 
-                var exc = DTO.Items.Where(i => !ReserveResult.RejectedProductIds.Any(r => r.ProductId == i.ProductId && r.AttrValueId == i.AttrValueId));
-                foreach (var orderDetail in exc) //create details
+                //var orderDetails = from orderDetail in DTO.Items
+                //                   join rejectedProducts in ReserveResult.RejectedProductIds
+                //                   on
+                //                   new { orderDetail.ProductId, orderDetail.AttrValueId }
+                //                   equals
+                //                   new { rejectedProducts.ProductId, rejectedProducts.AttrValueId }
+                //                   where rejectedProducts.ProductId ==null && rejectedProducts.AttrValueId == null
+                //                   select orderDetail;
+                var orderDetails = DTO.Items.Where(i => !ReserveResult.RejectedProductIds.Any(r => r.ProductId == i.ProductId && r.AttrValueId == i.AttrValueId));
+                
+                foreach (var orderDetail in orderDetails) //create details
                 {
                     var Product = await _productService.GetProductById(orderDetail.ProductId);
                     var CreatedOrderDetail = await _OrderDetailsService.Create(orderDetail, Order.Id, Product.Price);
                     Order.TotalPrice += CreatedOrderDetail.TotalPrice;
                 }
+                
                 Update(Order); // update order total 
                 ReserveResult.OrderID = Order.Id;
             }
@@ -79,7 +86,8 @@ namespace MyApp.Application.Services
 
         async Task CheckAndCutProductQtyAsync(PlaceOrderResultDTO Res, OrderDetailsDTO orderDetail)
         {
-            if (!await _productService.IsAvailableProduct(orderDetail))
+            var check = await _productService.IsAvailableProduct(orderDetail);
+            if (!check)
                 Res.RejectedProductIds.Add(new RejectedProduct
                 {
                     ProductId = orderDetail.ProductId,

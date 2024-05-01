@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MyApp.Domain.Enums
 {
-    public enum OrderStatus
+    public enum OrderType
     {
         Sales = 0,
         Return = 1,
