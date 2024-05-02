@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace MyApp.Application.Interfaces
 {
-     public interface IOrderService:IBaseOrderService
+     public interface ISalesOrderService:IOrderService,IBaseOrderService
     {
-        Task<PlaceOrderResultDTO> PlaceOrderAsync(OrderDTO DTO);
+        Task<PlaceOrderResultDTO> ReserveQtyAsync(List<OrderDetailsDTO> DTOs);
     }
 }

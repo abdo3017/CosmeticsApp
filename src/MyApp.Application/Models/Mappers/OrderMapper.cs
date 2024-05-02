@@ -23,7 +23,7 @@ namespace MyApp.Application.Models.Mappers
             };
         }
 
-        public static Order MapSalesOrderCreation(this OrderDTO dto)
+        public static Order Map(this OrderDTO dto)
         {
             return new Order
             {

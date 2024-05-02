@@ -19,9 +19,11 @@ namespace MyApp.Application.Core.Services
         private readonly Lazy<IProductService> _productService;
         private readonly Lazy<IGalleryService> _galleryService;
         private readonly Lazy<IAttributeValueService> _AttributeValueService;
-        private readonly Lazy<IOrderService> _orderService;
         private readonly Lazy<ILocationService> _locationService;
         private readonly Lazy<IOrderDetailsService> _OrderDetailsService;
+        private readonly Lazy<IBaseOrderService> _baseOrderService;
+        private readonly Lazy<ISalesOrderService> _salesOrderService;
+        private readonly Lazy<IReturnOrderService> _returnOrderService;
 
 
         public ServiceManager(IUnitOfWork unitOfWork)
@@ -33,7 +35,9 @@ namespace MyApp.Application.Core.Services
             _productService = new Lazy<IProductService>(() => new ProductService(unitOfWork));
             _galleryService = new Lazy<IGalleryService>(() => new GalleryService(unitOfWork));
             _AttributeValueService = new  Lazy<IAttributeValueService>(() => new AttributeValueService(unitOfWork));
-            _orderService = new Lazy<IOrderService>(() => new OrderService(unitOfWork , new ProductService(unitOfWork), new OrderDetailsService(unitOfWork)));
+            _baseOrderService = new Lazy<IBaseOrderService>(() => new BaseOrderService(unitOfWork));
+            _salesOrderService = new Lazy<ISalesOrderService>(() => new SalesOrderService(unitOfWork, new ProductService(unitOfWork), new OrderDetailsService(unitOfWork)));
+            _returnOrderService = new Lazy<IReturnOrderService>(() => new ReturnOrderService(unitOfWork, new ProductService(unitOfWork), new OrderDetailsService(unitOfWork)));
             _locationService = new Lazy<ILocationService>(() => new LocationService(unitOfWork));
             _OrderDetailsService = new Lazy<IOrderDetailsService>(() => new OrderDetailsService(unitOfWork));
         }
@@ -45,8 +49,11 @@ namespace MyApp.Application.Core.Services
         public IProductService ProductService => _productService.Value;
         public IGalleryService GalleryService => _galleryService.Value;
         public IAttributeValueService AttributeValueService => _AttributeValueService.Value;
-        public IOrderService OrderService => _orderService.Value;
         public ILocationService LocationService => _locationService.Value;
         public IOrderDetailsService OrderDetailsService => _OrderDetailsService.Value;
+        public IBaseOrderService BaseOrderService => _baseOrderService.Value;
+        public ISalesOrderService SalesOrderService => _salesOrderService.Value;
+        public IReturnOrderService ReturnOrderService => _returnOrderService.Value;
+
     }
 }

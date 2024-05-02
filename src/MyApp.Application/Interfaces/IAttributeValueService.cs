@@ -14,6 +14,7 @@ namespace MyApp.Application.Interfaces
         void DeleteAttrVal(int id);
         Task<List<AttributeValueDTO>> GetAllAttributeValues();
         Task<List<AttributeValueDTO>> GetAttributeValuesByProductId(int productId);
+        Task<AttributeValueDTO?> GetAttributeValuesById(int id);
         Task<List<AttributeValueDTO>> GetAttributeValuesByAttributeId(int attributeId);
         Task UpdateAttrVal(UpdateAttributeValueDTO req);
     }

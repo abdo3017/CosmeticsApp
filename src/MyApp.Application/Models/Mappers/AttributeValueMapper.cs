@@ -35,6 +35,17 @@ namespace MyApp.Application.Models.Mappers
                 Value = attr.Value
             };
         }
+        public static UpdateAttributeValueDTO MapForUpdate(this AttributeValueDTO attr)
+        {
+            return new UpdateAttributeValueDTO
+            {
+                Id = attr.Id,
+                AttributeId = attr.AttributeId,
+                Qty = attr.Qty,
+                ProductId = attr.ProductId,
+                Value = attr.Value
+            };
+        }
         public static AttributeValue Map(this CreateAttributeValueDTO attr)
         {
             return new AttributeValue

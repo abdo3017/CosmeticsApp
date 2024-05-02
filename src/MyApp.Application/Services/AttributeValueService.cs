@@ -90,5 +90,10 @@ namespace MyApp.Application.Services
                 throw new Exception("the quantity exceed product's quantity limit");
             }
         }
+
+        public async Task<AttributeValueDTO?> GetAttributeValuesById(int id)
+        {
+            return await GetAttributeValuesById(id);
+        }
     }
 }

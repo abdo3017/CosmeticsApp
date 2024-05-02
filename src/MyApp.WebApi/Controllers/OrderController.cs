@@ -13,11 +13,18 @@ namespace MyApp.WebApi.Controllers
             _serviceManager = serviceManager;
         }
 
-        [HttpPost("PlaceOrder")]
-        public async Task<IActionResult> PlaceOrder([FromBody] OrderDTO data)
+        [HttpPost("PlaceSalesOrder")]
+        public async Task<IActionResult> PlaceSalesOrder([FromBody] OrderDTO data)
         {
-            var  res = await _serviceManager.OrderService.PlaceOrderAsync(data);
+            var  res = await _serviceManager.SalesOrderService.PlaceOrderAsync(data);
             return Ok(res);
         }
+        [HttpPost("PlaceReturnOrder")]
+        public async Task<IActionResult> PlaceOrder([FromBody] OrderDTO data)
+        {
+            var res = await _serviceManager.ReturnOrderService.PlaceOrderAsync(data);
+            return Ok(res);
+        }
+
     }
 }

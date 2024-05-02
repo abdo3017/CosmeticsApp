@@ -14,24 +14,18 @@ using System.Threading.Tasks;
 
 namespace MyApp.Application.Services
 {
-    public class OrderService : BaseService<Order, int>, IOrderService
+    public class SalesOrderService : BaseOrderService, ISalesOrderService
     {
 
         private readonly IUnitOfWork _unitOfWork;
         private readonly IProductService _productService;
         private readonly IOrderDetailsService _OrderDetailsService;
 
-        public OrderService(IUnitOfWork unitOfWork, IProductService productService, IOrderDetailsService orderDetailsService) : base(unitOfWork)
+        public SalesOrderService(IUnitOfWork unitOfWork, IProductService productService, IOrderDetailsService orderDetailsService) : base(unitOfWork)
         {
             _unitOfWork = unitOfWork;
             _productService = productService;
             _OrderDetailsService = orderDetailsService;
-        }
-
-        public async Task<Order> Create(OrderDTO DTO)
-        {
-            var SalesOrder = await AddAsync(DTO.MapSalesOrderCreation());
-            return SalesOrder;
         }
 
         public async Task<PlaceOrderResultDTO> PlaceOrderAsync(OrderDTO DTO)
