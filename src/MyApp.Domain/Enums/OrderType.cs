@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace MyApp.Domain.Enums
 {
-    public enum OrderType
+    public enum OrderStatus
     {
+        Open = 0,
         Confirmed = 1,
-        Cancelled = 2,
-        Delivered = 3
+        Delivered = 2,
+        Closed = 3
     }
 }

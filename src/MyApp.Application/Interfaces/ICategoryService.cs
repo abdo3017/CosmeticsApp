@@ -14,6 +14,7 @@ namespace MyApp.Application.Interfaces
         void DeleteCategory(int id);
         Task<List<CategoryDTO>> GetAllCategories();
         Task<List<CategoryDTO>> GetSelectedCategories();
+        Task CreateImg(int CatId, IFormFile file);
         Task<CategoryDTO?> GetCategoryById(int id);
         Task<CategoryDTO?> GetCategoryByName(string name);
         Task<List<CategoryDTO>?> GetAllWithSubCategories(); 

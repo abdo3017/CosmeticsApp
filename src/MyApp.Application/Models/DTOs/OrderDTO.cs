@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MyApp.Domain.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,10 +9,14 @@ namespace MyApp.Application.Models.DTOs
 {
     public class OrderDTO
     {
-        public int CustomerId { get; set; } 
+        public int CustomerId { get; set; }
         public int AddressId { get; set; }
 
-        public List<OrderDetailsDTO> Items { get; set;}
+        public byte DeliveryType { get; set; }
+        public byte Type { get; set; } = (byte)OrderType.Sales;
+        public byte Status { get; set; } = (byte)OrderStatus.Open;
+
+        public List<OrderDetailsDTO> Items { get; set; }
 
     }
 }
