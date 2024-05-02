@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Http;
 using MyApp.Application.Models.DTOs;
 using MyApp.Application.Models.Requests;
 using MyApp.Application.Models.Responses;
@@ -18,5 +19,6 @@ namespace MyApp.Application.Interfaces
         Task<List<CategoryDTO>?> GetAllWithSubCategories(); 
         Task<CategoryDTO> GetByIdWithSubCategories(int id); 
         Task<List<CategoryDTO>?> GetCategoriesByBrandId(int id);
+        Task<CategoryDTO> CreateImg(int CatId, IFormFile file);
     }
 }

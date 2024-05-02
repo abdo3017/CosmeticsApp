@@ -22,6 +22,7 @@ namespace MyApp.Application.Core.Services
         private readonly Lazy<IOrderService> _orderService;
         private readonly Lazy<ILocationService> _locationService;
         private readonly Lazy<IOrderDetailsService> _OrderDetailsService;
+        private readonly Lazy<IshipmentCostService> _ShipmentCostService;
 
 
         public ServiceManager(IUnitOfWork unitOfWork)
@@ -36,6 +37,7 @@ namespace MyApp.Application.Core.Services
             _orderService = new Lazy<IOrderService>(() => new OrderService(unitOfWork , new ProductService(unitOfWork), new OrderDetailsService(unitOfWork)));
             _locationService = new Lazy<ILocationService>(() => new LocationService(unitOfWork));
             _OrderDetailsService = new Lazy<IOrderDetailsService>(() => new OrderDetailsService(unitOfWork));
+            _ShipmentCostService = new Lazy<IshipmentCostService>(() => new ShipmentCostService(unitOfWork));
         }
 
         public IReviewService ReviewService => _reviewService.Value;
@@ -48,5 +50,7 @@ namespace MyApp.Application.Core.Services
         public IOrderService OrderService => _orderService.Value;
         public ILocationService LocationService => _locationService.Value;
         public IOrderDetailsService OrderDetailsService => _OrderDetailsService.Value;
+        public IshipmentCostService ShipmentCostService => _ShipmentCostService.Value;
+
     }
 }

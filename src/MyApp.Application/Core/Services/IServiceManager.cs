@@ -21,5 +21,6 @@ namespace MyApp.Application.Core.Services
         IOrderService OrderService { get; }
         ILocationService LocationService { get; } 
         IOrderDetailsService OrderDetailsService { get; }
+        IshipmentCostService ShipmentCostService { get; }
     }
 }
