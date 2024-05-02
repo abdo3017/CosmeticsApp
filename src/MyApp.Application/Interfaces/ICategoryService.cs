@@ -20,6 +20,6 @@ namespace MyApp.Application.Interfaces
         Task<List<CategoryDTO>?> GetAllWithSubCategories(); 
         Task<CategoryDTO> GetByIdWithSubCategories(int id); 
         Task<List<CategoryDTO>?> GetCategoriesByBrandId(int id);
-        Task<CategoryDTO> CreateImg(int CatId, IFormFile file);
+       
     }
 }
