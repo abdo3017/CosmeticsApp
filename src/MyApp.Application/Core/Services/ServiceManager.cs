@@ -37,7 +37,7 @@ namespace MyApp.Application.Core.Services
             _AttributeValueService = new  Lazy<IAttributeValueService>(() => new AttributeValueService(unitOfWork));
             _baseOrderService = new Lazy<IBaseOrderService>(() => new BaseOrderService(unitOfWork));
             _salesOrderService = new Lazy<ISalesOrderService>(() => new SalesOrderService(unitOfWork, new ProductService(unitOfWork), new OrderDetailsService(unitOfWork)));
-            _returnOrderService = new Lazy<IReturnOrderService>(() => new ReturnOrderService(unitOfWork, new ProductService(unitOfWork), new OrderDetailsService(unitOfWork)));
+            _returnOrderService = new Lazy<IReturnOrderService>(() => new ReturnOrderService(unitOfWork, new ProductService(unitOfWork),new AttributeValueService(unitOfWork), new OrderDetailsService(unitOfWork)));
             _locationService = new Lazy<ILocationService>(() => new LocationService(unitOfWork));
             _OrderDetailsService = new Lazy<IOrderDetailsService>(() => new OrderDetailsService(unitOfWork));
         }
