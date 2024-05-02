@@ -21,6 +21,7 @@ namespace MyApp.Infrastructure.Data
         public MyAppDbContext(DbContextOptions<MyAppDbContext> options) : base(options)
         { }
 
+        public virtual DbSet<ShipmentCost> shipmentCost { get; set; }
         public virtual DbSet<Review> Reviews { get; set; }
 
         public virtual DbSet<Advertisement> Advertisements { get; set; }
