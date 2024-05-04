@@ -11,7 +11,7 @@ namespace MyApp.Domain.Entities
     {
         public int Id { get; set; } 
         public string Area { get; set; }
-        public string Ciry { get; set; }
+        public string City { get; set; }
         public decimal Cost { get; set; }
 
     }

@@ -7,9 +7,10 @@ using System.Threading.Tasks;
 
 namespace MyApp.Application.Interfaces
 {
-    public interface IshipmentCostService
+    public interface IShipmentCostService
     {
         Task<ShipmentCost> Create(ShipmentCost ShipCost);
+        Task<ShipmentCost?> GetShipmentCostByAddressId(int addressId);
         Task<IEnumerable<IGrouping<string, ShipmentCost>>> GetShipmentAddress();
         Task<ShipmentCost> AddCost(int ShipmentId, decimal Cost);
         Task<IList<ShipmentCost>> GetShipmentsAsync(int PageNO, int PageSize);

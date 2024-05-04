@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MyApp.Application.Interfaces
 {
-     public interface IOrderService:IBaseOrderService
+    public interface IOrderService : IBaseOrderService
     {
         Task<PlaceOrderResultDTO> PlaceOrderAsync(OrderDTO DTO);
     }

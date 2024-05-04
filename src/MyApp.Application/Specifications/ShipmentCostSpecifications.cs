@@ -20,8 +20,12 @@ namespace MyApp.Application.Specifications
         public static BaseSpecification<ShipmentCost> GetShipmentAddress()
         {
             var spec = new BaseSpecification<ShipmentCost>();
-            spec.ApplyGroupBy(x => x.Area); 
+            spec.ApplyGroupBy(x => x.Area);
             return spec;
+        }
+        public static BaseSpecification<ShipmentCost> GetShipmentCostByAddress(string city, string area)
+        {
+            return new BaseSpecification<ShipmentCost>(x => x.Area == area && x.City == city);
         }
     }
 }

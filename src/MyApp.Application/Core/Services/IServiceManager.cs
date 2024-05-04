@@ -23,6 +23,6 @@ namespace MyApp.Application.Core.Services
         IReturnOrderService ReturnOrderService { get; }
         ILocationService LocationService { get; } 
         IOrderDetailsService OrderDetailsService { get; }
-        IshipmentCostService ShipmentCostService { get; }
+        IShipmentCostService ShipmentCostService { get; }
     }
 }

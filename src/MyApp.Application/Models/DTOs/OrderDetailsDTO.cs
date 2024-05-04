@@ -8,7 +8,9 @@ namespace MyApp.Application.Models.DTOs
 {
     public class OrderDetailsDTO
     {
+        public int Id { get; set; } = 0;
         public int ProductId { get; set; }
+        public int OrderId { get; set; } = 0;
         public int ProductQty { get; set; }
         public int ProductPrice { get; set; } = 0;
         public decimal TotalPrice { get; set; } = 0;

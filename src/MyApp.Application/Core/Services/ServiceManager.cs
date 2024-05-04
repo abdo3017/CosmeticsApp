@@ -11,7 +11,7 @@ namespace MyApp.Application.Core.Services
 {
     public class ServiceManager : IServiceManager
     {
-        
+
         private readonly Lazy<IReviewService> _reviewService;
         private readonly Lazy<IAdvertisementService> _advertisementService;
         private readonly Lazy<ICategoryService> _categoryService;
@@ -24,7 +24,7 @@ namespace MyApp.Application.Core.Services
         private readonly Lazy<IBaseOrderService> _baseOrderService;
         private readonly Lazy<ISalesOrderService> _salesOrderService;
         private readonly Lazy<IReturnOrderService> _returnOrderService;
-        private readonly Lazy<IshipmentCostService> _ShipmentCostService;
+        private readonly Lazy<IShipmentCostService> _ShipmentCostService;
 
 
         public ServiceManager(IUnitOfWork unitOfWork)
@@ -35,13 +35,13 @@ namespace MyApp.Application.Core.Services
             _brandService = new Lazy<IBrandService>(() => new BrandService(unitOfWork));
             _productService = new Lazy<IProductService>(() => new ProductService(unitOfWork));
             _galleryService = new Lazy<IGalleryService>(() => new GalleryService(unitOfWork));
-            _AttributeValueService = new  Lazy<IAttributeValueService>(() => new AttributeValueService(unitOfWork));
-            _baseOrderService = new Lazy<IBaseOrderService>(() => new BaseOrderService(unitOfWork));
-            _salesOrderService = new Lazy<ISalesOrderService>(() => new SalesOrderService(unitOfWork, new ProductService(unitOfWork), new OrderDetailsService(unitOfWork)));
-            _returnOrderService = new Lazy<IReturnOrderService>(() => new ReturnOrderService(unitOfWork, new ProductService(unitOfWork),new AttributeValueService(unitOfWork), new OrderDetailsService(unitOfWork)));
+            _AttributeValueService = new Lazy<IAttributeValueService>(() => new AttributeValueService(unitOfWork));
+            _baseOrderService = new Lazy<IBaseOrderService>(() => new BaseOrderService(unitOfWork, new ProductService(unitOfWork), new AttributeValueService(unitOfWork), new OrderDetailsService(unitOfWork), new ShipmentCostService(unitOfWork)));
+            _salesOrderService = new Lazy<ISalesOrderService>(() => new SalesOrderService(unitOfWork, new ProductService(unitOfWork), new AttributeValueService(unitOfWork), new OrderDetailsService(unitOfWork), new ShipmentCostService(unitOfWork)));
+            _returnOrderService = new Lazy<IReturnOrderService>(() => new ReturnOrderService(unitOfWork, new ProductService(unitOfWork), new AttributeValueService(unitOfWork), new OrderDetailsService(unitOfWork), new ShipmentCostService(unitOfWork)));
             _locationService = new Lazy<ILocationService>(() => new LocationService(unitOfWork));
             _OrderDetailsService = new Lazy<IOrderDetailsService>(() => new OrderDetailsService(unitOfWork));
-            _ShipmentCostService = new Lazy<IshipmentCostService>(() => new ShipmentCostService(unitOfWork));
+            _ShipmentCostService = new Lazy<IShipmentCostService>(() => new ShipmentCostService(unitOfWork));
         }
 
         public IReviewService ReviewService => _reviewService.Value;
@@ -57,7 +57,7 @@ namespace MyApp.Application.Core.Services
         public ISalesOrderService SalesOrderService => _salesOrderService.Value;
         public IReturnOrderService ReturnOrderService => _returnOrderService.Value;
 
-        public IshipmentCostService ShipmentCostService => _ShipmentCostService.Value;
+        public IShipmentCostService ShipmentCostService => _ShipmentCostService.Value;
 
     }
 }

@@ -10,7 +10,8 @@ namespace MyApp.Domain.Enums
     {
         Open = 0,
         Confirmed = 1,
-        Delivered = 2,
-        Closed = 3
+        Canceled = 2,
+        Delivered = 3,
+        Closed = 4
     }
 }

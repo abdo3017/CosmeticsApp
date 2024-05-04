@@ -29,7 +29,7 @@ namespace MyApp.Application.Services
 
         public async Task<IList<Customer_Address>> GetAllByCustomerIdAsync(int CustomerId)
         {
-             var spec = CustomerAddressSpecifications.GetAllAddressByCustomerId(CustomerId);
+             var spec = CustomerAddressSpecifications.GetAllAddressesByCustomerId(CustomerId);
              var res = await _repository.ListAsync(spec);
             return res; 
         }

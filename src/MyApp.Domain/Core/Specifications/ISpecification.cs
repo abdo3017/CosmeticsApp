@@ -5,6 +5,7 @@ namespace MyApp.Domain.Core.Specifications
     public interface ISpecification<T>
     {
         Expression<Func<T, bool>> Criteria { get; }
+        //List<Expression<Func<T, IIncludableQueryable<T, object>>>> IncludesWithSub { get; }
         List<Expression<Func<T, object>>> Includes { get; }
         List<string> IncludeStrings { get; }
         Expression<Func<T, object>> OrderBy { get; }

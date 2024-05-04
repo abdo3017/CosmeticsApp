@@ -11,28 +11,35 @@ namespace MyApp.Application.Models.Mappers
     public static class OrderMapper
     {
 
-        public static OrderDetail Map(this OrderDetailsDTO dto, int OrderId, decimal ProductPrice)
-        {
-            return new OrderDetail
-            {
-                OrderId = OrderId,
-                ProductId = dto.ProductId,
-                Qty = dto.ProductQty,
-                TotalPrice = dto.ProductQty * ProductPrice,
-                AttrValueId = dto.AttrValueId
-            };
-        }
+        
 
         public static Order Map(this OrderDTO dto)
         {
             return new Order
             {
+                Id = dto.Id,
                 AddressId = dto.AddressId,
                 CustomerId = dto.CustomerId,
                 CreatedAt = DateTime.Now,
                 Status = dto.Status,
                 DeliveryType = dto.DeliveryType,
-                Type = dto.Type
+                Type = dto.Type,
+                OrderDetails = dto.Items.Select(s => s.Map(dto.Id,s.ProductPrice)).ToList()
+            };
+        }
+
+        public static OrderDTO Map(this Order dto)
+        {
+            return new OrderDTO
+            {
+                Id = dto.Id,
+                AddressId = dto.AddressId,
+                CustomerId = dto.CustomerId,
+                Status = dto.Status,
+                DeliveryType = (byte)dto.DeliveryType,
+                Type = dto.Type,
+                TotalPrice = dto.TotalPrice,
+                Items = dto.OrderDetails.Select(s => s.Map()).ToList()
             };
         }
     }

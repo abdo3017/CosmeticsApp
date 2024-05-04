@@ -20,12 +20,15 @@ namespace MyApp.Application.Services
         private readonly IProductService _productService;
         private readonly IAttributeValueService _attributeValueService;
         private readonly IOrderDetailsService _OrderDetailsService;
+        private readonly IShipmentCostService _shipmentCostService;
 
-        public ReturnOrderService(IUnitOfWork unitOfWork, IProductService productService, IAttributeValueService attributeValueService, IOrderDetailsService orderDetailsService) : base(unitOfWork)
+        public ReturnOrderService(IUnitOfWork unitOfWork, IProductService productService, IAttributeValueService attributeValueService, IOrderDetailsService orderDetailsService, IShipmentCostService shipmentCostService)
+            : base(unitOfWork, productService, attributeValueService, orderDetailsService, shipmentCostService)
         {
             _productService = productService;
             _attributeValueService = attributeValueService;
             _OrderDetailsService = orderDetailsService;
+            _shipmentCostService = shipmentCostService;
         }
 
         public async Task<PlaceOrderResultDTO> PlaceOrderAsync(OrderDTO DTO)
@@ -34,51 +37,32 @@ namespace MyApp.Application.Services
             {
                 await UpdateReturnedQty(item);
             });
-            var Order = await Create(DTO); // create order 
+            var order = await Create(DTO); // create order 
             var placeOrderResultDTO = new PlaceOrderResultDTO();
 
             placeOrderResultDTO.IsValidOrder = true;
-            placeOrderResultDTO.OrderID = Order.Id;
+            placeOrderResultDTO.OrderID = order.Id;
             foreach (var orderDetail in DTO.Items) //create details
             {
                 var Product = await _productService.GetProductById(orderDetail.ProductId);
                 if (Product != null)
                 {
-                    var CreatedOrderDetail = await _OrderDetailsService.Create(orderDetail, Order.Id, Product.Price);
-                    Order.TotalPrice += CreatedOrderDetail.TotalPrice;
+                    var CreatedOrderDetail = await _OrderDetailsService.Create(orderDetail, order.Id, Product.Price);
+                    order.TotalPrice += CreatedOrderDetail.TotalPrice;
                 }
             }
-
-            Update(Order); // update order total 
+            var cost = await _shipmentCostService.GetShipmentCostByAddressId(DTO.AddressId);
+            if (cost != null)
+            {
+                order.TotalPrice += cost.Cost;
+            }
+            ConfirmOrder(order.Map());
+            //Update(order); // update order total 
             return placeOrderResultDTO;
         }
 
 
-        async Task UpdateReturnedQty(OrderDetailsDTO orderDetail)
-        {
-            await UpdateProductWithReturnedQty(orderDetail);
-            await UpdateAttributeValueWithReturnedQty(orderDetail);
-        }
 
-        async Task UpdateProductWithReturnedQty(OrderDetailsDTO orderDetail)
-        {
-            var product = await _productService.GetProductById(orderDetail.ProductId);
-            if (product is productDTO)
-            {
-                product.Qty += orderDetail.ProductQty;
-                _productService.UpdateProduct(product);
-            }
-        }
-
-        async Task UpdateAttributeValueWithReturnedQty(OrderDetailsDTO orderDetail)
-        {
-            var attributeValue = await _attributeValueService.GetAttributeValuesById(orderDetail.AttrValueId);
-            if (attributeValue is AttributeValueDTO)
-            {
-                attributeValue.Qty += orderDetail.ProductQty;
-                await _attributeValueService.UpdateAttrVal(attributeValue.MapForUpdate());
-            }
-        }
 
     }
 }

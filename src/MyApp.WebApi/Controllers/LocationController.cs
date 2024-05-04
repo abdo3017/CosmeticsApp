@@ -24,11 +24,6 @@ namespace MyApp.WebApi.Controllers
             var res = await _serviceManager.LocationService.GetAllByCustomerIdAsync(customerId);
             return Ok(res);
         }
-        [HttpGet("ShippingCost")]
-        public IActionResult GetShippingCost(int AddressId)
-        {// calculate shipping cost 
-            return Ok(10);
-        }
 
         [HttpDelete("deleteAddress")]
         public IActionResult DeleteAddress(int addressId)

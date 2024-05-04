@@ -11,5 +11,6 @@ namespace MyApp.Application.Interfaces
      public interface ISalesOrderService:IOrderService,IBaseOrderService
     {
         Task<PlaceOrderResultDTO> ReserveQtyAsync(List<OrderDetailsDTO> DTOs);
+        Task CancelOrder(int id);
     }
 }

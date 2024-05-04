@@ -3,12 +3,13 @@ using MyApp.Application.Interfaces;
 using MyApp.Application.Models.DTOs;
 using MyApp.Application.Specifications;
 using MyApp.Domain.Core.Repositories;
+using MyApp.Domain.Core.Specifications;
 using MyApp.Domain.Entities;
 using System.Data.Entity.Core.Metadata.Edm;
 
 namespace MyApp.Application.Services
 {
-    public class ShipmentCostService : BaseService<ShipmentCost, int>, IshipmentCostService
+    public class ShipmentCostService : BaseService<ShipmentCost, int>, IShipmentCostService
     {
 
         private readonly IUnitOfWork _unitOfWork;
@@ -30,12 +31,12 @@ namespace MyApp.Application.Services
             return res.GroupBy(q => q.Area);
         }
 
-        public async Task<ShipmentCost> AddCost(int ShipmentId , decimal Cost)
+        public async Task<ShipmentCost> AddCost(int ShipmentId, decimal Cost)
         {
             var Shipment = await GetByIdAsync(ShipmentId);
-            if(Shipment != null)
+            if (Shipment != null)
             {
-               Shipment.Cost = Cost;
+                Shipment.Cost = Cost;
                 _unitOfWork.SaveChanges();
             }
             return Shipment;
@@ -48,5 +49,18 @@ namespace MyApp.Application.Services
             return res;
         }
 
+        public async Task<ShipmentCost?> GetShipmentCostByAddressId(int addressId)
+        {
+            ShipmentCost? cost = null;
+            var locationSpec = CustomerAddressSpecifications.GetAddressById(addressId);
+            var locationRepo = _unitOfWork.Repository<Customer_Address, int>();
+            var location = await locationRepo.FirstOrDefaultAsync(locationSpec);
+            if (location != null)
+            {
+                var spec = ShipmentCostSpecifications.GetShipmentCostByAddress(location.City, location.Area);
+                cost = await _repository.FirstOrDefaultAsync(spec);
+            }
+            return cost;
+        }
     }
 }
