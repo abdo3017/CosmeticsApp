@@ -12,7 +12,7 @@ namespace MyApp.Application.Models.DTOs
         public int ProductId { get; set; }
         public int OrderId { get; set; } = 0;
         public int ProductQty { get; set; }
-        public int ProductPrice { get; set; } = 0;
+        public decimal ProductPrice { get; set; } = 0;
         public decimal TotalPrice { get; set; } = 0;
         public int AttrValueId { get; set; }
     }
