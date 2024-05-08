@@ -23,5 +23,12 @@ namespace MyApp.Application.Specifications
         {
             return new BaseSpecification<Brand>(x => x.Id == id);
         }
+
+        public static BaseSpecification<Brand> GetBrandByNameLike(string name)
+        {
+            var spec = new BaseSpecification<Brand>(p => p.Name.Contains(name));
+            spec.ApplyPaging(0, 5);
+            return spec;
+        }
     }
 }

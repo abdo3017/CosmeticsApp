@@ -22,7 +22,9 @@ namespace MyApp.Application.Interfaces
         Task<List<productDTO>> GetBestProducts(int pageNo, int pageSize);
         Task<List<productDTO>> GetRecentProducts(int pageNo, int pageSize);
         Task<bool> IsAvailableProduct(OrderDetailsDTO DTO);
-      
+        Task<SearchResultDTO> SearchResult(string searchTxt);
+
+
 
 
     }

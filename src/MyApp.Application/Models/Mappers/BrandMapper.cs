@@ -1,5 +1,6 @@
 ﻿using MyApp.Application.Models.DTOs;
 using MyApp.Domain.Entities;
+using MyApp.Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +28,17 @@ namespace MyApp.Application.Models.Mappers
                 Name = brand.Name,
                 Id = brand.Id,
                 Image = brand.Image,
+            };
+        }
+
+        public static SearchResult MapTOSearchResult(this Brand dto)
+        {
+            return new SearchResult
+            {
+
+                Name = dto.Name,
+                Key = dto.Id,
+                Type = SearchResultType.Brand
             };
         }
     }

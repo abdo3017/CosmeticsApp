@@ -14,6 +14,7 @@ namespace MyApp.Application.Models.DTOs
         public string? Icon { get; set; }
         public bool? IsSelected { get; set; }
         public int? ParentId { get; set; }
+        public byte[]? Img { get; set; }
         public ICollection<CategoryDTO> SubCategories { get; set; } = new HashSet<CategoryDTO>();
 
     }

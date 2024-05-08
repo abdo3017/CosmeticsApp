@@ -14,6 +14,6 @@ namespace MyApp.Application.Models.DTOs
         public int ProductQty { get; set; }
         public decimal ProductPrice { get; set; } = 0;
         public decimal TotalPrice { get; set; } = 0;
-        public int AttrValueId { get; set; }
+        public int AttrValueId { get; set; } = -1;
     }
 }

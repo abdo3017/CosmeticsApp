@@ -194,6 +194,14 @@ namespace MyApp.Application.Specifications
             return containsCall;
         }
 
+        public static BaseSpecification<Product> GetProductByName(string name)
+        {
+            var spec = new BaseSpecification<Product>(p=> p.Name.Contains(name));
+            spec.ApplyPaging(0, 5);
+            return spec;
+        }
+
+
 
     }
 }

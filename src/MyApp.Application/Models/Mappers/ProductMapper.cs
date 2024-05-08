@@ -1,5 +1,6 @@
 ﻿using MyApp.Application.Models.DTOs;
 using MyApp.Domain.Entities;
+using MyApp.Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -88,6 +89,18 @@ namespace MyApp.Application.Models.Mappers
                 AttributeValues = pro.AttributeValues.Select(s=>s.Map()).GroupBy(p=> p.AttributeId),
                 ProductImgs = pro.Imgs,
                 BrandName = pro.Brand?.Name
+            };
+        }
+
+
+        public static SearchResult MapTOSearchResult(this Product dto)
+        {
+            return new SearchResult
+            {
+
+               Name = dto.Name,
+               Key = dto.Id,
+               Type= SearchResultType.Product
             };
         }
     }

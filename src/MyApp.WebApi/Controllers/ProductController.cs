@@ -114,5 +114,12 @@ namespace MyApp.WebApi.Controllers
             _serviceManager.ProductService.DeleteProduct(id);
             return Ok();
         }
+
+        [HttpGet("Search/{txt}")]
+        public async Task<IActionResult> GetAll(string txt)
+        {
+            var allProducts = await _serviceManager.ProductService.SearchResult(txt);
+            return Ok(allProducts.Brands.Union(allProducts.Products).Union(allProducts.Categories));
+        }
     }
 }

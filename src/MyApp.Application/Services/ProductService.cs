@@ -67,6 +67,13 @@ namespace MyApp.Application.Services
             var productDto = product?.Map();
             return productDto;
         }
+        public async Task<productDTO?> GetProductByIdASnoTracking(int id)
+        {
+            var spec = ProductSpecifications.GetProductByIdWithImgs(id);
+            var product = await _repository.FirstOrDefaultNoTrackingAsync(spec);
+            var productDto = product?.Map();
+            return productDto;
+        }
 
         public async Task<ProductDetailsDTO> GetProductDetails(int id)
         {
@@ -109,7 +116,7 @@ namespace MyApp.Application.Services
         {
             return totalCount;
         }
-        public async Task<List<productDTO>> GetBestProducts(int pageNo , int pageSize)
+        public async Task<List<productDTO>> GetBestProducts(int pageNo, int pageSize)
         {
             var spec = ProductSpecifications.GetProductWithRateGt4_5(pageNo, pageSize);
             var products = await _repository.ListAsync(spec);
@@ -126,6 +133,30 @@ namespace MyApp.Application.Services
             var productsDto = products.Select(s => s.Map()).ToList();
             return productsDto;
         }
+
+        public async Task<SearchResultDTO> SearchResult(string searchTxt)
+        {
+            var catRepo = _unitOfWork.Repository<Category, int>();
+            var brandRepo = _unitOfWork.Repository<Brand, int>();
+
+            var ProSpec = ProductSpecifications.GetProductByName(searchTxt);
+            var ProductsResult = await _repository.ListAsync(ProSpec);
+
+            var CatSpec = CategorySpecifications.GetCategoryByNameLike(searchTxt);
+            var CategoryResult = await catRepo.ListAsync(CatSpec);
+
+            var BrandSpec  = BrandSpecifications.GetBrandByNameLike(searchTxt);
+            var BrandResult = await brandRepo.ListAsync(BrandSpec);
+
+            return new SearchResultDTO()
+            {
+                Products = ProductsResult.Select(p => p.MapTOSearchResult()).ToList(),
+                Categories = CategoryResult.Select(p => p.MapTOSearchResult()).ToList(),
+                Brands = BrandResult.Select(p => p.MapTOSearchResult()).ToList()
+            };
+        }
+
+
 
         public async Task<bool> IsAvailableProduct(OrderDetailsDTO DTO)
         {

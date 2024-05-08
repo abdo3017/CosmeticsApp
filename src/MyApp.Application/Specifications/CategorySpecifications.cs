@@ -27,5 +27,12 @@ namespace MyApp.Application.Specifications
         {
             return new BaseSpecification<Category>(x => x.Id == id);
         }
+
+        public static BaseSpecification<Category> GetCategoryByNameLike(string name)
+        {
+            var spec = new BaseSpecification<Category>(p => p.Name.Contains(name));
+            spec.ApplyPaging(0, 5);
+            return spec;
+        }
     }
 }
