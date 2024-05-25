@@ -67,7 +67,7 @@ namespace MyApp.Application.Services
             var productDto = product?.Map();
             return productDto;
         }
-        public async Task<productDTO?> GetProductByIdASnoTracking(int id)
+        public async Task<productDTO?> GetProductByIdAsNoTracking(int id)
         {
             var spec = ProductSpecifications.GetProductByIdWithImgs(id);
             var product = await _repository.FirstOrDefaultNoTrackingAsync(spec);
@@ -162,7 +162,7 @@ namespace MyApp.Application.Services
         {
             bool isValid = false;
             var attrValueRepo = _unitOfWork.Repository<AttributeValue, int>();
-            var productDto = await GetProductById(DTO.ProductId);
+            var productDto = await GetProductByIdAsNoTracking(DTO.ProductId);
             var attrValue = await attrValueRepo.GetByIdAsync(DTO.AttrValueId);
             if (productDto is productDTO && productDto.Qty >= DTO.ProductQty)
             {
