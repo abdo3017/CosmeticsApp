@@ -145,7 +145,7 @@ namespace MyApp.Application.Services
             var CatSpec = CategorySpecifications.GetCategoryByNameLike(searchTxt);
             var CategoryResult = await catRepo.ListAsync(CatSpec);
 
-            var BrandSpec  = BrandSpecifications.GetBrandByNameLike(searchTxt);
+            var BrandSpec = BrandSpecifications.GetBrandByNameLike(searchTxt);
             var BrandResult = await brandRepo.ListAsync(BrandSpec);
 
             return new SearchResultDTO()
@@ -160,22 +160,24 @@ namespace MyApp.Application.Services
 
         public async Task<bool> IsAvailableProduct(OrderDetailsDTO DTO)
         {
+            bool isValid = false;
             var attrValueRepo = _unitOfWork.Repository<AttributeValue, int>();
+            var productDto = await GetProductById(DTO.ProductId);
             var attrValue = await attrValueRepo.GetByIdAsync(DTO.AttrValueId);
-            if (attrValue != null)
+            if (productDto is productDTO && productDto.Qty >= DTO.ProductQty)
             {
-                bool isValid = attrValue.Qty >= DTO.ProductQty;
-                if (isValid) {
-                    attrValue.Qty -= DTO.ProductQty;
-                    attrValueRepo.Update(attrValue);
-                    var productDto  = await GetProductById(DTO.ProductId);
-                    productDto.Qty -= DTO.ProductQty; 
-                    UpdateProduct(productDto);
-                    _unitOfWork.SaveChanges();
-                }
-                return isValid; 
+                isValid = true;
+                productDto.Qty -= DTO.ProductQty;
+                UpdateProduct(productDto);
             }
-            return false;
+            if (attrValue is AttributeValue && attrValue.Qty >= DTO.ProductQty)
+            {
+                isValid = true;
+                attrValue.Qty -= DTO.ProductQty;
+                attrValueRepo.Update(attrValue);
+            }
+            _unitOfWork.SaveChanges();
+            return isValid;
         }
     }
 }

@@ -71,7 +71,11 @@ namespace MyApp.Application.Services
                     var CreatedOrderDetail = await _OrderDetailsService.Create(orderDetail, Order.Id, Product.Price);
                     Order.TotalPrice += CreatedOrderDetail.TotalPrice;
                 }
-
+                var cost = await _shipmentCostService.GetShipmentCostByAddressId(DTO.AddressId);
+                if (cost != null)
+                {
+                    Order.TotalPrice += cost.Cost;
+                }
                 Update(Order); // update order total 
                 ReserveResult.OrderID = Order.Id;
             }
