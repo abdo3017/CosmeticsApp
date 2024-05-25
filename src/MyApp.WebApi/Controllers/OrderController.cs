@@ -4,6 +4,8 @@ using MyApp.Application.Models.DTOs;
 
 namespace MyApp.WebApi.Controllers
 {
+    [ApiController]
+    [Route("api/[controller]")]
     public class OrderController : ControllerBase
     {
         private readonly IServiceManager _serviceManager;
@@ -20,7 +22,7 @@ namespace MyApp.WebApi.Controllers
             return Ok(res);
         }
         [HttpPost("PlaceReturnOrder")]
-        public async Task<IActionResult> PlaceOrder([FromBody] OrderDTO data)
+        public async Task<IActionResult> PlaceReturnOrder([FromBody] OrderDTO data)
         {
             var res = await _serviceManager.ReturnOrderService.PlaceOrderAsync(data);
             return Ok(res);

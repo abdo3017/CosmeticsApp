@@ -11,7 +11,7 @@ namespace MyApp.Application.Models.DTOs
     {
         public int Id { get; set; } = 0;
         public int CustomerId { get; set; }
-        public int AddressId { get; set; }
+        public int AddressId { get; set; } = 0;
         public decimal TotalPrice { get; set; }
         public byte DeliveryType { get; set; }
         public byte Type { get; set; } = (byte)OrderType.Sales;

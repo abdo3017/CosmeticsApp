@@ -145,7 +145,7 @@ namespace MyApp.Application.Services
             var CatSpec = CategorySpecifications.GetCategoryByNameLike(searchTxt);
             var CategoryResult = await catRepo.ListAsync(CatSpec);
 
-            var BrandSpec  = BrandSpecifications.GetBrandByNameLike(searchTxt);
+            var BrandSpec = BrandSpecifications.GetBrandByNameLike(searchTxt);
             var BrandResult = await brandRepo.ListAsync(BrandSpec);
 
             return new SearchResultDTO()
@@ -160,31 +160,24 @@ namespace MyApp.Application.Services
 
             public async Task<bool> IsAvailableProduct(OrderDetailsDTO DTO)
         {
-            bool isValid;
+            bool isValid = false;
             var attrValueRepo = _unitOfWork.Repository<AttributeValue, int>();
+            var productDto = await GetProductById(DTO.ProductId);
             var attrValue = await attrValueRepo.GetByIdAsync(DTO.AttrValueId);
-            var productDto = await GetProductByIdASnoTracking(DTO.ProductId);
-            if (attrValue != null && DTO.AttrValueId != -1)
+            if (productDto is productDTO && productDto.Qty >= DTO.ProductQty)
             {
-                isValid = attrValue.Qty >= DTO.ProductQty;
-                if (isValid)
-                {
-                    attrValue.Qty -= DTO.ProductQty;
-                    attrValueRepo.Update(attrValue);
-                }
+                isValid = true;
+                productDto.Qty -= DTO.ProductQty;
+                UpdateProduct(productDto);
             }
-            else
-                isValid = productDto.Qty >= DTO.ProductQty;
-
-            if (isValid)
+            if (attrValue is AttributeValue && attrValue.Qty >= DTO.ProductQty)
             {
-                attrValue.Product.Qty -= DTO.ProductQty;
-                UpdateProduct(attrValue.Product.Map());
-                //_repository.Update(attrValue.Product);
-                _unitOfWork.SaveChanges();
-                return true;
+                isValid = true;
+                attrValue.Qty -= DTO.ProductQty;
+                attrValueRepo.Update(attrValue);
             }
-            return false;
+            _unitOfWork.SaveChanges();
+            return isValid;
         }
     }
 }
