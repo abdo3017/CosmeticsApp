@@ -10,6 +10,9 @@ namespace MyApp.Application.Models.DTOs
     {
         public int ProductId { get; set; }
         public int AttrValueId { get; set; }
+        public string AttrName { get; set; }
+        public string ProductName { get; set; }
+        public int Qty { get; set; }
 
     }
 }

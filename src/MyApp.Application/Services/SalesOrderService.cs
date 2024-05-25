@@ -68,7 +68,8 @@ namespace MyApp.Application.Services
                 foreach (var orderDetail in orderDetails) //create details
                 {
                     var Product = await _productService.GetProductById(orderDetail.ProductId);
-                    var CreatedOrderDetail = await _OrderDetailsService.Create(orderDetail, Order.Id, Product.Price);
+                    decimal ProductPriceAfterDiscount = Product.Price - (Product.DiscountPercentage * Product.Price / 100); 
+                    var CreatedOrderDetail = await _OrderDetailsService.Create(orderDetail, Order.Id, ProductPriceAfterDiscount);
                     Order.TotalPrice += CreatedOrderDetail.TotalPrice;
                 }
 
@@ -101,11 +102,20 @@ namespace MyApp.Application.Services
         {
             var check = await _productService.IsAvailableProduct(orderDetail);
             if (!check)
+            {
+                var product =  await _productService.GetProductById(orderDetail.ProductId);
+                var atrr = await _attributeValueService.GetAttributeValuesById(orderDetail.AttrValueId);
                 Res.RejectedProductIds.Add(new RejectedProduct
                 {
                     ProductId = orderDetail.ProductId,
-                    AttrValueId = orderDetail.AttrValueId
-                });
+                    AttrValueId = orderDetail.AttrValueId,
+                    ProductName = product.Name,
+                    Qty = atrr.Qty,
+                    AttrName = atrr.AttributeName
+                }); ;
+                ;
+            }
+
         }
 
     }

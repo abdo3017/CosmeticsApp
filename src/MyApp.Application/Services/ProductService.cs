@@ -158,22 +158,31 @@ namespace MyApp.Application.Services
 
 
 
-        public async Task<bool> IsAvailableProduct(OrderDetailsDTO DTO)
+            public async Task<bool> IsAvailableProduct(OrderDetailsDTO DTO)
         {
+            bool isValid;
             var attrValueRepo = _unitOfWork.Repository<AttributeValue, int>();
             var attrValue = await attrValueRepo.GetByIdAsync(DTO.AttrValueId);
-            if (attrValue != null)
+            var productDto = await GetProductByIdASnoTracking(DTO.ProductId);
+            if (attrValue != null && DTO.AttrValueId != -1)
             {
-                bool isValid = attrValue.Qty >= DTO.ProductQty;
-                if (isValid) {
+                isValid = attrValue.Qty >= DTO.ProductQty;
+                if (isValid)
+                {
                     attrValue.Qty -= DTO.ProductQty;
                     attrValueRepo.Update(attrValue);
-                    var productDto  = await GetProductById(DTO.ProductId);
-                    productDto.Qty -= DTO.ProductQty; 
-                    UpdateProduct(productDto);
-                    _unitOfWork.SaveChanges();
                 }
-                return isValid; 
+            }
+            else
+                isValid = productDto.Qty >= DTO.ProductQty;
+
+            if (isValid)
+            {
+                attrValue.Product.Qty -= DTO.ProductQty;
+                UpdateProduct(attrValue.Product.Map());
+                //_repository.Update(attrValue.Product);
+                _unitOfWork.SaveChanges();
+                return true;
             }
             return false;
         }
