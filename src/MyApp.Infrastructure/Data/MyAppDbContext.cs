@@ -49,6 +49,7 @@ namespace MyApp.Infrastructure.Data
         public virtual DbSet<OrderDetail> OrderDetails { get; set; }
 
         public virtual DbSet<Product> Products { get; set; }
+        public virtual DbSet<CardToken> CardTokens { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

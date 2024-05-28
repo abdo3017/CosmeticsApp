@@ -24,7 +24,8 @@ namespace MyApp.Application.Core.Services
         private readonly Lazy<IBaseOrderService> _baseOrderService;
         private readonly Lazy<ISalesOrderService> _salesOrderService;
         private readonly Lazy<IReturnOrderService> _returnOrderService;
-        private readonly Lazy<IShipmentCostService> _ShipmentCostService;
+        private readonly Lazy<IShipmentCostService> _shipmentCostService;
+        private readonly Lazy<ICardTokenService> _cardTokenService;
 
 
         public ServiceManager(IUnitOfWork unitOfWork)
@@ -41,9 +42,11 @@ namespace MyApp.Application.Core.Services
             _returnOrderService = new Lazy<IReturnOrderService>(() => new ReturnOrderService(unitOfWork, new ProductService(unitOfWork), new AttributeValueService(unitOfWork), new OrderDetailsService(unitOfWork), new ShipmentCostService(unitOfWork)));
             _locationService = new Lazy<ILocationService>(() => new LocationService(unitOfWork));
             _OrderDetailsService = new Lazy<IOrderDetailsService>(() => new OrderDetailsService(unitOfWork));
-            _ShipmentCostService = new Lazy<IShipmentCostService>(() => new ShipmentCostService(unitOfWork));
+            _shipmentCostService = new Lazy<IShipmentCostService>(() => new ShipmentCostService(unitOfWork));
+            _cardTokenService = new Lazy<ICardTokenService>(() => new CardTokenService(unitOfWork));
         }
 
+        public ICardTokenService CardTokenService => _cardTokenService.Value;
         public IReviewService ReviewService => _reviewService.Value;
         public IAdvertisementService AdvertisementService => _advertisementService.Value;
         public ICategoryService CategoryService => _categoryService.Value;
@@ -57,7 +60,7 @@ namespace MyApp.Application.Core.Services
         public ISalesOrderService SalesOrderService => _salesOrderService.Value;
         public IReturnOrderService ReturnOrderService => _returnOrderService.Value;
 
-        public IShipmentCostService ShipmentCostService => _ShipmentCostService.Value;
+        public IShipmentCostService ShipmentCostService => _shipmentCostService.Value;
 
     }
 }

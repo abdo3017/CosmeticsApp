@@ -11,6 +11,7 @@ namespace MyApp.Application.Core.Services
     public interface IServiceManager
     {
 
+        ICardTokenService CardTokenService { get; }
         IReviewService ReviewService { get; }
         ICategoryService CategoryService { get; }
         IBrandService BrandService { get; }

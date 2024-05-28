@@ -18,19 +18,18 @@ var appSettings = new ConfigurationBuilder()
 MyApp.Application.DependencyInjections.ConfigureServices(builder.Services);
 MyApp.Infrastructure.DependencyInjections.ConfigureServices(builder.Services, appSettings);
 
-builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
+builder.Services.AddLocalization(options => options.ResourcesPath = @"src\\MyApp.Domain\\Resources");
 
 
 builder.Services.Configure<RequestLocalizationOptions>(options =>
 {
     var supportedCultures = new[]
     {
-        new CultureInfo("en-US"),
-        new CultureInfo("ar-EG"),
-        new CultureInfo("fr-FR")
+        new CultureInfo("en"),
+        new CultureInfo("ar")
     };
 
-    options.DefaultRequestCulture = new RequestCulture(culture: "en-US", uiCulture: "en-US");
+    options.DefaultRequestCulture = new RequestCulture(culture: "en", uiCulture: "en");
     options.SupportedCultures = supportedCultures;
     options.SupportedUICultures = supportedCultures;
 });

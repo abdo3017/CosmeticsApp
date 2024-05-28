@@ -113,11 +113,3 @@ namespace MyApp.Application.Services
         }
     }
 }
-
-
-
-// check qty 
-//cut qty 
-//create order 
-//create orderDetails
-//

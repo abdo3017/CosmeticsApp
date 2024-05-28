@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using MyApp.Domain.Entities;
 using MyApp.Domain.Models;
+using MyApp.Infrastructure.Models;
 using System.ComponentModel.DataAnnotations.Schema;
 using Attribute = MyApp.Domain.Entities.Attribute;
 
@@ -11,6 +12,11 @@ namespace MyApp.Infrastructure.Data.Configurations
     {
         public static void ConfigureEf(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<CardToken>(entity =>
+            {
+                entity.Property(e => e.Token).HasMaxLength(255);
+            });
+
             modelBuilder.Entity<User>(entity =>
             {
                 entity.ToTable("aspnetusers");

@@ -4,6 +4,8 @@ using MyApp.Application.Models.DTOs;
 
 namespace MyApp.WebApi.Controllers
 {
+    [ApiController]
+    [Route("api/[controller]")]
     public class LocationController:ControllerBase
     {
         private IServiceManager _serviceManager;

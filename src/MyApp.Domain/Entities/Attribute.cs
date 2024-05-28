@@ -9,6 +9,7 @@ public partial class Attribute : BaseEntity
     public int Id { get; set; }
 
     public string Name { get; set; } = null!;
+    public string NameAr { get; set; }
 
     public virtual ICollection<AttributeValue> AttributeValues { get; set; } = new List<AttributeValue>();
 }

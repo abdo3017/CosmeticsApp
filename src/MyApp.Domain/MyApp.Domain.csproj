@@ -14,4 +14,24 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="8.0.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="Resources\Orders.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Orders.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Resources\Orders.ar.resx">
+      <CustomToolNamespace>MyApp.Domain</CustomToolNamespace>
+      <Generator></Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Resources\Orders.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Orders.Designer.cs</LastGenOutput>
+      <CustomToolNamespace>MyApp.Domain</CustomToolNamespace>
+    </EmbeddedResource>
+  </ItemGroup>
+
 </Project>

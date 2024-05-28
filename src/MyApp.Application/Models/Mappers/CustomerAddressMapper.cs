@@ -1,5 +1,6 @@
 ﻿using MyApp.Application.Models.DTOs;
 using MyApp.Domain.Entities;
+using System.Globalization;
 
 namespace MyApp.Application.Models.Mappers
 {
@@ -14,10 +15,10 @@ namespace MyApp.Application.Models.Mappers
                 City = dto.City,
                 CustomerId = dto.CustomerId,
                 Street = dto.Street,
-                Country="KSA",
-                PostalCode ="0000"
-                
-
+                Country=CultureInfo.CurrentCulture.Name=="en"?"KSA": "المملكة العربية السعودية",
+                PostalCode ="0000",
+                AreaAr = dto.AreaAr,
+                CityAr = dto.CityAr
             };
         }
     }

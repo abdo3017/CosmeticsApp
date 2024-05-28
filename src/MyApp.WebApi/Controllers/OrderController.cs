@@ -27,6 +27,11 @@ namespace MyApp.WebApi.Controllers
             var res = await _serviceManager.ReturnOrderService.PlaceOrderAsync(data);
             return Ok(res);
         }
-
+        [HttpPost("CancelOrder")]
+        public async Task<IActionResult> CancelOrder(int id)
+        {
+             await _serviceManager.SalesOrderService.CancelOrder(id);
+            return Ok();
+        }
     }
 }
