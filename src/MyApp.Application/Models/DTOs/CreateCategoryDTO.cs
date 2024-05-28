@@ -9,6 +9,7 @@ namespace MyApp.Application.Models.DTOs
     public class CreateCategoryDTO
     {
         public string? Name { get; set; }
+        public string? NameAr { get; set; }
         public string? Description { get; set; }
         public string? Icon { get; set; }
         public int? ParentId { get; set; }

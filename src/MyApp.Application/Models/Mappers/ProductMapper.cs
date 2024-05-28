@@ -3,6 +3,7 @@ using MyApp.Domain.Entities;
 using MyApp.Domain.Enums;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -44,6 +45,7 @@ namespace MyApp.Application.Models.Mappers
                 Qty = dto.Qty,
                 DiscountPercentage = dto.DiscountPercentage,             
                 Tag = dto.Tag,
+                NameAr = dto.NameAr
             };
         }
 
@@ -52,7 +54,7 @@ namespace MyApp.Application.Models.Mappers
             return new productDTO
             {
                 Id = pro.Id,
-                Name = pro.Name,
+                Name = CultureInfo.CurrentCulture.Name == "en" ? pro.Name :pro.NameAr,
                 CategoryId = pro.CategoryId,
                 Description = pro.Description,
                 BrandId = pro.BrandId,
@@ -66,7 +68,10 @@ namespace MyApp.Application.Models.Mappers
                 CoverImg = pro.Imgs.SingleOrDefault(i => i.IsCover)?.Image,
                 CategoryName = pro.Category?.Name,
                 BrandName = pro.Brand?.Name,
-                HasAttr = pro.AttributeValues.Count() > 0 
+                HasAttr = pro.AttributeValues.Count() > 0,
+                NameAr = pro.NameAr
+                
+
             };
         }
 
@@ -76,7 +81,7 @@ namespace MyApp.Application.Models.Mappers
             return new ProductDetailsDTO
             {
                 Id = pro.Id,
-                Name = pro.Name,
+                Name = CultureInfo.CurrentCulture.Name == "en" ? pro.Name : pro.NameAr,
                 Tag = pro.Tag,
                 Description = pro.Description,
                 BrandImg = pro.Brand?.Image,

@@ -3,6 +3,7 @@ using MyApp.Domain.Entities;
 using MyApp.Domain.Enums;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,7 +18,8 @@ namespace MyApp.Application.Models.Mappers
             {
                 Name = dto.Name,
                 Image = dto.Image,
-                Id = dto.Id
+                Id = dto.Id,
+                NameAr = dto.NameAr,
             };
         }
 
@@ -25,9 +27,10 @@ namespace MyApp.Application.Models.Mappers
         {
             return new BrandDTO
             {
-                Name = brand.Name,
+                Name = CultureInfo.CurrentCulture.Name=="en"?brand.Name:brand.NameAr,
                 Id = brand.Id,
                 Image = brand.Image,
+                NameAr= brand.NameAr,
             };
         }
 

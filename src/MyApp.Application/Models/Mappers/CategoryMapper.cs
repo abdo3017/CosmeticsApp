@@ -3,6 +3,7 @@ using MyApp.Domain.Entities;
 using MyApp.Domain.Enums;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -33,6 +34,7 @@ namespace MyApp.Application.Models.Mappers
                 Icon = dto.Icon,
                 ParentId = dto.ParentId,
                 IsSelected = dto.IsSelected,
+                NameAr = dto.NameAr
             };
         }
 
@@ -41,7 +43,7 @@ namespace MyApp.Application.Models.Mappers
             return new CategoryDTO
             {
                 Id = dto.Id,
-                Name = dto.Name,
+                Name = CultureInfo.CurrentCulture.Name == "en" ? dto.Name :dto.NameAr,
                 IsSelected = dto.IsSelected,
                 Description = dto.Description,
                 Icon = dto.Icon,
@@ -54,7 +56,7 @@ namespace MyApp.Application.Models.Mappers
             return new SearchResult
             {
 
-                Name = dto.Name,
+                Name = CultureInfo.CurrentCulture.Name == "en" ? dto.Name : dto.NameAr,
                 Key = dto.Id,
                 Type = SearchResultType.Categort
             };
