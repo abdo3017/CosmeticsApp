@@ -15,11 +15,11 @@ namespace MyApp.Application.Services
         {
         }
 
-        public async Task<Customer_Address> Create(AddressDto address)
+        public async Task<AddressDto> Create(AddressDto address)
         {
             Customer_Address customer_address = address.Map();
             var res = await AddAsync(customer_address);
-            return res;
+            return res.Map();
         }
 
         public void Delete(int id)
@@ -27,11 +27,11 @@ namespace MyApp.Application.Services
            DeleteById(id);
         }
 
-        public async Task<IList<Customer_Address>> GetAllByCustomerIdAsync(int CustomerId)
+        public async Task<IList<AddressDto>> GetAllByCustomerIdAsync(int CustomerId)
         {
              var spec = CustomerAddressSpecifications.GetAllAddressesByCustomerId(CustomerId);
              var res = await _repository.ListAsync(spec);
-            return res; 
+            return res.Select(s=>s.Map()).ToList(); 
         }
     }
 }

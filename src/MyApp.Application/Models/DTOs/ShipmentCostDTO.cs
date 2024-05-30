@@ -4,17 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using MyApp.Domain.Core.Models;
 
-namespace MyApp.Domain.Entities
+namespace MyApp.Application.Models.DTOs
 {
-    public class ShipmentCost : BaseEntity
+    public class ShipmentCostDTO
     {
         public int Id { get; set; }
         public string Area { get; set; } = null!;
         public string City { get; set; } = null!;
         public decimal Cost { get; set; }
+        [JsonIgnore]
         public string? AreaAr { get; set; }
+        [JsonIgnore]
         public string? CityAr { get; set; }
     }
 }

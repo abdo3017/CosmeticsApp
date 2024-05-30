@@ -1,4 +1,5 @@
-﻿using MyApp.Domain.Entities;
+﻿using MyApp.Application.Models.DTOs;
+using MyApp.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +10,10 @@ namespace MyApp.Application.Interfaces
 {
     public interface IShipmentCostService
     {
-        Task<ShipmentCost> Create(ShipmentCost ShipCost);
-        Task<ShipmentCost?> GetShipmentCostByAddressId(int addressId);
-        Task<IEnumerable<IGrouping<string, ShipmentCost>>> GetShipmentAddress();
-        Task<ShipmentCost> AddCost(int ShipmentId, decimal Cost);
-        Task<IList<ShipmentCost>> GetShipmentsAsync(int PageNO, int PageSize);
+        Task<ShipmentCostDTO> Create(ShipmentCostDTO ShipCost);
+        Task<ShipmentCostDTO?> GetShipmentCostByAddressId(int addressId);
+        Task<IEnumerable<IGrouping<string, ShipmentCostDTO>>> GetShipmentAddress();
+        Task<ShipmentCostDTO> AddCost(int ShipmentId, decimal Cost);
+        Task<IList<ShipmentCostDTO>> GetShipmentsAsync(int PageNO, int PageSize);
     }
 }

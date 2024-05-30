@@ -18,6 +18,8 @@ namespace MyApp.Application.Models.DTOs
         [JsonIgnore]
         public string? AreaAr { get; set; }
         public string Street { get; set; }
+        public string PostalCode { get; set; }
+        public string Country { get; set; }
 
     }
 }

@@ -11,9 +11,9 @@ namespace MyApp.Application.Interfaces
 {
     public interface ILocationService
     {
-        Task<Customer_Address> Create(AddressDto address);
+        Task<AddressDto> Create(AddressDto address);
         void Delete(int id);
-        Task<IList<Customer_Address>> GetAllByCustomerIdAsync(int CustomerId);
+        Task<IList<AddressDto>> GetAllByCustomerIdAsync(int CustomerId);
 
     }
 }
