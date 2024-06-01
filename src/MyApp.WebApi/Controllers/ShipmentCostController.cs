@@ -36,5 +36,13 @@ namespace MyApp.WebApi.Controllers
             return Ok(res);
         }
 
+
+        [HttpGet("GetshipmentCostByAddresssID")]
+       public async Task<IActionResult> GetshipmentCostByAddresssID(int Id)
+        {
+            var res = await _serviceManager.ShipmentCostService.GetShipmentCostByAddressId(Id);
+            return Ok(res);
+        }
+
     }
 }
