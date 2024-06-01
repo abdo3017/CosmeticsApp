@@ -3,6 +3,7 @@ using MyApp.Domain.Core.Repositories;
 using MyApp.Domain.Service;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -43,7 +44,10 @@ namespace MyApp.Application.Core.Services
             _repository.Update(entity);
             UnitOfWork.SaveChanges();
         }
-
+        public void UpdateWithoutSave(TEntity entity)
+        {
+            _repository.Update(entity);
+        }
         public void Delete(TEntity entity)
         {
             _repository.Delete(entity);
@@ -55,8 +59,18 @@ namespace MyApp.Application.Core.Services
             _repository.DeleteById(entityId);
             UnitOfWork.SaveChanges();
         }
-
-
+        public async Task<dynamic> BeginTransactionAsync(IsolationLevel isolationLevel = default)
+        {
+            return await UnitOfWork.BeginTransactionAsync(isolationLevel);
+        }
+        public async Task CommitAsync(CancellationToken cancellationToken = default)
+        {
+            await UnitOfWork.CommitAsync(cancellationToken);
+        }
+        public async Task RollbackAsync(CancellationToken cancellationToken = default)
+        {
+            await UnitOfWork.RollbackAsync(cancellationToken);
+        }
         public void Dispose()
         {
             Dispose(true);

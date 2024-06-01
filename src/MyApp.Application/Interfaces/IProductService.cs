@@ -10,6 +10,7 @@ namespace MyApp.Application.Interfaces
     {
         Task<productDTO> CreateProduct(CreateProductDTO pro );
         void UpdateProduct(productDTO pro);
+        void UpdateProductWithoutSave(productDTO pro);
         void DeleteProduct(int pro);
         int TotalCount();
         Task<List<productDTO>> GetAllProducts(int pageNo, int pageSize);
@@ -23,7 +24,7 @@ namespace MyApp.Application.Interfaces
         Task<List<productDTO>> GetRecentProducts(int pageNo, int pageSize);
         Task<bool> IsAvailableProduct(OrderDetailsDTO DTO);
         Task<SearchResultDTO> SearchResult(string searchTxt);
-
+        Task<productDTO?> GetProductByIdAsNoTracking(int id);
 
 
 

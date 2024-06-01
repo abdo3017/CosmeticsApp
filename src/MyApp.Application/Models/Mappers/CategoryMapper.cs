@@ -21,7 +21,9 @@ namespace MyApp.Application.Models.Mappers
                 Description = dto.Description,
                 Icon = dto.Icon,
                 IsSelected = dto.IsSelected,
-                ParentId = dto.ParentId
+                ParentId = dto.ParentId,
+                NameAr = dto.NameAr,
+                DescriptionAr = dto.DescriptionAr,
             };
         }
 
@@ -34,7 +36,8 @@ namespace MyApp.Application.Models.Mappers
                 Icon = dto.Icon,
                 ParentId = dto.ParentId,
                 IsSelected = dto.IsSelected,
-                NameAr = dto.NameAr
+                NameAr = dto.NameAr,
+                DescriptionAr = dto.DescriptionAr
             };
         }
 
@@ -44,8 +47,8 @@ namespace MyApp.Application.Models.Mappers
             {
                 Id = dto.Id,
                 Name = CultureInfo.CurrentCulture.Name == "en" ? dto.Name :dto.NameAr,
+                Description = CultureInfo.CurrentCulture.Name == "en" ? dto.Description : dto.DescriptionAr,
                 IsSelected = dto.IsSelected,
-                Description = dto.Description,
                 Icon = dto.Icon,
                 Img = dto.Image
             };

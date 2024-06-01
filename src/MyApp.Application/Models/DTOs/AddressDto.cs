@@ -13,13 +13,12 @@ namespace MyApp.Application.Models.DTOs
         public int CustomerId { get; set; }
         public string City { get; set; }
         public string Area { get; set; }
-        [JsonIgnore]
         public string? CityAr { get; set; }
         [JsonIgnore]
         public string? AreaAr { get; set; }
-        public string Street { get; set; }
-        public string PostalCode { get; set; }
-        public string Country { get; set; }
+        public string? Street { get; set; }
+        public string? PostalCode { get; set; }
+        public string? Country { get; set; }
 
     }
 }

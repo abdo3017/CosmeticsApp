@@ -9,6 +9,7 @@ namespace MyApp.Application.Models.DTOs
         public string? NameAr { get; set; }
         public int CategoryId { get; set; }
         public string? Description { get; set; }
+        public string? DescriptionAr { get; set; }
         public int BrandId { get; set; }
         public decimal Price { get; set; }
         public DateTime CreationDate { get; set; }

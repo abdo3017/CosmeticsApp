@@ -18,7 +18,10 @@ namespace MyApp.Application.Specifications
         {
             return new BaseSpecification<AttributeValue>(x => x.ProductId == productId);
         }
-
+        public static BaseSpecification<AttributeValue> GetAttributeValuesById(int id)
+        {
+            return new BaseSpecification<AttributeValue>(x => x.Id == id);
+        }
         internal static ISpecification<AttributeValue> GetAttributeValuesByAttributeId(int attributeId)
         {
             return new BaseSpecification<AttributeValue>(x => x.AttributeId == attributeId);

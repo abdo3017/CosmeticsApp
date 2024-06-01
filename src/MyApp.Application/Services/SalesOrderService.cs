@@ -9,6 +9,7 @@ using MyApp.Domain.Enums;
 using MyApp.Domain.Models;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,8 +25,8 @@ namespace MyApp.Application.Services
         private readonly IShipmentCostService _shipmentCostService;
         private readonly IAttributeValueService _attributeValueService;
 
-        public SalesOrderService(IUnitOfWork unitOfWork, IProductService productService, IAttributeValueService attributeValueService, IOrderDetailsService orderDetailsService,IShipmentCostService shipmentCostService)
-            : base(unitOfWork, productService, attributeValueService, orderDetailsService,shipmentCostService)
+        public SalesOrderService(IUnitOfWork unitOfWork, IProductService productService, IAttributeValueService attributeValueService, IOrderDetailsService orderDetailsService, IShipmentCostService shipmentCostService)
+            : base(unitOfWork, productService, attributeValueService, orderDetailsService, shipmentCostService)
         {
             _unitOfWork = unitOfWork;
             _productService = productService;
@@ -68,7 +69,7 @@ namespace MyApp.Application.Services
                 foreach (var orderDetail in orderDetails) //create details
                 {
                     var Product = await _productService.GetProductById(orderDetail.ProductId);
-                    decimal ProductPriceAfterDiscount = Product.Price - (Product.DiscountPercentage * Product.Price / 100); 
+                    decimal ProductPriceAfterDiscount = Product.Price - (Product.DiscountPercentage * Product.Price / 100);
                     var CreatedOrderDetail = await _OrderDetailsService.Create(orderDetail, Order.Id, ProductPriceAfterDiscount);
                     Order.TotalPrice += CreatedOrderDetail.TotalPrice;
                 }
@@ -90,11 +91,11 @@ namespace MyApp.Application.Services
             {
                 try
                 {
-                    await CheckAndCutProductQtyAsync(Res, orderDetail);
+                    await CheckAndCutQtyAsync(Res, orderDetail);
                 }
                 catch (DbUpdateConcurrencyException ex)  // in case of  Concurrency keep rebate the process 
                 {
-                    await CheckAndCutProductQtyAsync(Res, orderDetail);
+                    await CheckAndCutQtyAsync(Res, orderDetail);
                 }
             }
             Res.IsValidOrder = DTOs.Count() > Res.RejectedProductIds.Count(); // chaeck if all items rejected then the order isn't valiad and no order will be created 
@@ -102,23 +103,57 @@ namespace MyApp.Application.Services
         }
 
 
-        async Task CheckAndCutProductQtyAsync(PlaceOrderResultDTO Res, OrderDetailsDTO orderDetail)
+        async Task CheckAndCutQtyAsync(PlaceOrderResultDTO Res, OrderDetailsDTO orderDetail)
         {
-            var check = await _productService.IsAvailableProduct(orderDetail);
-            if (!check)
+            //await BeginTransactionAsync(IsolationLevel.RepeatableRead);
+
+            //check qty for prod
+            bool isValid = false;
+            var productDto = await _productService.GetProductByIdAsNoTracking(orderDetail.ProductId);
+            if (productDto is productDTO && productDto.Qty >= orderDetail.ProductQty)
             {
-                var product =  await _productService.GetProductById(orderDetail.ProductId);
-                var atrr = await _attributeValueService.GetAttributeValuesById(orderDetail.AttrValueId);
-                Res.RejectedProductIds.Add(new RejectedProduct
-                {
-                    ProductId = orderDetail.ProductId,
-                    AttrValueId = orderDetail.AttrValueId,
-                    ProductName = product.Name,
-                    Qty = atrr.Qty,
-                    AttrName = atrr.AttributeName
-                }); ;
-                ;
+                isValid = true;
+                productDto.Qty -= orderDetail.ProductQty;
+                _productService.UpdateProductWithoutSave(productDto);
             }
+            //check qty for attr 
+            var attrValue = await _attributeValueService.GetAttributeValuesByIdAsNoTracking(orderDetail.AttrValueId);
+            if (attrValue is AttributeValueDTO && attrValue.Qty >= orderDetail.ProductQty)
+            {
+                isValid = true;
+                attrValue.Qty -= orderDetail.ProductQty;
+                await _attributeValueService.UpdateAttrValWithoutSaving(attrValue.MapForUpdate());
+            }
+
+            
+            if (isValid)
+            {
+                _unitOfWork.SaveChanges();
+                //await CommitAsync();
+            }
+            else 
+            {
+                try
+                {
+                    var product = await _productService.GetProductById(orderDetail.ProductId);
+                    var atrr = await _attributeValueService.GetAttributeValuesById(orderDetail.AttrValueId);
+                    Res.RejectedProductIds.Add(new RejectedProduct
+                    {
+                        ProductId = orderDetail.ProductId,
+                        AttrValueId = orderDetail.AttrValueId,
+                        ProductName = product?.Name,
+                        Qty = atrr is null ? product.Qty : atrr.Qty,
+                        AttrName = atrr?.AttributeName
+                    });
+                }
+                catch { throw; }
+                finally
+                {
+                    //await RollbackAsync();
+                }
+
+            }
+           
 
         }
 
@@ -127,7 +162,7 @@ namespace MyApp.Application.Services
 
 
 
-// check qty 
+// check qty product
 //cut qty 
 //create order 
 //create orderDetails

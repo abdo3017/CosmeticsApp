@@ -13,9 +13,7 @@ namespace MyApp.Application.Models.DTOs
         public string Area { get; set; } = null!;
         public string City { get; set; } = null!;
         public decimal Cost { get; set; }
-        [JsonIgnore]
         public string? AreaAr { get; set; }
-        [JsonIgnore]
         public string? CityAr { get; set; }
     }
 }

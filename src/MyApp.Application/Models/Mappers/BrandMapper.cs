@@ -39,7 +39,7 @@ namespace MyApp.Application.Models.Mappers
             return new SearchResult
             {
 
-                Name = dto.Name,
+                Name = CultureInfo.CurrentCulture.Name == "en" ? dto.Name : dto.NameAr,
                 Key = dto.Id,
                 Type = SearchResultType.Brand
             };

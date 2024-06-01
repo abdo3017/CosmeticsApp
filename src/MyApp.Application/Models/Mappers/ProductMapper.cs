@@ -13,14 +13,14 @@ namespace MyApp.Application.Models.Mappers
     public static class ProductMapper
     {
 
-        public static Product Map (this productDTO dto)
+        public static Product Map(this productDTO dto)
         {
             return new Product
             {
                 Id = dto.Id,
                 Name = dto.Name,
                 CategoryId = dto.CategoryId,
-                Description= dto.Description,
+                Description = dto.Description,
                 BrandId = dto.BrandId,
                 Price = dto.Price,
                 Qty = dto.Qty,
@@ -28,7 +28,8 @@ namespace MyApp.Application.Models.Mappers
                 TotalRate = dto.TotalRate,
                 RateValue = dto.RateValue,
                 Tag = dto.Tag,
-                
+                NameAr = dto.NameAr,
+                DescriptionAr = dto.DescriptionAr,
             };
         }
 
@@ -36,16 +37,17 @@ namespace MyApp.Application.Models.Mappers
         {
             return new Product
             {
-              
+
                 Name = dto.Name,
                 CategoryId = dto.CategoryId,
                 Description = dto.Description,
                 BrandId = dto.BrandId,
                 Price = dto.Price,
                 Qty = dto.Qty,
-                DiscountPercentage = dto.DiscountPercentage,             
+                DiscountPercentage = dto.DiscountPercentage,
                 Tag = dto.Tag,
-                NameAr = dto.NameAr
+                NameAr = dto.NameAr,
+                DescriptionAr = dto.DescriptionAr
             };
         }
 
@@ -54,9 +56,9 @@ namespace MyApp.Application.Models.Mappers
             return new productDTO
             {
                 Id = pro.Id,
-                Name = CultureInfo.CurrentCulture.Name == "en" ? pro.Name :pro.NameAr,
+                Name = CultureInfo.CurrentCulture.Name == "en" ? pro.Name : pro.NameAr,
                 CategoryId = pro.CategoryId,
-                Description = pro.Description,
+                Description = CultureInfo.CurrentCulture.Name == "en" ? pro.Description : pro.DescriptionAr,
                 BrandId = pro.BrandId,
                 Price = pro.Price,
                 Qty = pro.Qty,
@@ -69,9 +71,8 @@ namespace MyApp.Application.Models.Mappers
                 CategoryName = pro.Category?.Name,
                 BrandName = pro.Brand?.Name,
                 HasAttr = pro.AttributeValues.Count() > 0,
-                NameAr = pro.NameAr
-                
-
+                NameAr = pro.NameAr,
+                DescriptionAr = pro.DescriptionAr,
             };
         }
 
@@ -83,7 +84,7 @@ namespace MyApp.Application.Models.Mappers
                 Id = pro.Id,
                 Name = CultureInfo.CurrentCulture.Name == "en" ? pro.Name : pro.NameAr,
                 Tag = pro.Tag,
-                Description = pro.Description,
+                Description = CultureInfo.CurrentCulture.Name == "en" ? pro.Description : pro.DescriptionAr,
                 BrandImg = pro.Brand?.Image,
                 Price = pro.Price,
                 RateValue = pro.RateValue,
@@ -91,7 +92,7 @@ namespace MyApp.Application.Models.Mappers
                 CreationDate = pro.CreationDate,
                 Qty = pro.Qty,
                 DiscountPercentage = pro.DiscountPercentage,
-                AttributeValues = pro.AttributeValues.Select(s=>s.Map()).GroupBy(p=> p.AttributeId),
+                AttributeValues = pro.AttributeValues.Select(s => s.Map()).GroupBy(p => p.AttributeId),
                 ProductImgs = pro.Imgs,
                 BrandName = pro.Brand?.Name
             };
@@ -103,9 +104,9 @@ namespace MyApp.Application.Models.Mappers
             return new SearchResult
             {
 
-               Name = dto.Name,
-               Key = dto.Id,
-               Type= SearchResultType.Product
+                Name = CultureInfo.CurrentCulture.Name == "en" ? dto.Name : dto.NameAr,
+                Key = dto.Id,
+                Type = SearchResultType.Product
             };
         }
     }

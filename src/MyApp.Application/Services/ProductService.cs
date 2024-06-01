@@ -88,7 +88,11 @@ namespace MyApp.Application.Services
             var product = pro.Map();
             Update(product);
         }
-
+        public void UpdateProductWithoutSave(productDTO pro)
+        {
+            var product = pro.Map();
+            UpdateWithoutSave(product);
+        }
         public List<int> GetProductPriceRange()
         {
             return [1, 22];
@@ -158,18 +162,13 @@ namespace MyApp.Application.Services
 
 
 
-            public async Task<bool> IsAvailableProduct(OrderDetailsDTO DTO)
+        public async Task<bool> IsAvailableProduct(OrderDetailsDTO DTO)
         {
             bool isValid = false;
             var attrValueRepo = _unitOfWork.Repository<AttributeValue, int>();
             var productDto = await GetProductByIdAsNoTracking(DTO.ProductId);
             var attrValue = await attrValueRepo.GetByIdAsync(DTO.AttrValueId);
-            if (productDto is productDTO && productDto.Qty >= DTO.ProductQty)
-            {
-                isValid = true;
-                productDto.Qty -= DTO.ProductQty;
-                UpdateProduct(productDto);
-            }
+            
             if (attrValue is AttributeValue && attrValue.Qty >= DTO.ProductQty)
             {
                 isValid = true;

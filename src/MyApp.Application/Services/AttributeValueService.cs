@@ -69,7 +69,13 @@ namespace MyApp.Application.Services
             await ValidateQty(attr);
             Update(attr);
         }
-        
+        public async Task UpdateAttrValWithoutSaving(UpdateAttributeValueDTO req)
+        {
+            var attr = req.Map();
+            await ValidateQty(attr);
+            UpdateWithoutSave(attr);
+        }
+
         public void DeleteAttrVal(int id)
         {
             DeleteById(id);
@@ -93,7 +99,14 @@ namespace MyApp.Application.Services
 
         public async Task<AttributeValueDTO?> GetAttributeValuesById(int id)
         {
-            return await GetAttributeValuesById(id);
+            var res = await GetByIdAsync(id);
+            return res?.Map();
+        }
+        public async Task<AttributeValueDTO?> GetAttributeValuesByIdAsNoTracking(int id)
+        {
+            var spec = AttributeValueSpecifications.GetAttributeValuesById(id);
+            var res = await _repository.FirstOrDefaultNoTrackingAsync(spec);
+            return res?.Map();
         }
     }
 }
