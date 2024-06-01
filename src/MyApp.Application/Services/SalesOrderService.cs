@@ -80,6 +80,7 @@ namespace MyApp.Application.Services
                 }
                 Update(Order); // update order total 
                 ReserveResult.OrderID = Order.Id;
+                ReserveResult.TotalPrice = Order.TotalPrice;
             }
             return ReserveResult;
         }
@@ -128,7 +129,7 @@ namespace MyApp.Application.Services
             
             if (isValid)
             {
-                _unitOfWork.SaveChanges();
+                UnitOfWork.SaveChanges();
                 //await CommitAsync();
             }
             else 

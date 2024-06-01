@@ -72,7 +72,7 @@ namespace MyApp.Application.Services
         public async Task UpdateAttrValWithoutSaving(UpdateAttributeValueDTO req)
         {
             var attr = req.Map();
-            await ValidateQty(attr);
+            //await ValidateQty(attr);
             UpdateWithoutSave(attr);
         }
 
