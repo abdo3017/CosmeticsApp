@@ -6,8 +6,6 @@ namespace MyApp.Domain.Entities;
 
 public partial class Product : BaseEntity
 {
-    //public int Id { get; set; }
-
     public string Name { get; set; } = null!;
     public string? NameAr { get; set; } 
     public int CategoryId { get; set; }
