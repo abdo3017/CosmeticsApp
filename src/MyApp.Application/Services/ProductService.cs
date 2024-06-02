@@ -178,5 +178,11 @@ namespace MyApp.Application.Services
             _unitOfWork.SaveChanges();
             return isValid;
         }
+
+        public async Task<Product?> GetProductEntityById(int id)
+        {
+            var res = await _repository.GetByIdAsync(id);
+            return res;
+        }
     }
 }

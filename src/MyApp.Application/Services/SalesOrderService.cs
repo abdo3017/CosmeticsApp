@@ -106,32 +106,35 @@ namespace MyApp.Application.Services
 
         async Task CheckAndCutQtyAsync(PlaceOrderResultDTO Res, OrderDetailsDTO orderDetail)
         {
-            //await BeginTransactionAsync(IsolationLevel.RepeatableRead);
-
-            //check qty for prod
             bool isValid = false;
-            var productDto = await _productService.GetProductByIdAsNoTracking(orderDetail.ProductId);
-            if (productDto is productDTO && productDto.Qty >= orderDetail.ProductQty)
+              var productDto = await _productService.GetProductEntityById(orderDetail.ProductId);
+            if (productDto is Product && productDto.Qty >= orderDetail.ProductQty)
             {
                 isValid = true;
                 productDto.Qty -= orderDetail.ProductQty;
-                _productService.UpdateProductWithoutSave(productDto);
             }
             //check qty for attr 
-            var attrValue = await _attributeValueService.GetAttributeValuesByIdAsNoTracking(orderDetail.AttrValueId);
-            if (attrValue is AttributeValueDTO && attrValue.Qty >= orderDetail.ProductQty)
+           
+            var attrValue = productDto.AttributeValues.FirstOrDefault(x => x.Id == orderDetail.AttrValueId);  
+            if (attrValue is AttributeValue )
             {
-                isValid = true;
-                attrValue.Qty -= orderDetail.ProductQty;
-                await _attributeValueService.UpdateAttrValWithoutSaving(attrValue.MapForUpdate());
+                if (attrValue.Qty >= orderDetail.ProductQty)
+                {
+                    isValid = true;
+                    attrValue.Qty -= orderDetail.ProductQty;
+
+                }else
+                {
+                    isValid = false;
+                    productDto.Qty += orderDetail.ProductQty;
+                }
             }
 
-            
+
             if (isValid)
-            {
+
                 UnitOfWork.SaveChanges();
-                //await CommitAsync();
-            }
+
             else 
             {
                 try

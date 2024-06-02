@@ -25,6 +25,7 @@ namespace MyApp.Application.Interfaces
         Task<bool> IsAvailableProduct(OrderDetailsDTO DTO);
         Task<SearchResultDTO> SearchResult(string searchTxt);
         Task<productDTO?> GetProductByIdAsNoTracking(int id);
+        Task<Product?> GetProductEntityById(int id);
 
 
 

@@ -10,5 +10,6 @@ namespace MyApp.Application.Models.DTOs
     {
         public int CustomerId { get; set; }
         public string Token { get; set; } = null!;
+        public int? LastDigit { get; set; }
     }
 }
