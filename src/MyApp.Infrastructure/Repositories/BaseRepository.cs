@@ -6,7 +6,7 @@ using MyApp.Domain.Core.Repositories;
 
 namespace MyApp.Infrastructure.Repositories
 {
-    public class BaseRepository<T,TType> : IBaseRepository<T, TType> where T : BaseEntity
+    public class BaseRepository<T, TType> : IBaseRepository<T, TType> where T : BaseEntity
     {
         protected readonly MyAppDbContext _dbContext;
         private bool _disposed;
@@ -19,6 +19,10 @@ namespace MyApp.Infrastructure.Repositories
         public async Task<T?> GetByIdAsync(TType id)
         {
             return await _dbContext.Set<T>().FindAsync(id);
+        }
+        public T? GetById(TType id)
+        {
+            return  _dbContext.Set<T>().Find(id);
         }
 
         public async Task<IList<T>> GetAllAsync()

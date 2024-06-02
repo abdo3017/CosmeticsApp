@@ -1,4 +1,5 @@
-﻿using MyApp.Application.Core.Services;
+﻿using Microsoft.EntityFrameworkCore;
+using MyApp.Application.Core.Services;
 using MyApp.Application.Interfaces;
 using MyApp.Application.Models.DTOs;
 using MyApp.Application.Models.Mappers;
@@ -69,7 +70,7 @@ namespace MyApp.Application.Services
             await ValidateQty(attr);
             Update(attr);
         }
-        public async Task UpdateAttrValWithoutSaving(UpdateAttributeValueDTO req)
+        public void UpdateAttrValWithoutValidatingAndSaving(UpdateAttributeValueDTO req)
         {
             var attr = req.Map();
             //await ValidateQty(attr);
@@ -83,12 +84,12 @@ namespace MyApp.Application.Services
 
         private async Task ValidateQty(AttributeValue attr)
         {
-            var spec = AttributeValueSpecifications.GetAttributeValuesByProductId(attr.ProductId);
-
             var productRepo = _unitOfWork.Repository<Product, int>();
-            var products = await productRepo.GetAllAsync();
-            var product = await productRepo.GetByIdAsync(attr.ProductId);
 
+            var specp = ProductSpecifications.GetProductById(attr.ProductId);
+            var product = await productRepo.FirstOrDefaultNoTrackingAsync(specp);
+
+            var spec = AttributeValueSpecifications.GetAttributeValuesByProductId(attr.ProductId);
             var attrList = await _repository.ListAsync(spec);
             var totalQty = attrList.Sum(x => x.Qty);
             if (totalQty + attr.Qty > product?.Qty)

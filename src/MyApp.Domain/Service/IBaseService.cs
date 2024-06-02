@@ -22,6 +22,7 @@ namespace MyApp.Domain.Service
         Task RollbackAsync(CancellationToken cancellationToken = default);
         Task CommitAsync(CancellationToken cancellationToken = default);
         void UpdateWithoutSave(T entity);
+        T? GetById(TType id);
     }
 
 }

@@ -10,45 +10,48 @@ using System.Threading.Tasks;
 
 namespace MyApp.Application.Core.Services
 {
-    public class BaseService<TEntity, TType> : IBaseService<TEntity,TType> where TEntity : BaseEntity
+    public class BaseService<T, TType> : IBaseService<T,TType> where T : BaseEntity
     {
         public IUnitOfWork UnitOfWork { get; private set; }
-        protected readonly IBaseRepository<TEntity,TType> _repository;
+        protected readonly IBaseRepository<T,TType> _repository;
         private bool _disposed;
 
         public BaseService(IUnitOfWork unitOfWork)
         {
             UnitOfWork = unitOfWork;
-            _repository = UnitOfWork.Repository<TEntity, TType>();
+            _repository = UnitOfWork.Repository<T, TType>();
         }
 
-        public async Task<TEntity?> GetByIdAsync(TType id)
+        public async Task<T?> GetByIdAsync(TType id)
         {
             return await _repository.GetByIdAsync(id);
         }
-
-        public async Task<IList<TEntity>> GetAllAsync()
+        public T? GetById(TType id)
+        {
+            return  _repository.GetById(id);
+        }
+        public async Task<IList<T>> GetAllAsync()
         {
             return await _repository.GetAllAsync();
         }
 
-        public async Task<TEntity> AddAsync(TEntity entity)
+        public async Task<T> AddAsync(T entity)
         {
             var addedEntity = await _repository.AddAsync(entity);
             await UnitOfWork.SaveChangesAsync();
             return addedEntity;
         }
 
-        public void Update(TEntity entity)
+        public void Update(T entity)
         {
             _repository.Update(entity);
             UnitOfWork.SaveChanges();
         }
-        public void UpdateWithoutSave(TEntity entity)
+        public void UpdateWithoutSave(T entity)
         {
             _repository.Update(entity);
         }
-        public void Delete(TEntity entity)
+        public void Delete(T entity)
         {
             _repository.Delete(entity);
             UnitOfWork.SaveChanges();

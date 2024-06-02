@@ -200,8 +200,11 @@ namespace MyApp.Application.Specifications
             spec.ApplyPaging(0, 5);
             return spec;
         }
-
-
+        public static BaseSpecification<Product> GetProductById(int id)
+        {
+            var spec = new BaseSpecification<Product>(p => p.Id==id);
+            return spec;
+        }
 
     }
 }

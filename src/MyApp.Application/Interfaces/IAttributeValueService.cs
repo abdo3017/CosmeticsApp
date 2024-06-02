@@ -18,6 +18,6 @@ namespace MyApp.Application.Interfaces
         Task<List<AttributeValueDTO>> GetAttributeValuesByAttributeId(int attributeId);
         Task UpdateAttrVal(UpdateAttributeValueDTO req);
         Task<AttributeValueDTO?> GetAttributeValuesByIdAsNoTracking(int id);
-        Task UpdateAttrValWithoutSaving(UpdateAttributeValueDTO req);
+        void UpdateAttrValWithoutValidatingAndSaving(UpdateAttributeValueDTO req);
     }
 }

@@ -16,5 +16,6 @@ namespace MyApp.Domain.Core.Repositories
         void DeleteById(TType entityID);
         Task<int> CountAsync(ISpecification<T> spec);
         Task<bool> AnyAsync(ISpecification<T> spec);
+        T? GetById(TType id);
     }
 }

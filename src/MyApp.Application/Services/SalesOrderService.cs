@@ -110,29 +110,32 @@ namespace MyApp.Application.Services
 
             //check qty for prod
             bool isValid = false;
-            var productDto = await _productService.GetProductByIdAsNoTracking(orderDetail.ProductId);
-            if (productDto is productDTO && productDto.Qty >= orderDetail.ProductQty)
-            {
-                isValid = true;
-                productDto.Qty -= orderDetail.ProductQty;
-                _productService.UpdateProductWithoutSave(productDto);
-            }
-            //check qty for attr 
             var attrValue = await _attributeValueService.GetAttributeValuesByIdAsNoTracking(orderDetail.AttrValueId);
-            if (attrValue is AttributeValueDTO && attrValue.Qty >= orderDetail.ProductQty)
+            if (attrValue is AttributeValueDTO)
             {
-                isValid = true;
-                attrValue.Qty -= orderDetail.ProductQty;
-                await _attributeValueService.UpdateAttrValWithoutSaving(attrValue.MapForUpdate());
+                if (attrValue.Qty >= orderDetail.ProductQty)
+                {
+                    isValid = true;
+                    attrValue.Qty -= orderDetail.ProductQty;
+                    _attributeValueService.UpdateAttrValWithoutValidatingAndSaving(attrValue.MapForUpdate());
+                }
             }
 
-            
+            //check qty for attr 
+
             if (isValid)
             {
-                UnitOfWork.SaveChanges();
-                //await CommitAsync();
+                var productDto = await _productService.GetProductByIdAsNoTracking(orderDetail.ProductId);
+                if (productDto is productDTO && productDto.Qty >= orderDetail.ProductQty)
+                {
+                    isValid = true;
+                    productDto.Qty -= orderDetail.ProductQty;
+                    _productService.UpdateProductWithoutSave(productDto);
+                    UnitOfWork.SaveChanges();
+                    //await CommitAskdync();
+                }
             }
-            else 
+            else
             {
                 try
                 {
@@ -154,7 +157,7 @@ namespace MyApp.Application.Services
                 }
 
             }
-           
+
 
         }
 
