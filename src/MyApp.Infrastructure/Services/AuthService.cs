@@ -4,6 +4,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using MyApp.Application.Interfaces;
 using MyApp.Application.Models.DTOs;
+using MyApp.Domain.Enums;
 using MyApp.Infrastructure.Data.Configurations;
 using MyApp.Infrastructure.Identity.Models;
 using MyApp.Infrastructure.Models;
@@ -60,10 +61,10 @@ namespace MyApp.Infrastructure.Services
                 return new AuthModel { Message = errors };
             }
 
-            await _userManager.AddToRoleAsync(user, "User");
+            await _userManager.AddToRoleAsync(user, nameof(model.Role));
 
             var jwtSecurityToken = await CreateJwtToken(user);
-          
+
             return new AuthModel
             {
                 Email = user.Email,
@@ -71,7 +72,8 @@ namespace MyApp.Infrastructure.Services
                 Token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken),
                 Username = user.UserName,
                 UserId = user.Id,
-                IsAuthenticated = true
+                IsAuthenticated = true,
+                Role = model.Role
             };
         }
 
@@ -95,7 +97,8 @@ namespace MyApp.Infrastructure.Services
             authModel.Email = user.Email;
             authModel.Username = user.UserName;
             //authModel.ExpiresOn = jwtSecurityToken.ValidTo;
-            authModel.Roles = rolesList.ToList();
+            RoleType role = (RoleType)Enum.Parse(typeof(RoleType), rolesList.FirstOrDefault(), true);
+            authModel.Role = role;
 
 
             if (user.RefreshTokens.Any(t => t.IsActive))
@@ -197,7 +200,9 @@ namespace MyApp.Infrastructure.Services
             authModel.Email = user.Email;
             authModel.Username = user.UserName;
             var roles = await _userManager.GetRolesAsync(user);
-            authModel.Roles = roles.ToList();
+            RoleType role = (RoleType)Enum.Parse(typeof(RoleType), roles.FirstOrDefault(), true);
+
+            authModel.Role = role;
             authModel.RefreshToken = newRefreshToken.Token;
             authModel.RefreshTokenExpiration = newRefreshToken.ExpiresOn;
 

@@ -11,5 +11,7 @@ namespace MyApp.Application.Interfaces
     public interface IOrderService : IBaseOrderService
     {
         Task<PlaceOrderResultDTO> PlaceOrderAsync(OrderDTO DTO);
+        Task<List<OrderDTO>> GetOrdersByCustomerId(int customerId);
+        
     }
 }

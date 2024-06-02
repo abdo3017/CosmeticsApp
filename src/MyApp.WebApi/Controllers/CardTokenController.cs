@@ -24,10 +24,17 @@ namespace MyApp.WebApi.Controllers
 
 
         [HttpGet("GetCardTokensByCustomerId")]
-        public async Task<IActionResult> GetBrandsByCategoryId(int id)
+        public async Task<IActionResult> GetCardTokensByCustomerId(int id)
         {
             var allCards = await _serviceManager.CardTokenService.GetCardTokensByCustomerId(id);
             return Ok(allCards);
+
+        }
+        [HttpGet("GetCardTokensById")]
+        public async Task<IActionResult> GetCardTokensById(int id)
+        {
+            var Card = await _serviceManager.CardTokenService.GetCardTokensById(id);
+            return Ok(Card);
 
         }
 
@@ -46,9 +53,9 @@ namespace MyApp.WebApi.Controllers
         }
 
         [HttpDelete("Delete")]
-        public IActionResult Delete(CardTokenDTO tokenDTO)
+        public IActionResult Delete(int Id)
         {
-            _serviceManager.CardTokenService.DeleteCardToken(tokenDTO);
+            _serviceManager.CardTokenService.DeleteCardToken(Id);
             return Ok();
         }
 

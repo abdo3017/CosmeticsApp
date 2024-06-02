@@ -1,10 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MyApp.Application.Core.Services;
+using MyApp.Application.Core.Specifications;
 using MyApp.Application.Interfaces;
 using MyApp.Application.Models.DTOs;
 using MyApp.Application.Models.Mappers;
 using MyApp.Domain.Core.Repositories;
 using MyApp.Domain.Entities;
+using MyApp.Domain.Enums;
 using MyApp.Domain.Models;
 using System;
 using System.Collections.Generic;
@@ -29,6 +31,13 @@ namespace MyApp.Application.Services
             _attributeValueService = attributeValueService;
             _OrderDetailsService = orderDetailsService;
             _shipmentCostService = shipmentCostService;
+        }
+
+        public async Task<List<OrderDTO>> GetOrdersByCustomerId(int customerId)
+        {
+            var spec = new BaseSpecification<Order>(x => x.Type == (int)OrderType.Return && x.CustomerId == customerId);
+            spec.ApplyOrderByDescending(x => x.CreatedAt);
+            return await GetOrdersByCustomerId(spec);
         }
 
         public async Task<PlaceOrderResultDTO> PlaceOrderAsync(OrderDTO DTO)

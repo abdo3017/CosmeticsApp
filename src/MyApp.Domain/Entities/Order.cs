@@ -20,7 +20,7 @@ public partial class Order : BaseEntity
 
     public int AddressId { get; set; }
 
-    public int DeliveryType { get; set; }
+    public byte DeliveryType { get; set; }
     public DateTime? DeliveredAt { get; set; }
 
     public virtual ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();

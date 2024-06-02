@@ -31,7 +31,8 @@ namespace MyApp.Application.Models.Mappers
                 CustomerId = dto.CustomerId,
                 Street = dto.Street,
                 Country = CultureInfo.CurrentCulture.Name == "en" ? dto.Country : dto.CountryAr,
-                PostalCode = dto.PostalCode
+                PostalCode = dto.PostalCode,
+                Id = dto.Id
             };
         }
     }

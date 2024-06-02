@@ -1,9 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MyApp.Application.Core.Services;
+using MyApp.Application.Core.Specifications;
 using MyApp.Application.Interfaces;
 using MyApp.Application.Models.DTOs;
 using MyApp.Application.Models.Mappers;
 using MyApp.Domain.Core.Repositories;
+using MyApp.Domain.Core.Specifications;
 using MyApp.Domain.Entities;
 using MyApp.Domain.Enums;
 using MyApp.Domain.Models;
@@ -46,6 +48,13 @@ namespace MyApp.Application.Services
 
             Update(order);
 
+        }
+
+        public async Task<List<OrderDTO>> GetOrdersByCustomerId(int customerId)
+        {
+            var spec = new BaseSpecification<Order>(x => x.Type == (int)OrderType.Sales && x.CustomerId == customerId);
+            spec.ApplyOrderByDescending(x => x.CreatedAt);
+            return await GetOrdersByCustomerId(spec);
         }
 
         public async Task<PlaceOrderResultDTO> PlaceOrderAsync(OrderDTO DTO)
@@ -110,14 +119,18 @@ namespace MyApp.Application.Services
 
             //check qty for prod
             bool isValid = false;
-            var attrValue = await _attributeValueService.GetAttributeValuesByIdAsNoTracking(orderDetail.AttrValueId);
-            if (attrValue is AttributeValueDTO)
+            if (orderDetail.AttrValueId != null)
             {
-                if (attrValue.Qty >= orderDetail.ProductQty)
+
+                var attrValue = await _attributeValueService.GetAttributeValuesByIdAsNoTracking((int)orderDetail.AttrValueId);
+                if (attrValue is AttributeValueDTO)
                 {
-                    isValid = true;
-                    attrValue.Qty -= orderDetail.ProductQty;
-                    _attributeValueService.UpdateAttrValWithoutValidatingAndSaving(attrValue.MapForUpdate());
+                    if (attrValue.Qty >= orderDetail.ProductQty)
+                    {
+                        isValid = true;
+                        attrValue.Qty -= orderDetail.ProductQty;
+                        _attributeValueService.UpdateAttrValWithoutValidatingAndSaving(attrValue.MapForUpdate());
+                    }
                 }
             }
 
@@ -140,7 +153,11 @@ namespace MyApp.Application.Services
                 try
                 {
                     var product = await _productService.GetProductById(orderDetail.ProductId);
-                    var atrr = await _attributeValueService.GetAttributeValuesById(orderDetail.AttrValueId);
+                    AttributeValueDTO atrr = null;
+                    if (orderDetail.AttrValueId != null)
+                    {
+                        atrr = await _attributeValueService.GetAttributeValuesById((int)orderDetail.AttrValueId);
+                    }
                     Res.RejectedProductIds.Add(new RejectedProduct
                     {
                         ProductId = orderDetail.ProductId,

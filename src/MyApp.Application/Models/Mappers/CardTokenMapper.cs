@@ -15,8 +15,10 @@ namespace MyApp.Application.Models.Mappers
         {
             return new CardToken
             {
+                Id = dto.Id,
                 CustomerId = dto.CustomerId,
-                Token = dto.Token
+                Token = dto.Token,
+                LastDigit = dto.LastDigit
             };
         }
 
@@ -24,8 +26,10 @@ namespace MyApp.Application.Models.Mappers
         {
             return new CardTokenDTO
             {
+                Id=dto.Id,
                 CustomerId = dto.CustomerId,
-                Token = dto.Token
+                Token = dto.Token, 
+                LastDigit = dto.LastDigit
             };
         }
     }

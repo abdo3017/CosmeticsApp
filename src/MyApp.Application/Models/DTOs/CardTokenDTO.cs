@@ -8,7 +8,10 @@ namespace MyApp.Application.Models.DTOs
 {
     public class CardTokenDTO
     {
+        public int Id { get; set; }
+
         public int CustomerId { get; set; }
         public string Token { get; set; } = null!;
+        public int? LastDigit { get; set; }
     }
 }

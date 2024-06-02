@@ -35,11 +35,9 @@ namespace MyApp.Application.Services
             return dtoCardToken;
         }
 
-        public void DeleteCardToken(CardTokenDTO req)
+        public void DeleteCardToken(int id)
         {
-            var CardToken = req.Map();
-
-            Delete(CardToken);
+            DeleteById(id);
         }
 
         public async Task<List<CardTokenDTO>> GetAll()
@@ -62,7 +60,12 @@ namespace MyApp.Application.Services
             return dtoCardTokenList;
         }
 
-     
+        public async Task<CardTokenDTO?> GetCardTokensById(int id)
+        {
+            var res = await _repository.GetByIdAsync(id);
+            return res?.Map();
+        }
+
         public void UpdateCardToken(CardTokenDTO req)
         {
             var CardToken = req.Map();

@@ -22,7 +22,6 @@ namespace MyApp.Application.Interfaces
         List<int> GetProductPriceRange();
         Task<List<productDTO>> GetBestProducts(int pageNo, int pageSize);
         Task<List<productDTO>> GetRecentProducts(int pageNo, int pageSize);
-        Task<bool> IsAvailableProduct(OrderDetailsDTO DTO);
         Task<SearchResultDTO> SearchResult(string searchTxt);
         Task<productDTO?> GetProductByIdAsNoTracking(int id);
 

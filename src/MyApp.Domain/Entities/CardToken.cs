@@ -11,4 +11,5 @@ public partial class CardToken:BaseEntity
     public int CustomerId { get; set; }
 
     public string Token { get; set; } = null!;
+    public int? LastDigit { get; set; } 
 }

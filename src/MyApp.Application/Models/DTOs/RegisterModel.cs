@@ -1,6 +1,8 @@
-﻿using System;
+﻿using MyApp.Domain.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Data.Entity.Core.Metadata.Edm;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +25,7 @@ namespace MyApp.Application.Models.DTOs
 
         [StringLength(15)]
         public string Phone { get; set; }
+        public RoleType Role { get; set; } = RoleType.User;
 
     }
 }

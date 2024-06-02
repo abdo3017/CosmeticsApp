@@ -16,7 +16,8 @@ public partial class OrderDetail : BaseEntity
 
     public int ProductId { get; set; }
 
-    public int AttrValueId { get; set; }
+    public int? AttrValueId { get; set; }
+
     public virtual Order Order { get; set; } = null!;
 
     public virtual Product Product { get; set; } = null!;

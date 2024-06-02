@@ -159,24 +159,5 @@ namespace MyApp.Application.Services
                 Brands = BrandResult.Select(p => p.MapTOSearchResult()).ToList()
             };
         }
-
-
-
-        public async Task<bool> IsAvailableProduct(OrderDetailsDTO DTO)
-        {
-            bool isValid = false;
-            var attrValueRepo = _unitOfWork.Repository<AttributeValue, int>();
-            var productDto = await GetProductByIdAsNoTracking(DTO.ProductId);
-            var attrValue = await attrValueRepo.GetByIdAsync(DTO.AttrValueId);
-            
-            if (attrValue is AttributeValue && attrValue.Qty >= DTO.ProductQty)
-            {
-                isValid = true;
-                attrValue.Qty -= DTO.ProductQty;
-                attrValueRepo.Update(attrValue);
-            }
-            _unitOfWork.SaveChanges();
-            return isValid;
-        }
     }
 }

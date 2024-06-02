@@ -21,6 +21,12 @@ namespace MyApp.WebApi.Controllers
             var  res = await _serviceManager.SalesOrderService.PlaceOrderAsync(data);
             return Ok(res);
         }
+        [HttpGet("GetSalesOrdersByCustomerId")]
+        public async Task<IActionResult> GetSalesOrdersByCustomerId(int Id)
+        {
+            var res = await _serviceManager.SalesOrderService.GetOrdersByCustomerId(Id);
+            return Ok(res);
+        }
         [HttpPost("PlaceReturnOrder")]
         public async Task<IActionResult> PlaceReturnOrder([FromBody] OrderDTO data)
         {

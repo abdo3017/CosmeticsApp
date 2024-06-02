@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MyApp.Application.Core.Services;
+using MyApp.Application.Core.Specifications;
 using MyApp.Application.Interfaces;
 using MyApp.Application.Models.DTOs;
 using MyApp.Application.Models.Mappers;
@@ -60,6 +61,15 @@ namespace MyApp.Application.Services
 
             return dtoOrder;
         }
+        public async Task<List<OrderDTO>> GetOrdersByCustomerId(BaseSpecification<Order> specification)
+        {
+
+            var orders = await _repository.ListAsync(specification);
+
+            var dtoOrders = orders.Select(x => x.Map()).ToList();
+
+            return dtoOrders;
+        }
 
         public async Task<List<OrderDTO>> GetAllOrders(int id)
         {
@@ -98,11 +108,14 @@ namespace MyApp.Application.Services
 
         public async Task UpdateAttributeValueWithReturnedQty(OrderDetailsDTO orderDetail)
         {
-            var attributeValue = await _attributeValueService.GetAttributeValuesById(orderDetail.AttrValueId);
-            if (attributeValue is AttributeValueDTO)
+            if (orderDetail.AttrValueId != null)
             {
-                attributeValue.Qty += orderDetail.ProductQty;
-                await _attributeValueService.UpdateAttrVal(attributeValue.MapForUpdate());
+                var attributeValue = await _attributeValueService.GetAttributeValuesById((int)orderDetail.AttrValueId);
+                if (attributeValue is AttributeValueDTO)
+                {
+                    attributeValue.Qty += orderDetail.ProductQty;
+                    await _attributeValueService.UpdateAttrVal(attributeValue.MapForUpdate());
+                }
             }
         }
         public void ConfirmOrder(OrderDTO DTO)

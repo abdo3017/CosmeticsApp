@@ -1,4 +1,5 @@
-﻿using MyApp.Application.Models.DTOs;
+﻿using MyApp.Application.Core.Specifications;
+using MyApp.Application.Models.DTOs;
 using MyApp.Domain.Entities;
 using System;
 using System.Collections.Generic;
@@ -20,5 +21,6 @@ namespace MyApp.Application.Interfaces
         Task UpdateAttributeValueWithReturnedQty(OrderDetailsDTO orderDetail);
         Task UpdateReturnedQty(OrderDetailsDTO orderDetail);
         void ConfirmOrder(OrderDTO DTO);
+        Task<List<OrderDTO>> GetOrdersByCustomerId(BaseSpecification<Order> specification);
     }
 }

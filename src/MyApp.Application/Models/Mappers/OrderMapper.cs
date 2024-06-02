@@ -36,7 +36,7 @@ namespace MyApp.Application.Models.Mappers
                 AddressId = dto.AddressId,
                 CustomerId = dto.CustomerId,
                 Status = dto.Status,
-                DeliveryType = (byte)dto.DeliveryType,
+                DeliveryType = dto.DeliveryType,
                 Type = dto.Type,
                 TotalPrice = dto.TotalPrice,
                 Items = dto.OrderDetails.Select(s => s.Map()).ToList()
