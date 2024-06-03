@@ -5,6 +5,8 @@ using System.Security.Cryptography;
 
 namespace MyApp.WebApi.Controllers
 {
+    [ApiController]
+    [Route("api/[controller]")]
     public class ShipmentCostController :ControllerBase
     {
         private readonly IServiceManager _serviceManager;

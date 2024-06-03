@@ -9,9 +9,9 @@ namespace MyApp.Application.Models.DTOs
 {
     public class OrderDTO
     {
-        public int Id { get; set; } = 0;
+        public int Id { get; set; }
         public int CustomerId { get; set; }
-        public int AddressId { get; set; } = 0;
+        public int AddressId { get; set; }
         public decimal TotalPrice { get; set; }
         public byte DeliveryType { get; set; }
         public byte Type { get; set; } = (byte)OrderType.Sales;

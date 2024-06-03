@@ -118,7 +118,7 @@ namespace MyApp.Application.Services
             //await BeginTransactionAsync(IsolationLevel.RepeatableRead);
 
             //check qty for prod
-            bool isValid = false;
+            bool isValid = true;
             if (orderDetail.AttrValueId != null)
             {
 
@@ -131,6 +131,10 @@ namespace MyApp.Application.Services
                         attrValue.Qty -= orderDetail.ProductQty;
                         _attributeValueService.UpdateAttrValWithoutValidatingAndSaving(attrValue.MapForUpdate());
                     }
+                    else
+                    {
+                        isValid = false;
+                    }
                 }
             }
 
@@ -141,14 +145,13 @@ namespace MyApp.Application.Services
                 var productDto = await _productService.GetProductByIdAsNoTracking(orderDetail.ProductId);
                 if (productDto is productDTO && productDto.Qty >= orderDetail.ProductQty)
                 {
-                    isValid = true;
                     productDto.Qty -= orderDetail.ProductQty;
                     _productService.UpdateProductWithoutSave(productDto);
                     UnitOfWork.SaveChanges();
                     //await CommitAskdync();
                 }
             }
-            else
+           if(!isValid)
             {
                 try
                 {
@@ -174,7 +177,6 @@ namespace MyApp.Application.Services
                 }
 
             }
-
 
         }
 
