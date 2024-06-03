@@ -13,7 +13,7 @@ namespace MyApp.Application.Models.DTOs
         public int CustomerId { get; set; }
         public int AddressId { get; set; }
         public decimal TotalPrice { get; set; }
-        public byte DeliveryType { get; set; }
+        public byte DeliveryType { get; set; } = (byte)MyApp.Domain.Enums.DeliveryType.Home;
         public byte Type { get; set; } = (byte)OrderType.Sales;
         public byte Status { get; set; } = (byte)OrderStatus.Open;
 

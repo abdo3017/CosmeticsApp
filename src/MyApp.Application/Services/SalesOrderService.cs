@@ -82,7 +82,7 @@ namespace MyApp.Application.Services
                     var CreatedOrderDetail = await _OrderDetailsService.Create(orderDetail, Order.Id, ProductPriceAfterDiscount);
                     Order.TotalPrice += CreatedOrderDetail.TotalPrice;
                 }
-                if (DTO.DeliveryType == (int)DeliveryType.Home)
+                if (DTO.DeliveryType == (byte)DeliveryType.Home)
                 {
                     var cost = await _shipmentCostService.GetShipmentCostByAddressId(DTO.AddressId);
                     if (cost != null)
