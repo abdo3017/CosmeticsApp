@@ -15,5 +15,8 @@ namespace MyApp.Application.Models.DTOs
         public decimal ProductPrice { get; set; }
         public decimal TotalPrice { get; set; }
         public int? AttrValueId { get; set; }
+        public string? attributeName { get; set; }
+        public string? productName { get; set; }
+        public byte[]? ProductImage { get; set; }
     }
 }
