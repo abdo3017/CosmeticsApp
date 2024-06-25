@@ -10,6 +10,7 @@ using MyApp.Infrastructure.Identity.Models;
 using MyApp.Infrastructure.Models;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
@@ -60,8 +61,9 @@ namespace MyApp.Infrastructure.Services
 
                 return new AuthModel { Message = errors };
             }
+            var role =  model.Role.ToString(); 
 
-            await _userManager.AddToRoleAsync(user, nameof(model.Role));
+            await _userManager.AddToRoleAsync(user, model.Role.ToString());
 
             var jwtSecurityToken = await CreateJwtToken(user);
 
