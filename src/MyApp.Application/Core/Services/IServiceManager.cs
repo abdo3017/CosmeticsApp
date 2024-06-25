@@ -10,7 +10,7 @@ namespace MyApp.Application.Core.Services
 {
     public interface IServiceManager
     {
-
+        IPaymentService PaymentService { get; }
         ICardTokenService CardTokenService { get; }
         IReviewService ReviewService { get; }
         ICategoryService CategoryService { get; }
@@ -22,7 +22,7 @@ namespace MyApp.Application.Core.Services
         IBaseOrderService BaseOrderService { get; }
         ISalesOrderService SalesOrderService { get; }
         IReturnOrderService ReturnOrderService { get; }
-        ILocationService LocationService { get; } 
+        ILocationService LocationService { get; }
         IOrderDetailsService OrderDetailsService { get; }
         IShipmentCostService ShipmentCostService { get; }
     }

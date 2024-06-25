@@ -12,6 +12,7 @@ namespace MyApp.Application.Core.Services
     public class ServiceManager : IServiceManager
     {
 
+        private readonly Lazy<IPaymentService> _paymentService;
         private readonly Lazy<IReviewService> _reviewService;
         private readonly Lazy<IAdvertisementService> _advertisementService;
         private readonly Lazy<ICategoryService> _categoryService;
@@ -30,6 +31,7 @@ namespace MyApp.Application.Core.Services
 
         public ServiceManager(IUnitOfWork unitOfWork)
         {
+            _paymentService = new Lazy<IPaymentService>(() => new PaymentService(unitOfWork));
             _reviewService = new Lazy<IReviewService>(() => new ReviewService(unitOfWork));
             _advertisementService = new Lazy<IAdvertisementService>(() => new AdvertisementService(unitOfWork));
             _categoryService = new Lazy<ICategoryService>(() => new CategoryService(unitOfWork));
@@ -59,8 +61,7 @@ namespace MyApp.Application.Core.Services
         public IBaseOrderService BaseOrderService => _baseOrderService.Value;
         public ISalesOrderService SalesOrderService => _salesOrderService.Value;
         public IReturnOrderService ReturnOrderService => _returnOrderService.Value;
-
         public IShipmentCostService ShipmentCostService => _shipmentCostService.Value;
-
+        public IPaymentService PaymentService => _paymentService.Value;
     }
 }
