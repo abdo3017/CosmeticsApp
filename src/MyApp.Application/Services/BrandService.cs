@@ -35,11 +35,9 @@ namespace MyApp.Application.Services
             return dtoBrand;
         }
 
-        public void DeleteBrand(BrandDTO req)
+        public void DeleteBrand(int id)
         {
-            var Brand = req.Map();
-
-            Delete(Brand);
+            DeleteById(id);
         }
 
         public async Task<List<BrandDTO>> GetAllBrands()

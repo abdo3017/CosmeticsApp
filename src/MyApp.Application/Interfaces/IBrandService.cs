@@ -7,7 +7,7 @@ namespace MyApp.Application.Interfaces
     {
         Task<BrandDTO> CreateBrand(BrandDTO req);
         void UpdateBrand(BrandDTO req);
-        void DeleteBrand(BrandDTO req);
+        void DeleteBrand(int id);
         Task<List<BrandDTO>> GetAllBrands();
         Task<BrandDTO?> GetBrandById(int id);
         Task<BrandDTO?> GetBrandByName(string name);
