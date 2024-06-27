@@ -23,8 +23,8 @@ namespace MyApp.Application.Models.Mappers
         {
             return new ShipmentCostDTO
             {
-                Area = dto.Area,
-                City = dto.City,
+                Area = CultureInfo.CurrentCulture.Name == "en" ? dto.Area:dto.AreaAr,
+                City = CultureInfo.CurrentCulture.Name == "en" ? dto.City : dto.CityAr,
                 Cost = dto.Cost,
                 Id = dto.Id,
                 AreaAr = dto.AreaAr,
