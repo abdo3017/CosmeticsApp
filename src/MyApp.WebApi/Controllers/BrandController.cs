@@ -59,9 +59,9 @@ namespace MyApp.WebApi.Controllers
         }
 
         [HttpDelete("Delete")]
-        public IActionResult Delete(BrandDTO brand)
+        public IActionResult Delete(int id)
         {
-            _serviceManager.BrandService.DeleteBrand(brand);
+            _serviceManager.BrandService.DeleteBrand(id);
             return Ok();
         }
 

@@ -66,9 +66,9 @@ namespace MyApp.WebApi.Controllers
         }
 
         [HttpDelete("Delete")]
-        public IActionResult Delete(AdvertisementDTO Advertisement)
+        public IActionResult Delete(int id)
         {
-            _serviceManager.AdvertisementService.DeleteAdvertisement(Advertisement);
+            _serviceManager.AdvertisementService.DeleteAdvertisement(id);
             return Ok();
         }
 

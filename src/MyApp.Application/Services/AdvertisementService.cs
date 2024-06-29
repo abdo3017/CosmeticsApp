@@ -37,11 +37,10 @@ namespace MyApp.Application.Services
             return dtoAdvertisement;
         }
 
-        public void DeleteAdvertisement(AdvertisementDTO req)
+        public void DeleteAdvertisement(int id)
         {
-            var Advertisement = req.Map();
 
-            Delete(Advertisement);
+            DeleteById(id);
         }
 
         public async Task<List<AdvertisementDTO>> GetAllAdvertisements()
