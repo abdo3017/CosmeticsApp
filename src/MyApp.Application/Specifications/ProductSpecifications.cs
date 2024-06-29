@@ -30,6 +30,8 @@ namespace MyApp.Application.Specifications
         public static BaseSpecification<Product> GetProductWithPaging(int pageNo, int pageSize)
         {
             var spec = new BaseSpecification<Product>();
+            spec.AddInclude(p => p.Imgs);
+            spec.AddInclude(p => p.AttributeValues);
             spec.ApplyPaging((pageNo - 1) * pageSize, pageSize);
             return spec;
         }

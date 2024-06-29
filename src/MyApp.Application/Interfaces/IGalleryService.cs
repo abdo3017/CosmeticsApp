@@ -11,5 +11,6 @@ namespace MyApp.Application.Interfaces
     public interface IGalleryService
     {
         Task<Gallery> CreateImg(int proId, int isCover, IFormFile file);
+        void DeleteImg( int Id);
     }
 }

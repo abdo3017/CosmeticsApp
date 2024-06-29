@@ -104,7 +104,7 @@ namespace MyApp.Infrastructure.Data.Configurations
 
             modelBuilder.Entity<Gallery>(entity =>
             {
-                entity.HasKey(e => new { e.Id, e.ProductId });
+                entity.HasKey(e =>  e.Id );
 
                 entity.Property(e => e.Id).ValueGeneratedOnAdd();
             });

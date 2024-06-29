@@ -67,7 +67,7 @@ namespace MyApp.Application.Models.Mappers
                 Tag = pro.Tag,
                 TotalRate = pro.TotalRate,
                 RateValue = pro.RateValue,
-                CoverImg = pro.Imgs.SingleOrDefault(i => i.IsCover)?.Image,
+                CoverImg =  pro.Imgs.SingleOrDefault(i => i.IsCover)?.Image,
                 CategoryName = pro.Category?.Name,
                 BrandName = pro.Brand?.Name,
                 HasAttr = pro.AttributeValues.Count() > 0,

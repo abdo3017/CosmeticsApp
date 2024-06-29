@@ -3,6 +3,7 @@ using MyApp.Application.Core.Services;
 using MyApp.Application.Interfaces;
 using MyApp.Application.Models.DTOs;
 using MyApp.Application.Models.Mappers;
+using MyApp.Application.Specifications;
 using MyApp.Domain.Core.Repositories;
 using MyApp.Domain.Entities;
 using System;
@@ -32,6 +33,15 @@ namespace MyApp.Application.Services
             return AddedImg;
         }
 
-       
+        public  void DeleteImg( int Id)
+        {
+            ///var spec = GalarySpecifications.GetProductsById(ProductId, Id); 
+           // var gallaries = await _repository.ListAsync(spec);
+           // var img = gallaries[0];
+            //Delete(img);
+            DeleteById(Id);
+        }
+
+     
     }
 }
