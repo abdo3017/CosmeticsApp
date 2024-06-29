@@ -51,7 +51,7 @@ namespace MyApp.WebApi.Controllers
                 if (file != null && file.Length > 0)
                 {
                     await _serviceManager.CategoryService.CreateImg(catId, file);
-                    return Ok("uploaded");
+                    return Ok(new { Status = "success"});
                 }
                 else
                 {
@@ -69,7 +69,7 @@ namespace MyApp.WebApi.Controllers
         public async Task<IActionResult> DeleteProductImg(int id)
         {
             _serviceManager.GalleryService.DeleteImg(id);
-            return Ok("deleted");
+            return Ok(new { Status = "success" });
         }
     }
 }
