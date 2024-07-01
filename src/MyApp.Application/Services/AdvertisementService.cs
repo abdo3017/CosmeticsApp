@@ -13,6 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MyApp.Domain.Models;
 using Microsoft.AspNetCore.Http;
+using MyApp.Application.Core.Specifications;
 
 namespace MyApp.Application.Services
 {
@@ -43,10 +44,12 @@ namespace MyApp.Application.Services
             DeleteById(id);
         }
 
-        public async Task<List<AdvertisementDTO>> GetAllAdvertisements()
+        public async Task<List<AdvertisementDTO>> GetAllAdvertisements(int pageNo = 0, int pageSize = 0)
         {
-            var Advertisements = await _repository.GetAllAsync();
-
+            var spec = new BaseSpecification<Advertisement>();
+            spec.ApplyPaging(pageNo, pageSize);
+            var Advertisements = await _repository.ListAsync(spec);
+            totalCount = spec.TotalCount;
             var AdvertisementsDto = Advertisements.Select(s => s.Map()).ToList();
 
             return AdvertisementsDto;

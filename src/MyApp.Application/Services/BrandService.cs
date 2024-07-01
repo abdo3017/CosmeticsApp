@@ -12,12 +12,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using MyApp.Application.Core.Specifications;
 
 namespace MyApp.Application.Services
 {
     public class BrandService : BaseService<Brand, int>, IBrandService
     {
         private readonly IUnitOfWork _unitOfWork;
+        private int totalCount = 0;
 
         public BrandService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
@@ -40,10 +42,12 @@ namespace MyApp.Application.Services
             DeleteById(id);
         }
 
-        public async Task<List<BrandDTO>> GetAllBrands()
+        public async Task<List<BrandDTO>> GetAllBrands(int pageNo = 0, int pageSize = 0)
         {
-            var categories = await _repository.GetAllAsync();
-
+            var spec = new BaseSpecification<Brand>();
+            spec.ApplyPaging(pageNo, pageSize);
+            var categories = await _repository.ListAsync(spec);
+            totalCount = spec.TotalCount;
             var categoriesDto = categories.Select(s => s.Map()).ToList();
 
             return categoriesDto;
@@ -95,6 +99,10 @@ namespace MyApp.Application.Services
             var Brand = await _repository.FirstOrDefaultAsync(specification);
             Brand.Image = photoData;
             _unitOfWork.SaveChanges();
+        }
+        public int TotalCount()
+        {
+            return totalCount;
         }
     }
 }

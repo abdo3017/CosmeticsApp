@@ -36,6 +36,18 @@ namespace MyApp.WebApi.Controllers
             );
 
         }
+
+        [HttpGet("GetAllWithPaging")]
+        public async Task<IActionResult> GetAll(int pageNo, int pageSize)
+        {
+            var allAdvertisements = await _serviceManager.AdvertisementService.GetAllAdvertisements();
+            return Ok(new
+            {
+                TotalCount = _serviceManager.BrandService.TotalCount(),
+                Advertisements = allAdvertisements
+            });
+        }
+        
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAll()
         {

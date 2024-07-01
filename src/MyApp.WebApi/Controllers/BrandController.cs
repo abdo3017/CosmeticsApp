@@ -21,6 +21,16 @@ namespace MyApp.WebApi.Controllers
             var allBrands = await _serviceManager.BrandService.GetAllBrands();
             return Ok(allBrands);
         }
+        [HttpGet("GetAllWithPaging")]
+        public async Task<IActionResult> GetAllWithPaging(int pageNo, int pageSize)
+        {
+            var allBrands = await _serviceManager.BrandService.GetAllBrands(pageNo,pageSize);
+            return Ok(new
+            {
+                TotalCount = _serviceManager.BrandService.TotalCount(),
+                Brands = allBrands
+            });
+        }
 
         [HttpGet("GetById")]
         public async Task<IActionResult> GetById(int id)

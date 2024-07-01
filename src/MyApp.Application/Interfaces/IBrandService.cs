@@ -8,7 +8,9 @@ namespace MyApp.Application.Interfaces
         Task<BrandDTO> CreateBrand(BrandDTO req);
         void UpdateBrand(BrandDTO req);
         void DeleteBrand(int id);
-        Task<List<BrandDTO>> GetAllBrands();
+        int TotalCount();
+
+        Task<List<BrandDTO>> GetAllBrands(int pageNo = 0, int pageSize = 0);
         Task<BrandDTO?> GetBrandById(int id);
         Task<BrandDTO?> GetBrandByName(string name);
         Task<List<BrandDTO>?> GetBrandsByCategoryId(int id);
