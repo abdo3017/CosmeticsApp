@@ -30,12 +30,14 @@ namespace MyApp.Application.Services
         {
             _unitOfWork = unitOfWork;
         }
+        
         public async Task<object> ExecutePayment(PaymentInfoDto paymentInfoDto)
         {
             var orderRepo = _unitOfWork.Repository<Order, int>();
             var order = await orderRepo.GetByIdAsync(paymentInfoDto.OrderId);
             var resExecute = await Execute(order.TotalPrice);
-            var resDirect = await Direct(resExecute.Data.PaymentURL, order.TotalPrice, paymentInfoDto);
+            var res = paymentInfoDto.Decrypt();
+            var resDirect = await Direct(resExecute.Data.PaymentURL, order.TotalPrice, res);
             return resDirect;
         }
         private async Task<ExecutePaymentRes> Execute(decimal ivoiceValue)

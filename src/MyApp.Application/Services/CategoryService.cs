@@ -12,12 +12,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using MyApp.Application.Core.Specifications;
 
 namespace MyApp.Application.Services
 {
     public class CategoryService : BaseService<Category, int>, ICategoryService
     {
         private readonly IUnitOfWork _unitOfWork;
+        private int totalCount = 0;
 
         public CategoryService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
@@ -41,20 +43,22 @@ namespace MyApp.Application.Services
             DeleteById(id);
         }
 
-        public async Task<List<CategoryDTO>> GetAllCategories()
+        public async Task<List<CategoryDTO>> GetAllCategories(int pageNo = 0, int pageSize = 0)
         {
-            var categories = await _repository.GetAllAsync();
-
+            var spec = new BaseSpecification<Category>();
+            spec.ApplyPaging(pageNo, pageSize);
+            var categories = await _repository.ListAsync(spec);
+            totalCount = spec.TotalCount;
             var categoriesDto = categories.Select(s => s.Map()).ToList();
 
             return categoriesDto;
         }
-        public async Task<List<CategoryDTO>> GetSelectedCategories()
+        public async Task<List<CategoryDTO>> GetSelectedCategories(int pageNo = 0, int pageSize = 0)
         {
             var specification = CategorySpecifications.GetSelectedCategories();
-
+            specification.ApplyPaging(pageNo, pageSize);
             var categories = await _repository.ListAsync(specification);
-
+            totalCount = specification.TotalCount;
             var categoriesDto = categories.Select(s => s.Map()).ToList();
 
             return categoriesDto;
@@ -72,12 +76,13 @@ namespace MyApp.Application.Services
             return categoriesBrand;
         }
 
-        public async Task<List<CategoryDTO>?> GetAllWithSubCategories()
+        public async Task<List<CategoryDTO>?> GetAllWithSubCategories(int pageNo = 0, int pageSize = 0)
         {
             var AllCategories = await _repository.GetAllAsync();
-
             var specification = CategorySpecifications.GetAllParentCategories();
+            specification.ApplyPaging(pageNo, pageSize);
             var parentCategories = await _repository.ListAsync(specification);
+            totalCount = specification.TotalCount;
             var parentCategoriesDTO = parentCategories.Select(c => c.Map()).ToList();
 
             foreach (var category in parentCategoriesDTO)
@@ -151,6 +156,11 @@ namespace MyApp.Application.Services
                 cat.Image = photoData;
                 Update(cat);
             }
+        }
+
+        public int TotalCount()
+        {
+            return totalCount;
         }
     }
 }

@@ -14,13 +14,25 @@ namespace MyApp.WebApi.Controllers
         {
             _serviceManager = serviceManager;
         }
-
+        
+        [HttpGet("GetAllWithSubCategoriesWithPaging")]
+        public async Task<IActionResult> GetAllWithSubCategories(int pageNo, int pageSize)
+        {
+            var allCategories = await _serviceManager.CategoryService.GetAllWithSubCategories(pageNo, pageSize);
+            return Ok(new
+            {
+                TotalCount = _serviceManager.CategoryService.TotalCount(),
+                Categories = allCategories
+            });
+        }
+        
         [HttpGet("GetAllWithSubCategories")]
         public async Task<IActionResult> GetAllWithSubCategories()
         {
             var allCategories = await _serviceManager.CategoryService.GetAllWithSubCategories();
             return Ok(allCategories);
         }
+        
         [HttpGet("GetCategoriesByBrandId")]
         public async Task<IActionResult> GetCategoriesByBrandId(int id)
         {
@@ -28,6 +40,18 @@ namespace MyApp.WebApi.Controllers
             return Ok(allCategories);
 
         }
+        
+        [HttpGet("GetSelectedCategoriesWithPaging")]
+        public async Task<IActionResult> GetSelectedCategoriesWithPaging(int pageNo = 0, int pageSize = 0)
+        {
+            var selectedCategories = await _serviceManager.CategoryService.GetSelectedCategories();
+            return Ok(new
+            {
+                TotalCount = _serviceManager.CategoryService.TotalCount(),
+                Categories = selectedCategories
+            });
+        }
+        
         [HttpGet("GetSelectedCategories")]
         public async Task<IActionResult> GetSelectedCategories()
         {
@@ -35,19 +59,32 @@ namespace MyApp.WebApi.Controllers
             return Ok(selectedCategories);
 
         }
+        
+        [HttpGet("GetAllWithPaging")]
+        public async Task<IActionResult> GetAllWithPaging(int pageNo, int pageSize)
+        {
+            var allCategories = await _serviceManager.CategoryService.GetAllCategories(pageNo, pageSize);
+            return Ok(new
+            {
+                TotalCount = _serviceManager.CategoryService.TotalCount(),
+                Categories = allCategories
+            });
+        }
+        
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAll()
         {
             var allCategories = await _serviceManager.CategoryService.GetAllCategories();
             return Ok(allCategories);
         }
-
+        
         [HttpGet("GetById")]
         public async Task<IActionResult> GetById(int id)
         {
             var cat = await _serviceManager.CategoryService.GetCategoryById(id);
             return Ok(cat);
         }
+        
         [HttpGet("GetByIdWithSubCategories")]
         public async Task<IActionResult> GetByIdWithSubCategories(int id)
         {

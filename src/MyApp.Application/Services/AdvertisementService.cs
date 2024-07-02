@@ -13,6 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MyApp.Domain.Models;
 using Microsoft.AspNetCore.Http;
+using MyApp.Application.Core.Specifications;
 
 namespace MyApp.Application.Services
 {

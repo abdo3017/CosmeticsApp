@@ -44,7 +44,7 @@ namespace MyApp.Application.Core.Specifications
         {
             Skip = skip;
             Take = take;
-            if(Take > 0 && Skip >= 0)
+            if(Take > 0)
                 IsPagingEnabled = true;
             return this;
         }
