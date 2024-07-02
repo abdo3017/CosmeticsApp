@@ -12,5 +12,7 @@ namespace MyApp.Application.Interfaces
     {
         Task<PlaceOrderResultDTO> ReserveQtyAsync(List<OrderDetailsDTO> DTOs);
         Task CancelOrder(int id);
+
+        
     }
 }

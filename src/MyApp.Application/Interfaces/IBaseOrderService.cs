@@ -22,5 +22,7 @@ namespace MyApp.Application.Interfaces
         Task UpdateReturnedQty(OrderDetailsDTO orderDetail);
         void ConfirmOrder(OrderDTO DTO);
         Task<List<OrderDTO>> GetOrdersByCustomerId(BaseSpecification<Order> specification);
+        Task<List<OrderDTO>> GetAllOrdersPageing(int pageNo , int pageSize , int orderType );
+        Task<int> GetOrdersCount(int orderType);
     }
 }

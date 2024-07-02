@@ -13,6 +13,7 @@ namespace MyApp.Domain.Entities
         public virtual DateTimeOffset? LockoutEnd { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public int RoleId { get; set; }
         public virtual bool TwoFactorEnabled { get; set; }
         public virtual bool PhoneNumberConfirmed { get; set; }
         public virtual string? PhoneNumber { get; set; }

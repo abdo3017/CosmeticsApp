@@ -2,6 +2,7 @@
 using MyApp.Application.Core.Services;
 using MyApp.Application.Models.DTOs;
 
+
 namespace MyApp.WebApi.Controllers
 {
     [ApiController]
@@ -37,9 +38,10 @@ namespace MyApp.WebApi.Controllers
 
         }
         [HttpGet("GetAll")]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll(int pageNo , int PageSize)
         {
-            var allAdvertisements = await _serviceManager.AdvertisementService.GetAllAdvertisements();
+         
+            var allAdvertisements = await _serviceManager.AdvertisementService.GetAllAdvertisements(pageNo, PageSize);
             return Ok(allAdvertisements);
         }
 
@@ -50,6 +52,12 @@ namespace MyApp.WebApi.Controllers
             return Ok(cat);
         }
 
+        [HttpGet("GetAllCount")]
+        public async Task<IActionResult> GetAllCount()
+        {
+            var cat = await _serviceManager.AdvertisementService.GetTotalCount();
+            return Ok(cat);
+        }
 
         [HttpPost("Add")]
         public async Task<IActionResult> Add(AdvertisementDTO Advertisement)

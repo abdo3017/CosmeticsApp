@@ -20,5 +20,17 @@ namespace MyApp.Application.Specifications
             specs.AddInclude(x => x.OrderDetails);
             return specs;
         }
+
+        public static BaseSpecification<Order> GetOrderWithpageing(int pageNo, int pageSize, int orderType )
+        {
+            var spec = new BaseSpecification<Order>(o => o.Type == orderType);
+            spec.ApplyPaging((pageNo - 1) * pageSize, pageSize);
+            return spec;
+        }
+
+        public static BaseSpecification<Order> GetOrderByType(int type)
+        {
+            return new BaseSpecification<Order>(x => x.Type== type);
+        }
     }
 }

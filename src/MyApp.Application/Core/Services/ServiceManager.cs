@@ -27,7 +27,7 @@ namespace MyApp.Application.Core.Services
         private readonly Lazy<IReturnOrderService> _returnOrderService;
         private readonly Lazy<IShipmentCostService> _shipmentCostService;
         private readonly Lazy<ICardTokenService> _cardTokenService;
-
+        private readonly Lazy<ICustomerService> _customerService;
 
         public ServiceManager(IUnitOfWork unitOfWork)
         {
@@ -46,6 +46,7 @@ namespace MyApp.Application.Core.Services
             _OrderDetailsService = new Lazy<IOrderDetailsService>(() => new OrderDetailsService(unitOfWork));
             _shipmentCostService = new Lazy<IShipmentCostService>(() => new ShipmentCostService(unitOfWork));
             _cardTokenService = new Lazy<ICardTokenService>(() => new CardTokenService(unitOfWork));
+            _customerService = new Lazy<ICustomerService>(() => new CustomerService(unitOfWork));
         }
 
         public ICardTokenService CardTokenService => _cardTokenService.Value;
@@ -63,5 +64,6 @@ namespace MyApp.Application.Core.Services
         public IReturnOrderService ReturnOrderService => _returnOrderService.Value;
         public IShipmentCostService ShipmentCostService => _shipmentCostService.Value;
         public IPaymentService PaymentService => _paymentService.Value;
+        public ICustomerService CustomerService => _customerService.Value;
     }
 }

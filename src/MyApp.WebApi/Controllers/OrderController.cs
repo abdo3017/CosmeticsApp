@@ -39,5 +39,18 @@ namespace MyApp.WebApi.Controllers
              await _serviceManager.SalesOrderService.CancelOrder(id);
             return Ok();
         }
+        [HttpGet("GetAll")]
+        public async Task<IActionResult> GetAll(int  pageNo , int pageSize)
+        {
+            var res = await _serviceManager.SalesOrderService.GetAllOrdersPageing(pageNo, pageSize , 0 );
+            return Ok(res);
+        }
+
+        [HttpGet("GetSalesOrderCount")]
+        public async Task<IActionResult> GetSalesOrderCount()
+        {
+            var res = await _serviceManager.SalesOrderService.GetOrdersCount(0);
+            return Ok(res);
+        }
     }
 }

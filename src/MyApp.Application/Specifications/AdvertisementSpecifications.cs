@@ -82,6 +82,13 @@ namespace MyApp.Application.Specifications
             spec.ApplyPaging((pageNo - 1) * pageSize, pageSize);
             return spec;
         }
+       
+        public static BaseSpecification<Advertisement> GetAdvertisementsBypages( int pageNo, int pageSize)
+        {
+            var spec = new BaseSpecification<Advertisement>();
+            spec.ApplyPaging((pageNo - 1) * pageSize, pageSize);
+            return spec;
+        }
 
     }
 }

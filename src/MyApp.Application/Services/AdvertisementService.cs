@@ -43,12 +43,12 @@ namespace MyApp.Application.Services
             DeleteById(id);
         }
 
-        public async Task<List<AdvertisementDTO>> GetAllAdvertisements()
+        public async Task<List<AdvertisementDTO>> GetAllAdvertisements(int pageNo, int PageSize)
         {
-            var Advertisements = await _repository.GetAllAsync();
 
+            var spec = AdvertisementSpecifications.GetAdvertisementsBypages(pageNo, PageSize);
+            var Advertisements = await _repository.ListAsync(spec);
             var AdvertisementsDto = Advertisements.Select(s => s.Map()).ToList();
-
             return AdvertisementsDto;
         }
 
@@ -91,6 +91,14 @@ namespace MyApp.Application.Services
         }
         public int TotalCount()
         {
+            return totalCount;
+        }
+
+        public async Task<int> GetTotalCount()
+        {
+            var totalCount = 0;
+            var Advertisements = await _repository.GetAllAsync();
+            totalCount = Advertisements.Count();
             return totalCount;
         }
     }

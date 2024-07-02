@@ -6,12 +6,14 @@ using MyApp.Application.Models.DTOs;
 using MyApp.Application.Models.Mappers;
 using MyApp.Application.Specifications;
 using MyApp.Domain.Core.Repositories;
+using MyApp.Domain.Core.Specifications;
 using MyApp.Domain.Entities;
 using MyApp.Domain.Enums;
 using MyApp.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -123,6 +125,22 @@ namespace MyApp.Application.Services
             var order = DTO.Map();
             order.Status = (byte)OrderStatus.Confirmed;
             Update(order);
+        }
+
+        public async Task<List<OrderDTO>> GetAllOrdersPageing(int pageNo, int pageSize, int orderType)
+        {
+
+            var spec = OrderSpecifications.GetOrderWithpageing(pageNo, pageSize, orderType);
+            var orders = await _repository.ListAsync(spec);
+            var dtoOrders = orders.Select(x => x.Map()).ToList();
+            return dtoOrders;
+        }
+
+        public async Task<int> GetOrdersCount(int orderType)
+        {
+            var spec = OrderSpecifications.GetOrderByType(orderType);
+            var orders = await _repository.ListAsync(spec);
+            return orders.Count();
         }
     }
 }

@@ -9,7 +9,7 @@ namespace MyApp.Domain.Enums
 {
     public enum RoleType
     {
-        User,
-        Admin
+        User = 3,
+        Admin = 1
     }
 }

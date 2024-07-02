@@ -47,7 +47,8 @@ namespace MyApp.Infrastructure.Services
                 LastName = model.LastName,
                 UserName = model.Username,
                 Email = model.Email,
-                PhoneNumber = model.Phone
+                PhoneNumber = model.Phone,
+               roleId = (int)model.Role
             };
 
             var result = await _userManager.CreateAsync(user, model.Password);
@@ -210,5 +211,16 @@ namespace MyApp.Infrastructure.Services
 
             return authModel;
         }
+
+        //string RoleMapper( int role  )
+        //{
+        //    switch (role)
+        //    {
+        //        case 1:
+        //            return RoleType.Admin
+        //        default:
+        //            break;
+        //    }
+        //}
     }
 }
