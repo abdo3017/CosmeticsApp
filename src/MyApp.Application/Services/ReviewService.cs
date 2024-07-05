@@ -19,6 +19,7 @@ namespace MyApp.Application.Services
     public class ReviewService : BaseService<Review, int>, IReviewService
     {
         private readonly IUnitOfWork _unitOfWork;
+        private int totalCount = 0;
 
         public ReviewService(IUnitOfWork unitOfWork) : base(unitOfWork)
         {
@@ -41,12 +42,12 @@ namespace MyApp.Application.Services
             DeleteById(id);
         }
 
-        public async Task<List<ReviewDTO>> GetAllReviews()
+        public async Task<List<ReviewDTO>> GetAllReviews(int pageNo = 0, int pageSize = 0)
         {
             var specification = ReviewSpecifications.GetReviewWithUser();
-
+            specification.ApplyPaging(pageNo, pageSize);
             var reviews = await _repository.ListAsync(specification);
-
+            totalCount = specification.TotalCount;
             var reviewsDto = reviews.Select(s => s.Map()).ToList();
 
             return reviewsDto;
@@ -62,22 +63,24 @@ namespace MyApp.Application.Services
 
             return dtoReview;
         }
-        public async Task<List<ReviewDTO>> GetReviewsByProductId(int productId)
+        public async Task<List<ReviewDTO>> GetReviewsByProductId(int productId, int pageNo = 0, int pageSize = 0)
         {
             var specification = ReviewSpecifications.GetReviewsByProductId(productId);
-
+            specification.ApplyPaging(pageNo, pageSize);
             var reviews = await _repository.ListAsync(specification);
+            totalCount = specification.TotalCount;
 
             var reviewsDto = reviews.Select(s => s.Map()).ToList();
 
             return reviewsDto;
         }
         
-        public async Task<List<ReviewDTO>> GetReviewsByCustomerId(int customerId)
+        public async Task<List<ReviewDTO>> GetReviewsByCustomerId(int customerId, int pageNo = 0, int pageSize = 0)
         {
             var specification = ReviewSpecifications.GetReviewsByCustomerId(customerId);
-
+            specification.ApplyPaging(pageNo, pageSize);
             var reviews = await _repository.ListAsync(specification);
+            totalCount = specification.TotalCount;
 
             var reviewsDto = reviews.Select(s => s.Map()).ToList();
 
@@ -90,6 +93,9 @@ namespace MyApp.Application.Services
 
             Update(Review);
         }
-
+        public int TotalCount()
+        {
+            return totalCount;
+        }
     }
 }

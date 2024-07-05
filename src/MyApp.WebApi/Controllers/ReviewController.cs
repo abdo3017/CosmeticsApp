@@ -22,6 +22,16 @@ namespace MyApp.WebApi.Controllers
             var allReviews = await _serviceManager.ReviewService.GetAllReviews();
             return Ok(allReviews);
         }
+        [HttpGet("GetAllWithPaging")]
+        public async Task<IActionResult> GetAllWithPaging(int pageN, int pageSize)
+        {
+            var allReviews = await _serviceManager.ReviewService.GetAllReviews(pageN, pageSize);
+            return Ok(new
+            {
+                TotalCount = _serviceManager.CategoryService.TotalCount(),
+                Reviews = allReviews
+            });
+        }
 
         [HttpGet("GetById")]
         public async Task<IActionResult> GetById(int id)
@@ -37,11 +47,33 @@ namespace MyApp.WebApi.Controllers
             return Ok(reviews);
         }
 
+
+        [HttpGet("GetByCustomerIdWithPaging")]
+        public async Task<IActionResult> GetByCustomerIdWithPaging(int customerId, int pageN, int pageSize)
+        {
+            var reviews = await _serviceManager.ReviewService.GetReviewsByCustomerId(customerId, pageN, pageSize);
+            return Ok(new
+            {
+                TotalCount = _serviceManager.CategoryService.TotalCount(),
+                Reviews = reviews
+            });
+        }
+
         [HttpGet("GetByProductId")]
         public async Task<IActionResult> GetReviewsByProductId(int productId)
         {
             var reviews = await _serviceManager.ReviewService.GetReviewsByProductId(productId);
             return Ok(reviews);
+        }
+        [HttpGet("GetByProductIdWithPaging")]
+        public async Task<IActionResult> GetReviewsByProductIdWithPaging(int productId, int pageN, int pageSize)
+        {
+            var reviews = await _serviceManager.ReviewService.GetReviewsByProductId(productId, pageN, pageSize);
+            return Ok(new
+            {
+                TotalCount = _serviceManager.CategoryService.TotalCount(),
+                Reviews = reviews
+            });
         }
 
         [HttpPost("Add")]

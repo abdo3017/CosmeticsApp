@@ -44,10 +44,11 @@ namespace MyApp.Application.Services
             DeleteById(id);
         }
 
-        public async Task<List<AdvertisementDTO>> GetAllAdvertisements(int pageNo, int PageSize)
+        public async Task<List<AdvertisementDTO>> GetAllAdvertisements(int pageNo = 0, int pageSize = 0)
         {
 
-            var spec = AdvertisementSpecifications.GetAdvertisementsBypages(pageNo, PageSize);
+            var spec = new BaseSpecification<Advertisement>();
+            spec.ApplyPaging(pageNo, pageSize);
             var Advertisements = await _repository.ListAsync(spec);
             var AdvertisementsDto = Advertisements.Select(s => s.Map()).ToList();
             return AdvertisementsDto;

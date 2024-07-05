@@ -39,9 +39,9 @@ namespace MyApp.WebApi.Controllers
         }
 
         [HttpGet("GetAllWithPaging")]
-        public async Task<IActionResult> GetAll(int pageNo, int pageSize)
+        public async Task<IActionResult> GetAllWithPaging(int pageNo, int pageSize)
         {
-            var allAdvertisements = await _serviceManager.AdvertisementService.GetAllAdvertisements();
+            var allAdvertisements = await _serviceManager.AdvertisementService.GetAllAdvertisements(pageNo,pageSize);
             return Ok(new
             {
                 TotalCount = _serviceManager.BrandService.TotalCount(),
@@ -50,10 +50,10 @@ namespace MyApp.WebApi.Controllers
         }
         
         [HttpGet("GetAll")]
-        public async Task<IActionResult> GetAll(int pageNo , int PageSize)
+        public async Task<IActionResult> GetAll()
         {
          
-            var allAdvertisements = await _serviceManager.AdvertisementService.GetAllAdvertisements(pageNo, PageSize);
+            var allAdvertisements = await _serviceManager.AdvertisementService.GetAllAdvertisements();
             return Ok(allAdvertisements);
         }
 

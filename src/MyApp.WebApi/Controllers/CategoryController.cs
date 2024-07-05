@@ -42,9 +42,9 @@ namespace MyApp.WebApi.Controllers
         }
         
         [HttpGet("GetSelectedCategoriesWithPaging")]
-        public async Task<IActionResult> GetSelectedCategoriesWithPaging(int pageNo = 0, int pageSize = 0)
+        public async Task<IActionResult> GetSelectedCategoriesWithPaging(int pageNo, int pageSize)
         {
-            var selectedCategories = await _serviceManager.CategoryService.GetSelectedCategories();
+            var selectedCategories = await _serviceManager.CategoryService.GetSelectedCategories(pageNo,pageSize);
             return Ok(new
             {
                 TotalCount = _serviceManager.CategoryService.TotalCount(),

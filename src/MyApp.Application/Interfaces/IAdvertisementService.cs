@@ -8,7 +8,7 @@ namespace MyApp.Application.Interfaces
         Task<AdvertisementDTO> CreateAdvertisement(AdvertisementDTO req);
         void UpdateAdvertisement(AdvertisementDTO req);
         void DeleteAdvertisement(int id);
-        Task<List<AdvertisementDTO>> GetAllAdvertisements(int pageNo, int PageSize);
+        Task<List<AdvertisementDTO>> GetAllAdvertisements(int pageNo = 0, int PageSize = 0);
         Task<AdvertisementDTO?> GetAdvertisementById(int id);
         Task<List<AdvertisementDTO>?> GetFilteredAdvertisements(AdvertisementFilter filter, int pageNo, int pageSize);
         Task UploadImg(int AdvertisementId, IFormFile file);
