@@ -17,10 +17,10 @@ namespace MyApp.Application.Models.Mappers
             return new PaymentInfoDto
             {
                 OrderId = paymentInfo.OrderId,
-                CardNumber = EncryptionHelper.DecryptData(EncryptionHelper.GenerateSymmetricKey(), Convert.FromBase64String(paymentInfo.CardNumber)),
-                ExpiryMonth = EncryptionHelper.DecryptData(EncryptionHelper.GenerateSymmetricKey(),Convert.FromBase64String(paymentInfo.ExpiryMonth)),
-                ExpiryYear = EncryptionHelper.DecryptData(EncryptionHelper.GenerateSymmetricKey(),Convert.FromBase64String(paymentInfo.ExpiryYear)),
-                SecurityCode = EncryptionHelper.DecryptData(EncryptionHelper.GenerateSymmetricKey(),Convert.FromBase64String(paymentInfo.SecurityCode)),
+                CardNumber = EncryptionHelper.DecryptAES(paymentInfo.CardNumber),
+                ExpiryMonth = EncryptionHelper.DecryptAES(paymentInfo.ExpiryMonth),
+                ExpiryYear = EncryptionHelper.DecryptAES(paymentInfo.ExpiryYear),
+                SecurityCode = EncryptionHelper.DecryptAES(paymentInfo.SecurityCode)
             };
         }
     }
