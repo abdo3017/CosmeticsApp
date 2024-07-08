@@ -28,6 +28,20 @@ namespace MyApp.Application.Models.Mappers
             };
         }
 
+        public static Order MapForCreate(this OrderDTO dto)
+        {
+            return new Order
+            {
+                Id = dto.Id,
+                AddressId = dto.AddressId,
+                CustomerId = dto.CustomerId,
+                CreatedAt = DateTime.Now,
+                Status = dto.Status,
+                DeliveryType = dto.DeliveryType,
+                Type = dto.Type
+            };
+        }
+
         public static OrderDTO Map(this Order dto)
         {
             return new OrderDTO
