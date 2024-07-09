@@ -64,5 +64,12 @@ namespace MyApp.Application.Services
             }
             return cost?.Map();
         }
+
+
+        public async Task DeleteAsync(int id)
+        {
+
+            DeleteById(id);
+        }
     }
 }
