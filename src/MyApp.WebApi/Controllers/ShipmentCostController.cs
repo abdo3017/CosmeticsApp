@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MyApp.Application.Core.Services;
+using MyApp.Application.Models.DTOs;
 using MyApp.Domain.Entities;
 using System.Security.Cryptography;
 
@@ -31,6 +32,16 @@ namespace MyApp.WebApi.Controllers
             return Ok(res);
         }
 
+        [HttpPost("GetShipmentCost")]
+        public async Task<IActionResult> GetShipmentLocations(ShipmentCostDTO body)
+        {
+            var res = await _serviceManager.ShipmentCostService.Create(body);
+            return Ok(res);
+        }
+
+
+
+
         [HttpPut("SetShipmentCost{Id}/{Cost}")]
         public async Task<IActionResult> CreateCost(int  Id , decimal Cost)
         {
@@ -44,6 +55,14 @@ namespace MyApp.WebApi.Controllers
         {
             var res = await _serviceManager.ShipmentCostService.GetShipmentCostByAddressId(Id);
             return Ok(res);
+        }
+
+
+        [HttpDelete("delete/{Id}")]
+        public async Task<IActionResult> delete(int Id)
+        {
+             _serviceManager.ShipmentCostService.DeleteAsync(Id);
+            return Ok();
         }
 
     }
