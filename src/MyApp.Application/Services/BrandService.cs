@@ -85,11 +85,16 @@ namespace MyApp.Application.Services
 
             return brandsCategory;
         }
-        public void UpdateBrand(BrandDTO req)
+        public void UpdateBrand(BrandDTO dto)
         {
-            var Brand = req.Map();
-
-            Update(Brand);
+            var Brand = _repository.GetById(dto.Id);
+            if (Brand != null)
+            {
+                Brand.Name = dto.Name ?? Brand.Name;
+                Brand.Id = Brand.Id;
+                Brand.NameAr = dto.NameAr ?? Brand.NameAr;
+                Update(Brand);
+            }
         }
 
         public async Task UploadImg(int BrandId,IFormFile file)

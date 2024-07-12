@@ -140,11 +140,21 @@ namespace MyApp.Application.Services
             return dtoCategory;
         }
 
-        public void UpdateCategory(CategoryDTO req)
+        public void UpdateCategory(CategoryDTO dto)
         {
-            var category = req.Map();
 
+            var category = _repository.GetById(dto.Id);
+            if (category != null) {
+                category.Id = dto.Id;
+                category.Name = dto.Name ?? category.Name;
+                category.Description = dto.Description ?? category.Description;
+                category.Icon = dto.Icon ?? category.Icon;
+                category.IsSelected = dto.IsSelected ?? category.IsSelected;
+                category.ParentId = dto.ParentId ?? category.ParentId;
+                category.NameAr = dto.NameAr ?? category.NameAr;
+                category.DescriptionAr = dto.DescriptionAr ?? category.DescriptionAr;
             Update(category);
+            }
         }
 
         public async Task CreateImg(int CatId, IFormFile file)
