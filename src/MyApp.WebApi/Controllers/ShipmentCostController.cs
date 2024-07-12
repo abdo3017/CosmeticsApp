@@ -25,6 +25,13 @@ namespace MyApp.WebApi.Controllers
             return Ok(res);
         }
 
+        [HttpGet("GetShipmentCostCount")]
+        public async Task<IActionResult> GetShipmentCostCount()
+        {
+            var res = await _serviceManager.ShipmentCostService.GetShipmentsCostCount();
+            return Ok(res);
+        }
+
         [HttpGet("GetShipmentCost")]
         public async Task<IActionResult> GetShipmentLocations(int pageNo, int pageSize)
         {

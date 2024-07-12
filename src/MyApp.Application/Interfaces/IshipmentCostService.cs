@@ -16,5 +16,6 @@ namespace MyApp.Application.Interfaces
         Task<ShipmentCostDTO> AddCost(int ShipmentId, decimal Cost);
         Task<IList<ShipmentCostDTO>> GetShipmentsAsync(int PageNO, int PageSize);
         Task DeleteAsync(int id);
+        Task<int> GetShipmentsCostCount();
     }
 }

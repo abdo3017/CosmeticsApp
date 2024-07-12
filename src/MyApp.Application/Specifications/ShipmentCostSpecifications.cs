@@ -13,7 +13,7 @@ namespace MyApp.Application.Specifications
         public static BaseSpecification<ShipmentCost> GetShipmentCostWithPaging(int pageNo, int pageSize)
         {
             var spec = new BaseSpecification<ShipmentCost>();
-            spec.ApplyPaging((pageNo - 1) * pageSize, pageSize);
+            spec.ApplyPaging(pageNo , pageSize);
             return spec;
         }
 

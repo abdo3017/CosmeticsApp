@@ -50,7 +50,11 @@ namespace MyApp.Application.Services
             var res = await _repository.ListAsync(spec);
             return res.Select(x=>x.Map()).ToList();
         }
-
+        public async Task<int> GetShipmentsCostCount()
+        {
+            var res = await _repository.GetAllAsync();
+            return res.Count();
+        }
         public async Task<ShipmentCostDTO?> GetShipmentCostByAddressId(int addressId)
         {
             ShipmentCost? cost = null;
