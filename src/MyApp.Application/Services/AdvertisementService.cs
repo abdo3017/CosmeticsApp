@@ -76,13 +76,10 @@ namespace MyApp.Application.Services
             return dtoAdvertisement;
         }
 
-        public async void UpdateAdvertisement(AdvertisementDTO dto)
+        public void UpdateAdvertisement(AdvertisementDTO dto)
         {
 
-            var specification = AdvertisementSpecifications.GetAdvertisementById(dto.Id);
-
-            var Advertisement = await _repository.FirstOrDefaultAsync(specification);
-
+            var Advertisement =  _repository.GetById(dto.Id);
             if(Advertisement != null)
             {
                 Advertisement.Id = dto.Id;
