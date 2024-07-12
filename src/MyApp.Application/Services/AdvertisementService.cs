@@ -76,10 +76,21 @@ namespace MyApp.Application.Services
             return dtoAdvertisement;
         }
 
-        public void UpdateAdvertisement(AdvertisementDTO req)
+        public async void UpdateAdvertisement(AdvertisementDTO dto)
         {
-            var Advertisement = req.Map();
 
+            var specification = AdvertisementSpecifications.GetAdvertisementById(dto.Id);
+
+            var Advertisement = await _repository.FirstOrDefaultAsync(specification);
+
+            if(Advertisement != null)
+            {
+                Advertisement.Id = dto.Id;
+                Advertisement.BrandId = dto.BrandId?? Advertisement.BrandId;
+                Advertisement.Tag = dto.Tag?? Advertisement.Tag;
+                Advertisement.CategoryId = dto.CategoryId ?? Advertisement.CategoryId;
+                Advertisement.Discount = dto.Discount ?? Advertisement.Discount;
+            }
             Update(Advertisement);
         }
 
