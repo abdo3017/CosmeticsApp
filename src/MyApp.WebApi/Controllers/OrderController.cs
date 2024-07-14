@@ -45,6 +45,12 @@ namespace MyApp.WebApi.Controllers
             var res = await _serviceManager.SalesOrderService.GetAllOrdersPageing(pageNo, pageSize , 0 );
             return Ok(res);
         }
+        [HttpGet("GetOrderById")]
+        public async Task<IActionResult> GetOrderById(int id)
+        {
+            var res = await _serviceManager.BaseOrderService.GetOrderById(id);
+            return Ok(res);
+        }
 
         [HttpGet("GetSalesOrderCount")]
         public async Task<IActionResult> GetSalesOrderCount()

@@ -50,6 +50,7 @@ namespace MyApp.Application.Services
             var spec = new BaseSpecification<Advertisement>();
             spec.ApplyPaging(pageNo, pageSize);
             var Advertisements = await _repository.ListAsync(spec);
+            totalCount = spec.TotalCount;
             var AdvertisementsDto = Advertisements.Select(s => s.Map()).ToList();
             return AdvertisementsDto;
         }

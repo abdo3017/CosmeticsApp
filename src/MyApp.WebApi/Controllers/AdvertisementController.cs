@@ -44,7 +44,7 @@ namespace MyApp.WebApi.Controllers
             var allAdvertisements = await _serviceManager.AdvertisementService.GetAllAdvertisements(pageNo,pageSize);
             return Ok(new
             {
-                TotalCount = _serviceManager.BrandService.TotalCount(),
+                TotalCount = _serviceManager.AdvertisementService.TotalCount(),
                 Advertisements = allAdvertisements
             });
         }
