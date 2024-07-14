@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.VisualBasic;
 using MyApp.Application.Core.Services;
 using MyApp.Application.Models.DTOs;
 using MyApp.Domain.Entities;
@@ -37,11 +38,27 @@ namespace MyApp.WebApi.Controllers
             return Ok(filteredAttributeValues);
         }
 
+        [HttpGet("GetAttributeValuesById")]
+        public async Task<IActionResult> GetAttributeValuesById(int AttrId)
+        {
+            var filteredAttributeValues = await _serviceManager.AttributeValueService.GetAttributeValuesByIdAsNoTracking(AttrId);
+            return Ok(filteredAttributeValues);
+        }
+
         [HttpPost]
         public async Task<IActionResult> Add(CreateAttributeValueDTO attr)
         {
-            var res = await _serviceManager.AttributeValueService.CreateAttrVal(attr);
-            return Ok(res);
+            try
+            {
+                var res = await _serviceManager.AttributeValueService.CreateAttrVal(attr);
+                return Ok(res);
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest( new { Msg = ex.Message});
+            }
+
         }
 
         [HttpPut]

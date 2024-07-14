@@ -55,6 +55,8 @@ namespace MyApp.Application.Services
             return attributeValuesDto;
         }
 
+ 
+
         public async Task<AttributeValueDTO> CreateAttrVal(CreateAttributeValueDTO req)
         {
             var attr = req.Map();
@@ -67,7 +69,7 @@ namespace MyApp.Application.Services
         public async Task UpdateAttrVal(UpdateAttributeValueDTO req)
         {
             var attr = req.Map();
-            await ValidateQty(attr);
+         //   await ValidateQty(attr);
             Update(attr);
         }
         public void UpdateAttrValWithoutValidatingAndSaving(UpdateAttributeValueDTO req)

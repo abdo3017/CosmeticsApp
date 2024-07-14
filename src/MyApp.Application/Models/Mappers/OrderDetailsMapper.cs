@@ -30,14 +30,16 @@ namespace MyApp.Application.Models.Mappers
                 Id = dto.Id,
                 OrderId = dto.OrderId,
                 ProductId = dto.ProductId,
-                ProductQty = dto.Qty,
-                ProductPrice = dto.Product.Price,
-                TotalPrice = dto.Qty * dto.Product.Price,
+                ProductQty = dto.Product.Qty,
+                TotalPrice = dto.Product.Qty * dto.Product.Price,
                 AttrValueId = dto.AttrValueId,
                 productName = dto.Product.Name,
                 attributeName = dto.Product?.AttributeValues.FirstOrDefault(a => a.Id == dto.AttrValueId)?.Value,
-                ProductImage = dto.Product?.Imgs?.FirstOrDefault(g => g.IsCover).Image
+                ProductImage = dto.Product?.Imgs?.FirstOrDefault(g => g.IsCover)?.Image
             };
+
+  
+
         }
     }
 }

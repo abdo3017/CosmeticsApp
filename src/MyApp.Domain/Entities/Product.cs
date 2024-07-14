@@ -25,7 +25,7 @@ public partial class Product : BaseEntity
 
     public int DiscountPercentage { get; set; }
 
-    public int? Tag { get; set; }
+    public int Tag { get; set; } = -1;
 
     public DateTime CreationDate { get; set; }
 

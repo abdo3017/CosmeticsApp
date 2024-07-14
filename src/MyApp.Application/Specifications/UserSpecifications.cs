@@ -11,7 +11,7 @@ namespace MyApp.Application.Specifications
         public static BaseSpecification<User> GetCustomerWithPaging(int pageNo, int pageSize)
         {
             var spec = new BaseSpecification<User>(u => u.RoleId == 3) ;
-            spec.ApplyPaging(pageNo, pageSize);
+            spec.ApplyPaging(pageNo , pageSize);
             return spec;
         }
         public static BaseSpecification<User> GetCustomers()

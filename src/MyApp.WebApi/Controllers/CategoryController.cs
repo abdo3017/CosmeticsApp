@@ -117,8 +117,17 @@ namespace MyApp.WebApi.Controllers
         [HttpDelete("Delete")]
         public IActionResult Delete(int Id)
         {
-            _serviceManager.CategoryService.DeleteCategory(Id);
-            return Ok();
+            try
+            {
+                _serviceManager.CategoryService.DeleteCategory(Id);
+                return Ok();
+            }
+            catch (Exception)
+            {
+
+                return BadRequest(new { msg = "category has products " });
+            }
+         
         }
 
     }

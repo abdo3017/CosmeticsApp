@@ -39,7 +39,7 @@ namespace MyApp.Application.Services
 
         public async Task<Order> Create(OrderDTO DTO)
         {
-            var SalesOrder = await AddAsync(DTO.Map());
+            var SalesOrder = await AddAsync(DTO.MapForCreate());
             return SalesOrder;
         }
 

@@ -71,8 +71,17 @@ namespace MyApp.WebApi.Controllers
         [HttpDelete("Delete")]
         public IActionResult Delete(int id)
         {
-            _serviceManager.BrandService.DeleteBrand(id);
-            return Ok();
+            try
+            {
+                _serviceManager.BrandService.DeleteBrand(id);
+                return Ok();
+            }
+            catch (Exception)
+            {
+
+                return BadRequest(new { msg = "Brand Has Products " }); 
+            }
+          
         }
 
         [HttpPost("UploadImg/{BrandId}")]
