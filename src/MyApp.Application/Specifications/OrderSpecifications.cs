@@ -24,7 +24,7 @@ namespace MyApp.Application.Specifications
         public static BaseSpecification<Order> GetOrderWithpageing(int pageNo, int pageSize, int orderType )
         {
             var spec = new BaseSpecification<Order>(o => o.Type == orderType);
-            spec.ApplyPaging((pageNo - 1) * pageSize, pageSize);
+            spec.ApplyPaging(pageNo, pageSize);
             return spec;
         }
 

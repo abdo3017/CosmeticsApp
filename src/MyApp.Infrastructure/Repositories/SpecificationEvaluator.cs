@@ -44,7 +44,7 @@ namespace MyApp.Infrastructure.Repositories
             // Apply paging if enabled
             if (specification.IsPagingEnabled)
             {
-                query = query.Skip(specification.Skip)
+                query = query.Skip((specification.Skip - 1) * specification.Take)
                              .Take(specification.Take);
             }
 

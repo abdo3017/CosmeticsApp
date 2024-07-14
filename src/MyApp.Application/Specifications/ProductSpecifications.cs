@@ -18,13 +18,13 @@ namespace MyApp.Application.Specifications
         public static BaseSpecification<Product> GetProductsByBrandId(int id, int pageNo, int pageSize)
         {
             var spec = new BaseSpecification<Product>(Product => Product.BrandId == id);
-            spec.ApplyPaging((pageNo - 1) * pageSize, pageSize);
+            spec.ApplyPaging(pageNo, pageSize);
             return spec;
         }
         public static BaseSpecification<Product> GetProductsByCategoryId(int id, int pageNo, int pageSize)
         {
             var spec = new BaseSpecification<Product>(Product => Product.CategoryId == id);
-            spec.ApplyPaging((pageNo - 1) * pageSize, pageSize);
+            spec.ApplyPaging(pageNo, pageSize);
             return spec;
         }
         public static BaseSpecification<Product> GetProductWithPaging(int pageNo, int pageSize)
@@ -32,7 +32,7 @@ namespace MyApp.Application.Specifications
             var spec = new BaseSpecification<Product>();
             spec.AddInclude(p => p.Imgs);
             spec.AddInclude(p => p.AttributeValues);
-            spec.ApplyPaging((pageNo - 1) * pageSize, pageSize);
+            spec.ApplyPaging(pageNo, pageSize);
             return spec;
         }
 
@@ -46,7 +46,7 @@ namespace MyApp.Application.Specifications
         public static BaseSpecification<Product> GetProductWithRateGt4_5(int pageNo, int pageSize)
         {
             var spec = new BaseSpecification<Product>(BestProductExepression());
-            spec.ApplyPaging((pageNo - 1) * pageSize, pageSize);
+            spec.ApplyPaging(pageNo, pageSize);
             return spec;
         }
         static Expression<Func<Product, bool>> RecentProductExepression()
@@ -67,14 +67,14 @@ namespace MyApp.Application.Specifications
         public static BaseSpecification<Product> GetRecentProduct(int pageNo, int pageSize)
         {
             var spec = new BaseSpecification<Product>(RecentProductExepression());
-            spec.ApplyPaging((pageNo - 1) * pageSize, pageSize);
+            spec.ApplyPaging(pageNo, pageSize);
             return spec;
         }
 
         public static BaseSpecification<Product> GetMostPopularProduct(int pageNo, int pageSize)
         {
             var spec = new BaseSpecification<Product>(MostPopularProductExepression());
-            spec.ApplyPaging((pageNo - 1) * pageSize, pageSize);
+            spec.ApplyPaging(pageNo, pageSize);
             return spec;
         }
 
@@ -146,7 +146,7 @@ namespace MyApp.Application.Specifications
                 expression = tagsExep;
 
             var spec = new BaseSpecification<Product>(criteria: expression);
-            spec.ApplyPaging((pageNo - 1) * pageSize, pageSize);
+            spec.ApplyPaging(pageNo, pageSize);
 
             return spec;
         }

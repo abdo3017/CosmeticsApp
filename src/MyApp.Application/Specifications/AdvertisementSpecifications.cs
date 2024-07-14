@@ -79,14 +79,14 @@ namespace MyApp.Application.Specifications
 
             expression = Expression.Lambda<Func<Advertisement, bool>>(filterExpression, parameter);
             var spec = new BaseSpecification<Advertisement>(criteria: expression);
-            spec.ApplyPaging((pageNo - 1) * pageSize, pageSize);
+            spec.ApplyPaging(pageNo, pageSize);
             return spec;
         }
        
         public static BaseSpecification<Advertisement> GetAdvertisementsBypages( int pageNo, int pageSize)
         {
             var spec = new BaseSpecification<Advertisement>();
-            spec.ApplyPaging((pageNo - 1) * pageSize, pageSize);
+            spec.ApplyPaging(pageNo, pageSize);
             return spec;
         }
 

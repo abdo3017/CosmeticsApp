@@ -6,8 +6,8 @@ namespace MyApp.Application.Core.Specifications
 {
     public class BaseSpecification<T> : ISpecification<T>
     {
-        public BaseSpecification(){ }
-            public BaseSpecification(Expression<Func<T, bool>> criteria)
+        public BaseSpecification() { }
+        public BaseSpecification(Expression<Func<T, bool>> criteria)
         {
             Criteria = criteria;
         }
@@ -29,7 +29,7 @@ namespace MyApp.Application.Core.Specifications
             IncludesWithSub.Add(includeExpression);
             return this;
         }
-        public virtual BaseSpecification<T> AddInclude(Expression<Func<T,  object>> includeExpression)
+        public virtual BaseSpecification<T> AddInclude(Expression<Func<T, object>> includeExpression)
         {
             Includes.Add(includeExpression);
             return this;
@@ -42,9 +42,9 @@ namespace MyApp.Application.Core.Specifications
 
         public virtual BaseSpecification<T> ApplyPaging(int skip, int take)
         {
-            Skip = skip;
+            Skip = skip == 0 ? 1 : skip;
             Take = take;
-            if(Take > 0)
+            if (Take > 0)
                 IsPagingEnabled = true;
             return this;
         }
