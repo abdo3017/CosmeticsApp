@@ -50,6 +50,7 @@ namespace MyApp.Application.Models.Mappers
                 Description = CultureInfo.CurrentCulture.Name == "en" ? dto.Description : dto.DescriptionAr,
                 IsSelected = dto.IsSelected,
                 Icon = dto.Icon,
+                ParentId= dto.ParentId,
                 Img = dto.Image,
                 DescriptionAr = dto.DescriptionAr, 
                 NameAr = dto?.NameAr
